@@ -1,11 +1,11 @@
 # 🌙 Project Luna 
 
-> **"수동적인 반사를 넘어, 스스로 빛을 발산하는 능동적인 성장의 기록"** > *Transforming passive light into active brilliance through constant growth.*
+> **"지속적인 성장을 기록하고 관리하는 능동적인 포트폴리오 관리 시스템"**
 
 ---
 
-## ✨ Project Vision: From 'MOON' to 'LUNA'
-단순히 남의 빛을 받아 반사하는 존재였던 'MOON'에서 벗어나, 스스로 빛을 내고 그 범위를 확장(Utilizing & Expanding Light)해 나가는 **능동적인 개발자**의 포트폴리오 시스템입니다.
+## ✨ Project LUNA
+"독자적인 아키텍처를 구축하여 개발자의 기술력과 프로젝트 로그를 시스템적으로 통합하고 관리하는 포트폴리오 플랫폼입니다."
 
 - **Status:** 🚧 Work In Progress (Design Phase)
 - **Concept:** Minimalism, Active Growth, Clarity
