@@ -34,49 +34,68 @@ export function MoonOrb() {
   useEffect(() => setMounted(true), []);
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 🌅 테마 전환 시퀀스
-  //
-  // 📖 useAnimate()는 animate(요소, 목표값, 옵션) 형태로
-  //    여러 애니메이션을 await로 순서대로 실행할 수 있어요.
-  //    Promise 기반이라 "이게 끝나면 저것 시작" 제어가 쉽습니다.
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  useEffect(() => {
-    if (!mounted) return;
+// 🎬 마운트 시 초기 상태 설정
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useEffect(() => {
+  if (!mounted) return;
+  
+  const currentlyDark = theme === "dark";
+  
+  // 초기 테마에 따라 시작 상태 설정
+  if (currentlyDark) {
+    animateMoon(moonScope.current, { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
+    animateSun(sunScope.current, { opacity: 0, y: 60, scale: 0.7 }, { duration: 0 });
+  } else {
+    animateMoon(moonScope.current, { opacity: 0, y: 60, scale: 0.7 }, { duration: 0 });
+    animateSun(sunScope.current, { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
+  }
+  
+  setIsDark(currentlyDark);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [mounted]); // 마운트 시 1회만
 
-    const currentlyDark = theme === "dark";
-    if (currentlyDark === isDark) return; // 첫 마운트 시 실행 방지
-    setIsDark(currentlyDark);
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🌅 테마 전환 시 애니메이션 실행 ← 이게 빠졌어요!
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useEffect(() => {
+  if (!mounted) return;
 
-    if (!currentlyDark) {
-      // ── 다크 → 라이트: 달 지고 해 뜨기 ──
-      runDarkToLight();
-    } else {
-      // ── 라이트 → 다크: 해 지고 달 뜨기 ──
-      runLightToDark();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, mounted]);
+  const currentlyDark = theme === "dark";
+  if (currentlyDark === isDark) return; // 변화 없으면 무시
+  
+  setIsDark(currentlyDark);
+
+  if (!currentlyDark) {
+    runDarkToLight();
+  } else {
+    runLightToDark();
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [theme]); // theme 변경 시마다 실행
 
   async function runDarkToLight() {
     // 1단계: 달이 아래로 내려가며 사라짐 (0.5s)
-    await animateMoon(moonScope.current, {
-      y: 60,
-      scale: 0.7,
-      opacity: 0,
-    }, { duration: 0.5, ease: [0.55, 0, 1, 0.45] });
-
-    // 2단계: 해가 아래에서 떠오름 (0.8s)
+   // 1단계: 달 뒤에서 해가 먼저 올라옴 (0.8s)
+    // 📖 await 없이 실행 → 달과 동시에 시작하지 않고
+    //    해가 먼저 뜨기 시작함. 달은 해가 올라오는 동안 대기.
     await animateSun(sunScope.current, {
       y: [60, -8, 0],
       scale: [0.6, 1.05, 1],
-      opacity: [0, 1, 1],
-    }, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] });
+      opacity: [0, 0.7, 1],  // ✅ 3단계로 통일
+    }, { duration: 1.5, ease: [0.25, 0.29, 0.28, 0.94] });
 
-    // 3단계: 빛이 화면 전체로 퍼짐 (0.5s, 병렬)
+    // 2단계: 해가 다 올라온 후 달이 내려감 (0.5s)
+    animateMoon(moonScope.current, {
+      y: 60,
+      scale: 0.7,
+      opacity: [1, 0],  // ✅ 배열로 명시
+    }, { duration: 0.8, ease: [0.55, 0, 1, 0.45] });
+
+    // 3단계: 빛 번짐 (달이 내려가는 동시에)
     animateBurst(burstScope.current, {
       scale: [0.8, 3],
       opacity: [0.5, 0],
-    }, { duration: 0.5, ease: "easeOut" });
+    }, { duration: 1.5, ease: "easeOut" });
   }
 
   async function runLightToDark() {
@@ -84,14 +103,14 @@ export function MoonOrb() {
     await animateSun(sunScope.current, {
       y: 60,
       scale: 0.7,
-      opacity: 0,
+      opacity: [1, 0],  // ✅ 배열로 명시
     }, { duration: 0.5, ease: [0.55, 0, 1, 0.45] });
 
     // 2단계: 달이 아래에서 떠오름 (0.8s)
     await animateMoon(moonScope.current, {
       y: [60, -8, 0],
       scale: [0.6, 1.05, 1],
-      opacity: [0, 1, 1],
+      opacity: [0, 0.5, 1],  // ✅ 3단계로 통일
     }, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] });
   }
 
@@ -131,9 +150,6 @@ export function MoonOrb() {
         <div
           ref={moonScope}
           className="absolute inset-0"
-          // 📖 mounted 전에는 테마를 모르니 일단 둘 다 렌더링해두고
-          //    opacity로만 제어합니다. (레이아웃 이동 없이 전환 가능)
-          style={{ opacity: mounted && !isDark ? 0 : 1 }}
         >
           {/* 가장 바깥 글로우 링 */}
           <motion.div
@@ -221,7 +237,6 @@ export function MoonOrb() {
         <div
           ref={sunScope}
           className="absolute inset-0"
-          style={{ opacity: mounted && isDark ? 0 : 1 }}
         >
           {/* 햇빛 글로우 — 가장 바깥 */}
           <motion.div
