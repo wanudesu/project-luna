@@ -5,92 +5,184 @@
 // 1. useInView — 스크롤해서 요소가 화면에 보일 때 애니메이션 트리거
 // 2. 섹션별 컴포넌트 분리 — 파일이 길어지면 읽기 힘드니까
 //    각 섹션을 함수로 분리해서 가독성을 높입니다.
-// 3. metadata — 서버 컴포넌트에서만 export 가능한데,
-//    "use client"와 충돌하므로 별도 파일로 분리하거나 제거합니다.
+// 3. onError — 이미지 로드 실패 시 폴백 UI 표시
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎬 공통 Variants
-//
-// 📖 여러 섹션에서 같은 애니메이션을 재사용합니다.
-// DRY 원칙: Don't Repeat Yourself
-// 같은 코드를 반복하지 말고 한 곳에 정의해서 재사용하세요.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const fadeUpVariants = {
-  hidden: {
-    opacity: 0,
-    y: 32,
-    filter: "blur(6px)",
-  },
+  hidden: { opacity: 0, y: 32, filter: "blur(6px)" },
   visible: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1, // 자식 요소들이 0.1초 간격으로 순차 등장
-    },
-  },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🔧 커스텀 훅: useScrollReveal
-//
-// 📖 훅(Hook)이란?
-// 반복되는 로직을 재사용하기 위해 함수로 묶은 것입니다.
-// "use"로 시작하는 게 React Hook의 규칙이에요.
-//
-// useInView: 요소가 화면(viewport)에 들어왔는지 감지합니다.
-// once: true → 한 번만 실행 (스크롤 올렸다 내려도 반복 안 함)
-// margin: 화면 하단에서 100px 전에 미리 트리거
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function useScrollReveal() {
   const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "0px 0px -100px 0px",
-  });
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" });
   return { ref, isInView };
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🏗️ 섹션 컴포넌트들
+// 📌 섹션 헤더 (재사용)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-// ── 섹션 헤더 (재사용 컴포넌트) ──
 function SectionLabel({ number, label }: { number: string; label: string }) {
   return (
     <div className="flex items-center gap-3 mb-8">
-      {/* 섹션 번호 */}
-      <span
-        className="text-xs font-mono"
-        style={{ color: "var(--color-luna-accent)" }}
-      >
+      <span className="text-xs font-mono" style={{ color: "var(--color-luna-accent)" }}>
         {number}
       </span>
-      {/* 구분선 */}
-      <div
-        className="h-px w-12"
-        style={{ background: "var(--color-luna-accent)", opacity: 0.4 }}
-      />
-      {/* 섹션 이름 */}
+      <div className="h-px w-12" style={{ background: "var(--color-luna-accent)", opacity: 0.4 }} />
       <span
         className="text-xs font-mono tracking-widest uppercase"
         style={{ color: "var(--color-luna-mist)" }}
       >
         {label}
       </span>
+    </div>
+  );
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🌙 ProfilePhoto 컴포넌트
+//
+// 📖 MoonOrb와 동일한 레이어 구조:
+//   1. 가장 바깥 글로우 (흐릿하게 퍼지는 달빛)
+//   2. 중간 글로우 링
+//   3. 사진 본체 (원형 clip)
+//   4. 비네팅 오버레이
+//   5. 회전하는 별 링
+//
+// 📖 사진 교체 방법:
+//   public/images/profile.jpg (또는 .png, .webp) 에 파일 배치
+//   PHOTO_SRC 상수만 바꾸면 끝.
+//   나중에 AWS S3 사용 시: "https://[CloudFront도메인]/profile.jpg"
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const PHOTO_SRC = "/images/profile.jpg"; // ← 사진 경로. 여기만 교체하면 됩니다
+
+function ProfilePhoto() {
+  return (
+    <div style={{ perspective: "800px" }}>
+      <div className="relative w-[240px] h-[240px] md:w-[320px] md:h-[320px]">
+
+        {/* ── 1. 가장 바깥 글로우 ── */}
+        <motion.div
+          className="absolute inset-[-40px] rounded-full pointer-events-none"
+          animate={{ opacity: [0.12, 0.28, 0.12], scale: [1, 1.06, 1] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background: "radial-gradient(circle, rgba(77,124,254,0.22) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* ── 2. 중간 글로우 링 ── */}
+        <motion.div
+          className="absolute inset-[-12px] rounded-full pointer-events-none"
+          animate={{ opacity: [0.25, 0.55, 0.25] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          style={{
+            background: "radial-gradient(circle, rgba(77,124,254,0.18) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* ── 3. 사진 본체 ── */}
+        <div
+          className="relative w-full h-full rounded-full overflow-hidden"
+          style={{
+            background:
+              "radial-gradient(ellipse at 35% 35%, #3a4f7a 0%, #1a2540 40%, #0a1020 100%)",
+            boxShadow: `
+              inset -16px -16px 32px rgba(0,0,0,0.7),
+              inset 8px 8px 24px rgba(100,140,220,0.12),
+              0 0 40px rgba(77,124,254,0.35),
+              0 0 80px rgba(77,124,254,0.15)
+            `,
+          }}
+        >
+          {/*
+            📖 onError: 사진 파일이 없거나 로드 실패 시
+               자신을 숨기고 바로 다음 형제(폴백 div)를 flex로 전환합니다.
+               display 토글을 직접 조작하는 이유:
+               useState를 쓰면 hydration 시점에 깜빡임이 생길 수 있어서,
+               DOM을 직접 조작하는 방식이 더 안정적입니다.
+          */}
+          <img
+            src={PHOTO_SRC}
+            alt="이원우 프로필 사진"
+            className="w-full h-full object-cover object-top"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+              if (fallback) fallback.style.display = "flex";
+            }}
+          />
+
+          {/* ── 폴백: 사진 없을 때 이니셜 ── */}
+          <div
+            className="absolute inset-0 items-center justify-center"
+            style={{
+              display: "none",
+              background: "radial-gradient(ellipse at 35% 35%, #3a4f7a 0%, #1a2540 100%)",
+            }}
+          >
+            <span
+              className="text-5xl md:text-6xl font-bold select-none"
+              style={{ color: "rgba(77,124,254,0.7)" }}
+            >
+              W
+            </span>
+          </div>
+
+          {/* ── 4. 비네팅 오버레이 (달 느낌) ── */}
+          <div
+            className="absolute inset-0 rounded-full pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at 70% 70%, transparent 40%, rgba(3,5,10,0.45) 100%)",
+            }}
+          />
+        </div>
+
+        {/* ── 5. 회전하는 별 링 (MoonOrb와 동일) ── */}
+        <motion.div
+          className="absolute inset-[-20px] rounded-full pointer-events-none"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          style={{ border: "1px dashed rgba(77,124,254,0.12)" }}
+        >
+          {[0, 72, 144, 216, 288].map((deg, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 rounded-full"
+              style={{
+                top: "50%",
+                left: "50%",
+                // 📖 rotate → translateX 순서로 원 궤도 위에 점을 배치합니다.
+                //    숫자(170)는 링의 반지름(px). 사진 크기가 바뀌면 같이 조정하세요.
+                transform: `rotate(${deg}deg) translateX(170px) translateY(-50%)`,
+                background: "rgba(77,124,254,0.7)",
+              }}
+              animate={{ opacity: [0.2, 0.9, 0.2] }}
+              transition={{ duration: 2, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
+            />
+          ))}
+        </motion.div>
+
+      </div>
     </div>
   );
 }
@@ -104,58 +196,75 @@ function IntroSection() {
   return (
     <section className="min-h-screen flex items-center" ref={ref}>
       <div className="page-container w-full py-32">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {/* 작은 레이블 */}
-          <motion.div variants={fadeUpVariants} className="mb-6">
-            <span
-              className="text-xs font-mono tracking-widest uppercase"
-              style={{ color: "var(--color-luna-accent)" }}
-            >
-              About me
-            </span>
-          </motion.div>
 
-          {/* 메인 헤드라인 */}
-          <motion.h1
-            variants={fadeUpVariants}
-            className="text-5xl md:text-7xl font-bold leading-tight mb-8"
-            style={{ color: "var(--color-luna-glow)" }}
-          >
-            만드는 것을<br />
-            <span style={{ color: "var(--color-luna-accent)" }}>좋아하는</span> 사람.
-          </motion.h1>
+        {/*
+          📖 HeroSection과 동일한 좌우 분할 패턴.
+          모바일:  flex-col-reverse → 사진 위 / 텍스트 아래
+          데스크탑: flex-row        → 텍스트 왼쪽 / 사진 오른쪽
+        */}
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-8">
 
-          {/* 서브 텍스트 */}
-          <motion.p
-            variants={fadeUpVariants}
-            className="text-lg md:text-xl leading-relaxed max-w-2xl"
-            style={{ color: "var(--color-luna-silver)" }}
-          >
-            요리, 미술, 코드 — 형태는 달라도 항상 무언가를 만들어왔습니다.
-            <br />
-            디테일에 집착하고, 이유를 묻고, 끝까지 완성하려는 사람입니다.
-          </motion.p>
-
-          {/* 스크롤 힌트 */}
+          {/* ── 좌측: 텍스트 블록 ── */}
           <motion.div
-            variants={fadeUpVariants}
-            className="mt-16 flex items-center gap-3"
-            style={{ color: "var(--color-luna-mist)" }}
+            className="flex-1 max-w-[520px]"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
           >
-            <span className="text-xs font-mono tracking-widest">scroll to explore</span>
+            <motion.div variants={fadeUpVariants} className="mb-6">
+              <span
+                className="text-xs font-mono tracking-widest uppercase"
+                style={{ color: "var(--color-luna-accent)" }}
+              >
+                About me
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUpVariants}
+              className="text-5xl md:text-7xl font-bold leading-tight mb-8"
+              style={{ color: "var(--color-luna-glow)" }}
+            >
+              만드는 것을<br />
+              <span style={{ color: "var(--color-luna-accent)" }}>좋아하는</span> 사람.
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUpVariants}
+              className="text-lg md:text-xl leading-relaxed"
+              style={{ color: "var(--color-luna-silver)" }}
+            >
+              요리, 미술, 코드 — 형태는 달라도 항상 무언가를 만들어왔습니다.
+              <br />
+              디테일에 집착하고, 이유를 묻고, 끝까지 완성하려는 사람입니다.
+            </motion.p>
+
             <motion.div
-              className="w-8 h-px"
-              style={{ background: "var(--color-luna-mist)" }}
-              animate={{ scaleX: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ originX: 0, background: "var(--color-luna-mist)" }}
-            />
+              variants={fadeUpVariants}
+              className="mt-16 flex items-center gap-3"
+              style={{ color: "var(--color-luna-mist)" }}
+            >
+              <span className="text-xs font-mono tracking-widest">scroll to explore</span>
+              <motion.div
+                className="w-8 h-px"
+                animate={{ scaleX: [0, 1, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                style={{ originX: 0, background: "var(--color-luna-mist)" }}
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
+
+          {/* ── 우측: 프로필 사진 ── */}
+          <motion.div
+            className="flex-shrink-0 flex justify-center md:justify-end"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
+          >
+            <ProfilePhoto />
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
@@ -167,8 +276,6 @@ function IntroSection() {
 function MonozukuriSection() {
   const { ref, isInView } = useScrollReveal();
 
-  // 📖 배열 데이터를 컴포넌트 밖에 두지 않고 여기 두는 이유:
-  // 이 데이터는 이 섹션에서만 쓰이니까요. 응집도를 높입니다.
   const items = [
     {
       emoji: "🍳",
@@ -226,7 +333,6 @@ function MonozukuriSection() {
             저는 코드뿐 아니라 요리도, 그림도 그렇게 하더라고요.
           </motion.p>
 
-          {/* 카드 그리드 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {items.map((item, i) => (
               <motion.div
@@ -244,16 +350,10 @@ function MonozukuriSection() {
                 transition={{ duration: 0.2 }}
               >
                 <span className="text-2xl mb-3 block">{item.emoji}</span>
-                <h3
-                  className="text-sm font-semibold mb-2"
-                  style={{ color: "var(--color-luna-glow)" }}
-                >
+                <h3 className="text-sm font-semibold mb-2" style={{ color: "var(--color-luna-glow)" }}>
                   {item.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "var(--color-luna-mist)" }}
-                >
+                <p className="text-sm leading-relaxed" style={{ color: "var(--color-luna-mist)" }}>
                   {item.desc}
                 </p>
               </motion.div>
@@ -318,13 +418,7 @@ function JourneySection() {
             거창하지 않아요.<br />그냥 계속 했을 뿐이에요.
           </motion.h2>
 
-          {/* 타임라인 */}
           <div className="relative">
-            {/*
-              📖 타임라인 왼쪽 세로선
-              absolute로 부모 기준 위치를 잡고,
-              부모에 relative를 줘서 기준점을 설정합니다.
-            */}
             <div
               className="absolute top-0 bottom-0 w-px"
               style={{
@@ -333,15 +427,9 @@ function JourneySection() {
                   "linear-gradient(to bottom, transparent, var(--color-luna-border), transparent)",
               }}
             />
-
             <div className="space-y-12 pl-8">
               {timeline.map((item, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeUpVariants}
-                  className="relative"
-                >
-                  {/* 타임라인 점 */}
+                <motion.div key={i} variants={fadeUpVariants} className="relative">
                   <div
                     className="absolute w-2 h-2 rounded-full"
                     style={{
@@ -351,13 +439,8 @@ function JourneySection() {
                       boxShadow: "0 0 8px rgba(77,124,254,0.6)",
                     }}
                   />
-
-                  {/* 기간 + 태그 */}
                   <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className="text-xs font-mono"
-                      style={{ color: "var(--color-luna-mist)" }}
-                    >
+                    <span className="text-xs font-mono" style={{ color: "var(--color-luna-mist)" }}>
                       {item.period}
                     </span>
                     <span
@@ -371,20 +454,10 @@ function JourneySection() {
                       {item.tag}
                     </span>
                   </div>
-
-                  {/* 제목 */}
-                  <h3
-                    className="text-lg font-semibold mb-2"
-                    style={{ color: "var(--color-luna-glow)" }}
-                  >
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--color-luna-glow)" }}>
                     {item.title}
                   </h3>
-
-                  {/* 설명 */}
-                  <p
-                    className="text-sm leading-relaxed max-w-lg"
-                    style={{ color: "var(--color-luna-mist)" }}
-                  >
+                  <p className="text-sm leading-relaxed max-w-lg" style={{ color: "var(--color-luna-mist)" }}>
                     {item.desc}
                   </p>
                 </motion.div>
@@ -415,7 +488,6 @@ function WhyJapanSection() {
             <SectionLabel number="03" label="Why Japan / Why SSS" />
           </motion.div>
 
-          {/* 왜 일본 */}
           <motion.div variants={fadeUpVariants} className="mb-16">
             <h2
               className="text-3xl md:text-4xl font-bold mb-6"
@@ -423,10 +495,7 @@ function WhyJapanSection() {
             >
               좋아서 시작했고,<br />계속했을 뿐입니다.
             </h2>
-            <p
-              className="text-base leading-relaxed max-w-xl"
-              style={{ color: "var(--color-luna-silver)" }}
-            >
+            <p className="text-base leading-relaxed max-w-xl" style={{ color: "var(--color-luna-silver)" }}>
               고등학생 때 일본어 수업에서 시작된 작은 관심이었어요.
               처음엔 잘 몰라서 어렵기도 했지만, 알아가면서 재밌어졌고
               어느 순간 일본에서 일하고 싶다는 목표가 생겼어요.
@@ -437,7 +506,6 @@ function WhyJapanSection() {
             </p>
           </motion.div>
 
-          {/* 왜 SSS */}
           <motion.div
             variants={fadeUpVariants}
             className="p-8 rounded-2xl"
@@ -446,10 +514,7 @@ function WhyJapanSection() {
               border: "1px solid rgba(77,124,254,0.2)",
             }}
           >
-            <h3
-              className="text-xl font-bold mb-4"
-              style={{ color: "var(--color-luna-accent)" }}
-            >
+            <h3 className="text-xl font-bold mb-4" style={{ color: "var(--color-luna-accent)" }}>
               왜 The SSS인가요?
             </h3>
             <div className="space-y-4">
@@ -470,22 +535,13 @@ function WhyJapanSection() {
                 <div key={i} className="flex gap-4">
                   <div
                     className="w-1 rounded-full flex-shrink-0 mt-1"
-                    style={{
-                      background: "var(--color-luna-accent)",
-                      minHeight: "1rem",
-                    }}
+                    style={{ background: "var(--color-luna-accent)", minHeight: "1rem" }}
                   />
                   <div>
-                    <h4
-                      className="text-sm font-semibold mb-1"
-                      style={{ color: "var(--color-luna-glow)" }}
-                    >
+                    <h4 className="text-sm font-semibold mb-1" style={{ color: "var(--color-luna-glow)" }}>
                       {item.title}
                     </h4>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: "var(--color-luna-mist)" }}
-                    >
+                    <p className="text-sm leading-relaxed" style={{ color: "var(--color-luna-mist)" }}>
                       {item.desc}
                     </p>
                   </div>
@@ -604,11 +660,7 @@ function ContactSection() {
             언제든지 연락주세요.
           </motion.p>
 
-          <motion.div
-            variants={fadeUpVariants}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            {/* 이메일 버튼 */}
+          <motion.div variants={fadeUpVariants} className="flex flex-wrap justify-center gap-4">
             <motion.a
               href="mailto:your@email.com"
               className="px-6 py-3 text-sm font-medium rounded-lg"
@@ -617,18 +669,13 @@ function ContactSection() {
                 color: "white",
                 boxShadow: "0 0 20px rgba(77,124,254,0.3)",
               }}
-              whileHover={{
-                scale: 1.03,
-                boxShadow: "0 0 32px rgba(77,124,254,0.5)",
-              }}
+              whileHover={{ scale: 1.03, boxShadow: "0 0 32px rgba(77,124,254,0.5)" }}
               whileTap={{ scale: 0.97 }}
             >
               이메일 보내기
             </motion.a>
-
-            {/* GitHub 버튼 */}
             <motion.a
-              href="https://github.com/lewonu"
+              href="https://github.com/wanudesu"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 text-sm font-medium rounded-lg"
@@ -637,10 +684,7 @@ function ContactSection() {
                 color: "var(--color-luna-silver)",
                 background: "transparent",
               }}
-              whileHover={{
-                scale: 1.03,
-                borderColor: "rgba(200,214,232,0.4)",
-              }}
+              whileHover={{ scale: 1.03, borderColor: "rgba(200,214,232,0.4)" }}
               whileTap={{ scale: 0.97 }}
             >
               GitHub
@@ -654,15 +698,10 @@ function ContactSection() {
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🏗️ About 페이지 메인
-//
-// 📖 페이지는 섹션들을 조립하는 역할만 합니다.
-// 각 섹션의 로직은 위에서 각자 관리하고 있어요.
-// 이게 컴포넌트 분리의 핵심입니다.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function AboutPage() {
   return (
     <>
-      {/* 배경 그라데이션 */}
       <div
         className="fixed inset-0 -z-10"
         style={{
@@ -670,7 +709,6 @@ export default function AboutPage() {
             "radial-gradient(ellipse at 30% 20%, #0D1E40 0%, #070C18 50%, #03050A 100%)",
         }}
       />
-
       <IntroSection />
       <MonozukuriSection />
       <JourneySection />
