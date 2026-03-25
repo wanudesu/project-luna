@@ -1,26 +1,9 @@
-/* src/app/globals.css
- *
- * 📖 학습 포인트:
- * CSS Custom Properties(변수)는 Tailwind 클래스로 커버 안 되는
- * 동적 스타일링(JS에서 변수 변경 등)에 필수입니다.
- * next-themes의 Flicker 방지는 여기서 시작됩니다.
- */
+/* src/app/globals.css */
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * ✅ Flicker(깜빡임) 방지의 핵심
- *
- * next-themes는 <html> 태그에 class="dark" 또는 class="light"를
- * 붙이는 방식으로 작동해요.
- * JS가 실행되기 전 찰나에 번쩍이는 현상(FOUC)을 방지하기 위해
- * :root에 다크 모드 색상을 기본값으로 설정해둡니다.
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-/* tailwind v4부터는 tailwind.config.ts 적용 안되므로 globals.css로 옮김 */
 @import "tailwindcss";
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * 🎨 Tailwind @theme 토큰
- * 컴포넌트에서 text-luna-accent 처럼 쓸 수 있는 고정 팔레트
+ * 🎨 Tailwind @theme 토큰 (변경 없음)
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @theme {
   --color-luna-accent: #4D7CFE;
@@ -35,15 +18,14 @@
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * 🌑 다크 모드 (기본값 — Flicker 방지)
+ * 🌑 다크 모드 기본값 (Flicker 방지)
  *
- * 📖 :root와 .dark 양쪽에 같은 값을 선언하는 이유:
- *   - :root → JS 실행 전 기본 상태 (Flicker 방지)
- *   - .dark  → next-themes가 <html class="dark"> 붙인 후 상태
- *   두 상태가 같은 값이니 번쩍임 없이 자연스럽게 이어집니다.
+ * 📖 :root에 다크값을 기본으로 두면
+ *    next-themes JS가 실행되기 전에도 화면이 어둡게 유지됩니다.
+ *    .dark는 next-themes가 <html class="dark"> 붙인 후 상태.
+ *    두 값이 같으니 번쩍임 없이 이어집니다.
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root,
-.dark {
+:root {
   /* 배경 */
   --color-bg: #070C18;
   --color-bg-navy: #0D1526;
@@ -59,21 +41,18 @@
   --color-accent: #4D7CFE;
   --color-accent-glow: rgba(77, 124, 254, 0.3);
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   * 🌅 테마 전환 애니메이션용 변수
-   *
-   * 📖 MoonOrb 컴포넌트에서 이 변수를 읽어서
-   *    해와 달을 전환합니다. CSS만으로 상태를 전달하는 패턴.
-   * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* 레이아웃 */
+  --space-unit: 8px;
+  --max-width: 1200px;
+
+  /* 이징 */
+  --ease-luna: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* 테마 전환용 (나중에 MoonOrb에서 사용) */
   --sun-opacity: 0;
-  /* 해: 다크모드에서 숨김 */
   --star-opacity: 1;
-  /* 별: 다크모드에서 표시 */
   --orb-glow-color: rgba(77, 124, 254, 0.3);
-  /* 달빛: 파랑 */
-  --sky-color-from: #0D1E40;
-  /* HeroSection 배경 그라데이션 */
-  --sky-color-to: #03050A;
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -81,53 +60,24 @@
  *
  * 📖 next-themes가 <html class="light"> 를 붙이면
  *    아래 변수들이 :root를 덮어씁니다.
- *    var()를 쓰는 컴포넌트는 코드 수정 없이 자동으로 교체됩니다.
- *
- * ⚠️  컴포넌트에서 rgba(77,124,254,...) 처럼 하드코딩된 값은
- *    라이트모드에서도 그대로 다크 색상이 유지됩니다.
- *    사이트 완성 후 var()로 교체하는 작업이 필요해요.
- *    → 지금은 구조만 잡아두는 단계입니다.
+ *    var()를 쓰는 모든 컴포넌트가 자동으로 교체됩니다.
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .light {
-  /* 배경 */
   --color-bg: #F4F7FF;
   --color-bg-navy: #E8EDFA;
   --color-bg-surface: #FFFFFF;
   --color-border: #D0D9F0;
 
-  /* 텍스트 */
   --color-text: #2A3650;
   --color-text-muted: #5A6A88;
   --color-text-glow: #0F1E40;
 
-  /* 액센트 — 라이트에선 살짝 진하게 */
   --color-accent: #2952CC;
   --color-accent-glow: rgba(41, 82, 204, 0.2);
 
-  /* 테마 전환 애니메이션용 */
   --sun-opacity: 1;
-  /* 해: 라이트모드에서 표시 */
   --star-opacity: 0;
-  /* 별: 라이트모드에서 숨김 */
   --orb-glow-color: rgba(251, 191, 36, 0.4);
-  /* 햇빛: 노랑 */
-  --sky-color-from: #C7D9FF;
-  /* 밝은 하늘 */
-  --sky-color-to: #F4F7FF;
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * 🌅 테마 전환 트랜지션
- *
- * 📖 배경색 전환은 CSS transition으로,
- *    해/달 오브 전환은 Framer Motion useAnimate로 처리합니다.
- *    두 개를 분리하는 이유: 배경은 단순 색상 변환이지만
- *    오브는 위치·크기·파티클 등 복잡한 시퀀스가 필요하기 때문.
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-body {
-  transition:
-    background-color 0.8s var(--ease-luna),
-    color 0.5s var(--ease-luna);
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -156,6 +106,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior: none;
+    /* 📖 테마 전환 시 배경색이 부드럽게 전환됩니다 */
+    transition: background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   ::selection {
@@ -203,20 +156,7 @@ body {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * 🔧 CSS 커스텀 프로퍼티 (비-Tailwind 유틸)
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root {
-  --space-unit: 8px;
-  --max-width: 1200px;
-  --ease-luna: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* 해/달 전환 애니메이션 전체 소요 시간 */
-  --theme-transition-duration: 1.2s;
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * 🎨 재사용 유틸리티 클래스
+ * 🎨 유틸리티 클래스
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @layer utilities {
   .page-container {
@@ -260,9 +200,6 @@ body {
     opacity: 0.4;
   }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   * 🌙 달 펄스 애니메이션 (HeroSection에서 사용)
-   * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
   @keyframes moon-pulse {
 
     0%,
@@ -275,17 +212,7 @@ body {
     }
   }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   * ☀️ 해 떠오르기/지기 keyframe
-   *
-   * 📖 실제 시퀀스 제어는 Framer Motion useAnimate로 하고,
-   *    이 keyframe은 CSS transition의 보조 효과용입니다.
-   *    MoonOrb.tsx에서 animate() 호출 시 참고 타이밍으로 사용.
-   *
-   *    전체 흐름:
-   *    다크→라이트: sun-rise(0.8s) → light-burst(0.4s) → 배경 전환
-   *    라이트→다크: 배경 전환 → sun-set(0.6s) → 별 fade-in
-   * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* 해 떠오르기/지기 — 나중에 MoonOrb 테마 전환에서 사용 */
   @keyframes sun-rise {
     0% {
       transform: translateY(60px) scale(0.6);
@@ -315,7 +242,6 @@ body {
     }
   }
 
-  /* 빛이 화면 전체로 퍼지는 효과 */
   @keyframes light-burst {
     0% {
       opacity: 0;
