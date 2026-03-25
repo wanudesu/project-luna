@@ -144,8 +144,8 @@ export function LunaSection() {
     <div
       className="min-h-screen pt-24 pb-32"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #0D1E40 0%, #070C18 55%, #03050A 100%)",
+         background: "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+         transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
       {/* ── 별 파티클 ── */}
@@ -256,7 +256,7 @@ function HeroBlock() {
             style={{
               background: "rgba(200,214,232,0.04)",
               border: "1px solid rgba(200,214,232,0.1)",
-              color: "rgba(200,214,232,0.6)",
+              color: "var(--color-text)",
             }}
           >
             <span>{b.icon}</span>
@@ -349,7 +349,7 @@ function PurposeSection() {
               >
                 {r.title}
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(200,214,232,0.55)" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                 {r.desc}
               </p>
             </div>
@@ -394,7 +394,7 @@ function TechSection() {
             <motion.div key={cat} variants={fadeUp} className="flex items-center gap-4">
               <span
                 className="text-[10px] font-mono tracking-[0.12em] uppercase shrink-0 w-20 text-right"
-                style={{ color: "rgba(200,214,232,0.22)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 {cat}
               </span>
@@ -487,7 +487,7 @@ function StorySection() {
                   {item.period}
                 </span>
               </div>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(200,214,232,0.5)" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                 {item.story}
               </p>
             </motion.div>
@@ -540,7 +540,7 @@ function LearningSection() {
         >
           붙여넣기가 아닌 대화
         </h3>
-        <p className="text-sm leading-relaxed max-w-[520px]" style={{ color: "rgba(200,214,232,0.55)" }}>
+        <p className="text-sm leading-relaxed max-w-[520px]" style={{ color: "var(--color-text-muted)" }}>
           코드를 받으면 먼저 읽었습니다. 모르는 부분은 주석 설명을 요청했고,
           이해한 뒤에 직접 고쳐봤습니다. Claude는 선생님이 아니라
           <span className="text-luna-silver"> 같이 코딩하는 동료</span>에 가까웠습니다.
@@ -578,14 +578,14 @@ function LearningSection() {
             variants={fadeUp}
             className="flex gap-4 p-5 rounded-xl"
             style={{
-              background: "rgba(13,22,44,0.5)",
-              border: "1px solid rgba(200,214,232,0.06)",
+              background: "var(--color-bg-navy)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <span className="text-2xl mt-0.5 shrink-0">{l.icon}</span>
             <div>
               <h3 className="text-luna-silver text-sm font-semibold mb-1">{l.title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: "rgba(200,214,232,0.45)" }}>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                 {l.desc}
               </p>
             </div>
@@ -626,12 +626,12 @@ function FuturePlanSection() {
             variants={fadeUp}
             className="flex items-center gap-4 p-4 rounded-xl"
             style={{
-              background: "rgba(13,22,44,0.4)",
-              border: "1px solid rgba(200,214,232,0.05)",
+              background: "var(--color-bg-navy)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <span className="text-xl shrink-0">{p.icon}</span>
-            <p className="text-sm" style={{ color: "rgba(200,214,232,0.6)" }}>
+            <p className="text-sm" style={{ color: "var(--color-text)" }}>
               {p.text}
             </p>
           </motion.div>

@@ -151,13 +151,13 @@ export function KumoSection() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen pt-24 pb-32"
-      style={{
-        background:
-          "radial-gradient(ellipse at 60% 10%, #0D1E40 0%, #070C18 55%, #03050A 100%)",
-      }}
-    >
+<div
+  className="min-h-screen pt-24 pb-32"
+  style={{
+    background: "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+    transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+  }}
+>
       {/* ── 별 파티클 배경 ── */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         {particles.map((p) => (
@@ -311,7 +311,7 @@ function HeroBlock() {
             style={{
               background: "rgba(200,214,232,0.04)",
               border: "1px solid rgba(200,214,232,0.1)",
-              color: "rgba(200,214,232,0.6)",
+              color: "var(--color-text)",
             }}
           >
             <span>{b.icon}</span>
@@ -414,7 +414,7 @@ function DemoSection() {
           /* ── 실제 영상 ── */
           <div
             className="relative rounded-2xl overflow-hidden"
-            style={{ border: "1px solid rgba(200,214,232,0.08)" }}
+            style={{ border: "1px solid var(--color-border)" }}
           >
             {/* 로딩 전 스켈레톤 */}
             {!isReady && (
@@ -453,7 +453,7 @@ function DemoSection() {
             className="relative flex flex-col items-center justify-center rounded-2xl overflow-hidden"
             style={{
               height: "420px",
-              background: "rgba(13,22,44,0.5)",
+              background: "var(--color-bg-navy)",
               border: "1px dashed rgba(77,124,254,0.2)",
             }}
           >
@@ -502,7 +502,7 @@ function DemoSection() {
                 </p>
                 <p
                   className="text-xs font-mono"
-                  style={{ color: "rgba(200,214,232,0.3)" }}
+                  style={{ color: "var(--color-text-muted)" }}
                 >
                   {/* 📖 이 텍스트는 영상 추가 후 자동으로 사라집니다 */}
                   public/videos/kumo-demo.mp4
@@ -515,7 +515,7 @@ function DemoSection() {
         {/* 영상 캡션 */}
         <p
           className="mt-3 text-xs font-mono text-center"
-          style={{ color: "rgba(200,214,232,0.25)" }}
+          style={{ color: "var(--color-text-muted)" }}
         >
           KUMO — 지도 기반 한·일 구인구직 플랫폼 시연
         </p>
@@ -582,8 +582,8 @@ function OverviewSection() {
             variants={fadeUp}
             className="flex gap-4 p-5 rounded-xl"
             style={{
-              background: "rgba(13,22,44,0.5)",
-              border: "1px solid rgba(200,214,232,0.06)",
+              background: "var(--color-bg-navy)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <span className="text-2xl mt-0.5 shrink-0">{f.icon}</span>
@@ -593,7 +593,7 @@ function OverviewSection() {
               </h3>
               <p
                 className="text-xs leading-relaxed"
-                style={{ color: "rgba(200,214,232,0.45)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 {f.desc}
               </p>
@@ -651,7 +651,7 @@ function RoleSection() {
         </h3>
         <p
           className="text-sm leading-relaxed max-w-[520px]"
-          style={{ color: "rgba(200,214,232,0.55)" }}
+          style={{ color: "var(--color-text-muted)" }}
         >
           팀 5명이 각자 페이지를 담당하는 구조에서, 구인자와 관련된 모든 기능과 UI를
           혼자 설계하고 구현했습니다. 분량이 팀 내에서 가장 많았습니다.
@@ -666,8 +666,8 @@ function RoleSection() {
             variants={fadeUp}
             className="flex items-start gap-4 p-4 rounded-xl"
             style={{
-              background: "rgba(13,22,44,0.4)",
-              border: "1px solid rgba(200,214,232,0.05)",
+              background: "var(--color-bg-navy)",
+              border: "1px solid var(--color-border)",
             }}
           >
             <span
@@ -683,7 +683,7 @@ function RoleSection() {
               </h4>
               <p
                 className="text-xs leading-relaxed"
-                style={{ color: "rgba(200,214,232,0.4)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 {f.desc}
               </p>
@@ -725,7 +725,7 @@ function TechSection() {
               {/* 카테고리 레이블 */}
               <span
                 className="text-[10px] font-mono tracking-[0.12em] uppercase shrink-0 w-16 text-right"
-                style={{ color: "rgba(200,214,232,0.22)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 {cat}
               </span>
@@ -832,7 +832,7 @@ function StorySection() {
               </div>
               <p
                 className="text-sm leading-relaxed"
-                style={{ color: "rgba(200,214,232,0.5)" }}
+                style={{ color: "var(--color-text-muted)" }}
               >
                 {item.story}
               </p>
@@ -910,7 +910,7 @@ function ReflectionSection() {
               </p>
               <p
                 className="text-sm leading-relaxed"
-                style={{ color: "rgba(200,214,232,0.6)" }}
+                style={{ color: "var(--color-text)" }}
               >
                 {r.text}
               </p>
@@ -929,7 +929,7 @@ function ReflectionSection() {
           style={{
             background: "rgba(77,124,254,0.08)",
             border: "1px solid rgba(77,124,254,0.25)",
-            color: "rgba(200,214,232,0.7)",
+            color: "var(--color-text)",
           }}
         >
           <svg

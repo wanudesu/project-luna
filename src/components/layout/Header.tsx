@@ -39,9 +39,10 @@ export function Header() {
         className="absolute inset-0 -z-10"
         style={{
           opacity: backdropOpacity,
-          background: "rgba(7, 12, 24, 0.85)",
+          background: "color-mix(in srgb, var(--color-bg) 85%, transparent)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
+          transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       />
       {/* 하단 구분선 */}
