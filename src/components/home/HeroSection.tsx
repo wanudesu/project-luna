@@ -172,7 +172,7 @@ export function HeroSection() {
               >
                 {/* 📖 이름 부분은 나중에 본인 이름으로 변경하세요 */}
                 <span className="text-luna-glow">저는 </span>
-                <span className="text-gradient-luna">김민준</span>
+                <span className="text-gradient-luna">이원우</span>
                 <span className="text-luna-glow">입니다.</span>
               </motion.h1>
             </div>
