@@ -61,7 +61,7 @@ export function Header() {
     <motion.header
       className="fixed top-0 left-0 right-0 z-50"
       variants={headerVariants}
-      initial="hidden"
+      initial={false}
       animate="visible"
     >
       {/* ── 스크롤 시 나타나는 배경 (별도 레이어로 분리해 성능 최적화) ── */}
@@ -95,7 +95,7 @@ export function Header() {
         <nav className="flex items-center justify-between h-16">
 
           {/* 로고 */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="group flex items-center gap-2">
             {/* 달 아이콘 (SVG) */}
             <motion.div
               whileHover={{ rotate: -15, scale: 1.1 }}
@@ -127,7 +127,7 @@ export function Header() {
           </Link>
 
           {/* 네비게이션 링크 */}
-          <ul className="flex items-center list-none" style={{ gap: "4px"}}>
+          <ul className="flex items-center list-none gap-1">
             {NAV_LINKS.map((link) => {
               // 📖 pathname이 링크의 href로 시작하면 활성 상태
               //    startsWith를 쓰는 이유: /kumo/detail 같은 하위 경로도 활성화되도록
@@ -135,7 +135,7 @@ export function Header() {
 
               return (
                 <li key={link.href}>
-                  <Link href={link.href} className="relative group block" style={{ padding: "6px 16px" }}>
+                  <Link href={link.href} className="relative group px-4 py-2 block">
 
                     {/* 활성 상태 배경 글로우 */}
                     {isActive && (
@@ -169,7 +169,7 @@ export function Header() {
                       <motion.div
                         layoutId="active-nav-dot"
                         className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-luna-accent"
-                        style={{boxShadow: "0 0 6px rgba(77,124,254,0.8)" }}
+                        style={{ boxShadow: "0 0 6px rgba(77,124,254,0.8)" }}
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}

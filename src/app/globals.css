@@ -6,10 +6,6 @@
  * next-themes의 Flicker 방지는 여기서 시작됩니다.
  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  * ✅ Flicker(깜빡임) 방지의 핵심
  *
@@ -20,7 +16,25 @@
  * 해결책: :root에서 이미 다크 모드 색상을 기본값으로 설정해둡니다.
  * 그러면 JS 실행 전에도 이미 다크 테마가 적용된 상태로 보입니다.
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root {
+
+ /* globals.css 맨 위에 */
+ /* tailwind v4부터는 tailwind.config.ts 적용 안되므로 global.css로 옮김*/
+@import "tailwindcss";
+
+/* 커스텀 토큰 */
+@theme {
+  --color-luna-accent: #4D7CFE;
+  --color-luna-silver: #C8D6E8;
+  --color-luna-mist: #8899B4;
+  --color-luna-glow: #E8F0FF;
+  --color-luna-navy: #0D1526;
+  --color-luna-deep: #070C18;
+  --color-luna-void: #03050A;
+  --color-luna-surface: #162038;
+  --color-luna-border: #1E2D4A;
+}
+
+ :root {
   /* Luna 다크 테마를 기본값으로 (Flicker 방지) */
   --color-bg:        #070C18;
   --color-bg-navy:   #0D1526;

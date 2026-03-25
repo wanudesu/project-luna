@@ -79,8 +79,15 @@ export function PageTransition({ children }: PageTransitionProps) {
         - mode="wait": 이전 페이지 exit 애니메이션이 끝난 후
           새 페이지 enter 애니메이션을 시작합니다.
           (동시 실행하면 두 페이지가 겹쳐 보입니다)
-      */}
-      <AnimatePresence mode="wait" initial={false}>
+      */
+      // initial={false} 없을 때
+      // → 앱 첫 로드 시 "이미 화면에 있는" 컴포넌트도 initial → animate 실행
+
+      // initial={false} 있을 때
+      // → 앱 첫 로드 시 이미 있는 컴포넌트는 애니메이션 건너뜀
+      //   새로 추가되는 컴포넌트만 애니메이션 실행
+      }
+      <AnimatePresence mode="wait">
         {/*
           📖 key={pathname}: React가 경로별로 다른 컴포넌트 인스턴스를
           만들도록 강제합니다. key가 바뀌면 AnimatePresence가
