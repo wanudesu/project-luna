@@ -68,8 +68,8 @@
 .light {
   /* 배경: 크림빛 아이보리 */
   --color-bg: #FDF8F0;
-  --color-bg-navy: #F5EDD8;
-  --color-bg-surface: #FFFCF5;
+  --color-bg-navy: #EDE0C4;
+  --color-bg-surface: #F5EDD8;
   --color-border: #E8D8B8;
 
   /* 텍스트: 따뜻한 다크브라운 */
@@ -84,11 +84,14 @@
   --sun-opacity: 1;
   --star-opacity: 0;
   --orb-glow-color: rgba(251, 191, 36, 0.4);
+  
   --hero-bg: radial-gradient(ellipse at 75% 45%, #FFE4A0 0%, #FDF3DC 35%, #FDF8F0 70%);
+  --card-overlay: rgba(100, 60, 20, 0.5);
 }
 
 .dark {
   --hero-bg: radial-gradient(ellipse at 70% 50%, #0D1E40 0%, #070C18 55%, #03050A 100%);
+  --card-overlay: rgba(0, 0, 0, 0.6);
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

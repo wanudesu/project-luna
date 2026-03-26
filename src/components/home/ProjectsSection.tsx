@@ -89,12 +89,15 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           {/* 호버 오버레이 */}
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100
-                       transition-opacity duration-300
-                       bg-gradient-to-t from-black/60 via-transparent to-transparent
-                       flex items-end p-6"
+                        transition-opacity duration-300
+                        flex items-end p-6"
+                      
+            style={{
+                background: "linear-gradient(to top, var(--card-overlay) 0%, transparent 60%)"
+            }}
           >
             <span className="text-white font-medium flex items-center gap-2">
-              View Project
+              프로젝트 보기
               <svg
                 className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
                 fill="none"
@@ -206,32 +209,7 @@ export function ProjectsSection() {
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
-        </div>{/* ── 더보기 링크 ── */}
-        <motion.div variants={itemVariants} className="mt-16 text-center">
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 px-6 py-3
-                       font-medium rounded-full
-                       transition-colors duration-200"
-            style={{
-              color: "var(--color-accent)",
-              border: "1px solid var(--color-accent)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--color-accent)";
-              e.currentTarget.style.color = "white";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "transparent";
-              e.currentTarget.style.color = "var(--color-accent)";
-            }}
-          >
-            모든 프로젝트 보기
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );
