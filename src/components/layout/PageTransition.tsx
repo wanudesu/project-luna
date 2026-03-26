@@ -30,8 +30,7 @@ import { useEffect } from "react";
 const pageVariants = {
   // 페이지 진입 전 상태
   initial: {
-    opacity: 0,
-    y: 16,           // 16px 아래에서 시작
+    opacity: 0,           // 16px 아래에서 시작
     filter: "blur(4px)", // 약간의 블러로 '나타나는' 느낌
   },
   // 페이지가 완전히 보이는 상태
