@@ -47,15 +47,12 @@ const pageVariants = {
     },
   },
   // 페이지가 사라지는 상태
-  exit: {
-    opacity: 0,
-    y: -8,           // 위로 살짝 사라짐
-    filter: "blur(2px)",
-    transition: {
-      duration: 0.25, // exit은 enter보다 빠르게 (기다리는 느낌 최소화)
-      ease: [0.55, 0, 1, 0.45],
-    },
+exit: {
+  opacity: 0,
+  transition: {
+    duration: 0.1,
   },
+},
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -71,13 +68,13 @@ export function PageTransition({ children }: PageTransitionProps) {
   // 경로가 바뀔 때마다 이 값이 변경되어 리렌더링됩니다.
   const pathname = usePathname();
 
-// // 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
-// useEffect(() => {
-//   const timer = setTimeout(() => {
-//     window.scrollTo({ top: 0, behavior: "instant" });
-//   }, 800); // PageTransition exit duration과 맞춤
-//   return () => clearTimeout(timer);
-// }, [pathname]);
+// 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
+useEffect(() => {
+  const timer = setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, 800); // PageTransition exit duration과 맞춤
+  return () => clearTimeout(timer);
+}, [pathname]);
 
   return (
     <>
