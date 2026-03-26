@@ -9,6 +9,7 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { LunaOrb } from "./LunaOrb";
+import { ContactSection } from "@/components/home/ContactSection";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎬 공통 Variants (Kumo와 동일)
@@ -189,7 +190,7 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
         {index}
       </span>
       <div className="flex-1 h-px" style={{ background: "rgba(77,124,254,0.12)" }} />
-      <h2 className="text-sm font-mono tracking-[0.15em] text-luna-mist uppercase">{title}</h2>
+      <h2 className="text-xs font-mono tracking-[0.15em] text-luna-mist uppercase">{title}</h2>
     </div>
   );
 }
@@ -647,30 +648,13 @@ function FuturePlanSection() {
       </motion.div>
 
       {/* 마무리 문장 */}
-      <motion.div
-        variants={fadeUp}
-        className="relative p-8 rounded-2xl text-center overflow-hidden"
-        style={{
-          background: "var(--color-accent-glow)",
-          border: "1px solid rgba(77,124,254,0.15)",
-        }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse at 50% 100%, rgba(77,124,254,0.08) 0%, transparent 70%)",
-          }}
-        />
-        <p
-          className="text-lg md:text-xl font-medium text-luna-glow mb-2 relative z-10"
-          style={{ fontFamily: "var(--font-geist-sans)" }}
-        >
-          코드를 이해하면서 만든 첫 번째 사이트.
-        </p>
-        <p className="text-sm text-luna-mist relative z-10">
-          부족하지만, 그래서 더 솔직한 포트폴리오입니다.
-        </p>
-      </motion.div>
+      <ContactSection
+              title="함께 만들어요."
+              description1="언제든지 연락주세요."
+              description2="언제든지 연락주세요."
+              sectionNumber="06"
+            />
+      
     </motion.section>
   );
 }

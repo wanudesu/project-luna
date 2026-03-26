@@ -183,13 +183,16 @@ export function ProjectsSection() {
         viewport={{ once: true, margin: "-100px" }}
       >
         {/* ── 섹션 타이틀 ── */}
-        <motion.div variants={itemVariants} className="mb-16">
-          <span
-            className="font-mono text-sm tracking-wider"
-            style={{ color: "var(--color-accent)" }}
-          >
-            02. PROJECTS
-          </span>
+      <motion.div variants={itemVariants} className="mb-16">
+        <div className="flex items-center gap-4 mb-4">
+            <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
+                02
+            </span>
+        <div className="flex-1 h-px" style={{ background: "rgba(77,124,254,0.12)" }} />
+        <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
+            Projects
+        </span>
+    </div>
           <h2
             className="text-3xl md:text-4xl font-bold mt-2"
             style={{ color: "var(--color-text-glow)" }}

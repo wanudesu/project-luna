@@ -61,7 +61,20 @@ const socialLinks = [
   },
 ];
 
-export function ContactSection() {
+interface ContactSectionProps {
+    title?: string;
+    description1?: string;
+    description2?: string;
+    sectionNumber?: string;
+}
+
+export function ContactSection({
+    title = "함께 일해요",
+    description1 = "새로운 프로젝트, 협업 제안, 또는 그냥 인사도 좋아요.",
+    description2 = "편하게 연락주세요!",
+    sectionNumber = "03",
+}: ContactSectionProps) {
+
   return (
     <section
       id="contact"
@@ -81,7 +94,12 @@ export function ContactSection() {
           className="font-mono text-sm tracking-wider"
           style={{ color: "var(--color-accent)" }}
         >
-          03. CONTACT
+                  <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
+                      {sectionNumber}
+                  </span>
+                  <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
+                      . CONTACT
+                  </span>
         </motion.span>
 
         <motion.h2
@@ -89,7 +107,9 @@ export function ContactSection() {
           className="text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6"
           style={{ color: "var(--color-text-glow)" }}
         >
-          함께 일해요
+                  <span>
+                      {title}
+          </span>
         </motion.h2>
 
         <motion.p
@@ -97,9 +117,11 @@ export function ContactSection() {
           className="text-lg mb-12 max-w-xl mx-auto"
           style={{ color: "var(--color-text-muted)" }}
         >
-          새로운 프로젝트, 협업 제안, 또는 그냥 인사도 좋아요.
-          <br />
-          편하게 연락주세요!
+                  <span>
+                      {description1}
+                  <br />
+                      {description2}
+                  </span>
         </motion.p>
 
         {/* ── 이메일 버튼 (메인 CTA) ── */}
