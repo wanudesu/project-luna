@@ -182,7 +182,7 @@ export function ContactSection({
             style={{ color: "var(--color-text-muted)" }}
           >
             Designed & Built by{" "}
-            <span style={{ color: "var(--color-accent)" }}>이원우</span>
+            <span style={{ color: "var(--color-accent)" }}>이원우 with Claude</span>
           </p>
           <p
             className="text-xs mt-2"

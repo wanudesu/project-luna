@@ -267,6 +267,23 @@ function HeroBlock() {
             <span>{b.text}</span>
           </span>
         ))}
+            <a
+              href="https://github.com/wanudesu/project-luna"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
+              style={{
+                background: "rgba(77,124,254,0.08)",
+                border: "1px solid var(--color-accent-glow)",
+                color: "#4D7CFE",
+              }}
+            >
+              <span>🔗</span>
+              <span>GitHub</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 2h8v8M2 10 10 2" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+              </svg>
+            </a>
       </motion.div>
 
       {/* 구분선 */}

@@ -212,43 +212,6 @@ export function LunaOrb() {
           </div>
         </div>
       </motion.div>
-
-      {/* ── 플로팅 태그들 (카드 주변) ── */}
-      {[
-        // Next.js 글자색만 살짝 더 하늘색 빛이 돌게 수정했습니다 (#E8F0FF -> #A5C8FF)
-        { text: "Next.js 15", x: "-12%", y: "12%", color: "#A5C8FF", delay: 2.0 },
-        { text: "Framer Motion", x: "72%", y: "8%",  color: "#A78BFA", delay: 2.3 },
-        { text: "TypeScript",   x: "75%", y: "80%", color: "#4D7CFE", delay: 2.6 },
-        { text: "Tailwind v4",  x: "-8%", y: "78%", color: "#34D399", delay: 2.9 },
-      ].map((tag, i) => (
-        <motion.div
-          key={i}
-          className="absolute px-3 py-1.5 rounded-full text-[11px] font-mono whitespace-nowrap pointer-events-none"
-          style={{
-            left: tag.x,
-            top: tag.y,
-            color: tag.color,
-            // 💡 수정 포인트: 에디터와 통일감 있는 어두운 반투명 배경!
-            background: "rgba(10, 16, 32, 0.85)", 
-            // 테두리는 글자색과 맞춰서 은은하게
-            border: `1px solid ${tag.color}50`, 
-            // 그림자를 넣어서 공중에 확실히 뜬 느낌 주기
-            boxShadow: "0 8px 16px rgba(0,0,0,0.12)",
-            backdropFilter: "blur(8px)"
-          }}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: tag.delay, duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <motion.span
-            animate={{ y: [0, -3, 0] }}
-            transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-            className="block tracking-wide font-semibold"
-          >
-            {tag.text}
-          </motion.span>
-        </motion.div>
-      ))}
     </motion.div>
   );
 }
