@@ -643,7 +643,7 @@ function FuturePlanSection() {
         variants={fadeUp}
         className="relative p-8 rounded-2xl text-center overflow-hidden"
         style={{
-          background: "rgba(77,124,254,0.05)",
+          background: "var(--color-accent-glow)",
           border: "1px solid rgba(77,124,254,0.15)",
         }}
       >

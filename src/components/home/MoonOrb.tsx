@@ -2,11 +2,10 @@
 // src/components/home/MoonOrb.tsx
 //
 // 📖 학습 포인트:
-// 1. useTheme() → 테마 변경 감지
-// 2. useAnimate() → 여러 애니메이션을 순서대로 실행 (시퀀스)
-// 3. 달 → 해 전환: 달이 내려가고 해가 떠오르는 시퀀스
-//
-// 기존 마우스 틸트 효과는 그대로 유지합니다.
+// 1. useDragControls + drag → 드래그 가능한 요소
+// 2. useTransform → 드래그 거리를 scaleX/scaleY로 변환 (늘어남 효과)
+// 3. useSpring → 놓으면 탄성 있게 원래 자리로 복귀
+// 4. SVG mask → 초승달 모양
 
 import {
   motion,
@@ -24,104 +23,97 @@ export function MoonOrb() {
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(true);
 
-  // 달 오브 애니메이션 제어용
   const [moonScope, animateMoon] = useAnimate();
-  // 해 오브 애니메이션 제어용
   const [sunScope,  animateSun]  = useAnimate();
-  // 빛 번짐 오버레이 제어용
   const [burstScope, animateBurst] = useAnimate();
 
-  useEffect(() => setMounted(true), []);
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 🖱️ 드래그 → 늘어남 효과
+  //
+  // 📖 dragX, dragY: 드래그로 이동한 거리 (픽셀)
+  //    useTransform으로 거리를 scale로 변환합니다.
+  //    x축으로 많이 당길수록 가로로 늘어나고 세로는 줄어들어요.
+  //    (부피 보존 법칙처럼 한쪽이 늘면 다른쪽이 줄어야 자연스럽습니다)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const dragX = useMotionValue(0);
+  const dragY = useMotionValue(0);
+
+  // 드래그 거리 → scaleX 변환 (최대 1.35까지)
+  const rawScaleX = useTransform(
+    dragX,
+    [-200, -100, 0, 100, 200],
+    [1.35, 1.18, 1, 1.18, 1.35]
+  );
+  // 드래그 거리 → scaleY 변환 (x가 늘면 y는 줄어듦)
+  const rawScaleY = useTransform(
+    dragY,
+    [-200, -100, 0, 100, 200],
+    [1.35, 1.18, 1, 1.18, 1.35]
+  );
+
+  // 📖 useSpring: 놓는 순간 탄성 있게 원래 값(1)으로 복귀
+  //    stiffness 높을수록 빠르게 복귀, damping 낮을수록 더 통통 튐
+  const scaleX = useSpring(rawScaleX, { stiffness: 180, damping: 12 });
+  const scaleY = useSpring(rawScaleY, { stiffness: 180, damping: 12 });
+
+  // x/y 위치도 스프링 복귀
+  const springX = useSpring(dragX, { stiffness: 200, damping: 20 });
+  const springY = useSpring(dragY, { stiffness: 200, damping: 20 });
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🎬 마운트 시 초기 상태 설정
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-useEffect(() => {
-  if (!mounted) return;
-  
-  const currentlyDark = theme === "dark";
-  
-  // 초기 테마에 따라 시작 상태 설정
-  if (currentlyDark) {
-    animateMoon(moonScope.current, { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
-    animateSun(sunScope.current, { opacity: 0, y: 60, scale: 0.7 }, { duration: 0 });
-  } else {
-    animateMoon(moonScope.current, { opacity: 0, y: 60, scale: 0.7 }, { duration: 0 });
-    animateSun(sunScope.current, { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
-  }
-  
-  setIsDark(currentlyDark);
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [mounted]); // 마운트 시 1회만
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🌅 테마 전환 시 애니메이션 실행 ← 이게 빠졌어요!
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-useEffect(() => {
-  if (!mounted) return;
-
-  const currentlyDark = theme === "dark";
-  if (currentlyDark === isDark) return; // 변화 없으면 무시
-  
-  setIsDark(currentlyDark);
-
-  if (!currentlyDark) {
-    runDarkToLight();
-  } else {
-    runLightToDark();
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [theme]); // theme 변경 시마다 실행
-
-  async function runDarkToLight() {
-    // 1단계: 달이 아래로 내려가며 사라짐 (0.5s)
-   // 1단계: 달 뒤에서 해가 먼저 올라옴 (0.8s)
-    // 📖 await 없이 실행 → 달과 동시에 시작하지 않고
-    //    해가 먼저 뜨기 시작함. 달은 해가 올라오는 동안 대기.
-    await animateSun(sunScope.current, {
-      y: [60, -8, 0],
-      scale: [0.6, 1.05, 1],
-      opacity: [0, 0.7, 1],  // ✅ 3단계로 통일
-    }, { duration: 1.5, ease: [0.25, 0.29, 0.28, 0.94] });
-
-    // 2단계: 해가 다 올라온 후 달이 내려감 (0.5s)
-    animateMoon(moonScope.current, {
-      y: 60,
-      scale: 0.7,
-      opacity: [1, 0],  // ✅ 배열로 명시
-    }, { duration: 0.8, ease: [0.55, 0, 1, 0.45] });
-
-    // 3단계: 빛 번짐 (달이 내려가는 동시에)
-    animateBurst(burstScope.current, {
-      scale: [0.8, 3],
-      opacity: [0.5, 0],
-    }, { duration: 1.5, ease: "easeOut" });
-  }
-
-  async function runLightToDark() {
-    // 1단계: 해가 내려가며 사라짐 (0.5s)
-    await animateSun(sunScope.current, {
-      y: 60,
-      scale: 0.7,
-      opacity: [1, 0],  // ✅ 배열로 명시
-    }, { duration: 0.5, ease: [0.55, 0, 1, 0.45] });
-
-    // 2단계: 달이 아래에서 떠오름 (0.8s)
-    await animateMoon(moonScope.current, {
-      y: [60, -8, 0],
-      scale: [0.6, 1.05, 1],
-      opacity: [0, 0.5, 1],  // ✅ 3단계로 통일
-    }, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] });
-  }
-
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 🖱️ 마우스 틸트 (기존과 동일)
+  // 🖱️ 마우스 틸트 (기존)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springConfig = { stiffness: 50, damping: 20 };
-  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [8, -8]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-8, 8]), springConfig);
+  const tiltConfig = { stiffness: 50, damping: 20 };
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [8, -8]), tiltConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-8, 8]), tiltConfig);
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const currentlyDark = theme === "dark";
+    if (currentlyDark) {
+      animateMoon(moonScope.current, { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
+      animateSun(sunScope.current,   { opacity: 0, y: 80, scale: 0.5 }, { duration: 0 });
+    } else {
+      animateMoon(moonScope.current, { opacity: 0, y: 80, scale: 0.5 }, { duration: 0 });
+      animateSun(sunScope.current,   { opacity: 1, y: 0, scale: 1 }, { duration: 0 });
+    }
+    setIsDark(currentlyDark);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const currentlyDark = theme === "dark";
+    if (currentlyDark === isDark) return;
+    setIsDark(currentlyDark);
+    if (!currentlyDark) runDarkToLight();
+    else runLightToDark();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme]);
+
+  async function runDarkToLight() {
+    animateMoon(moonScope.current, { y: 80, scale: 0.5, opacity: 0 },
+      { duration: 0.4, ease: [0.55, 0, 1, 0.45] });
+    await animateSun(sunScope.current, {
+      y: [80, 40, -8, 0],
+      scale: [0.4, 0.7, 1.05, 1],
+      opacity: [0, 0.2, 0.8, 1],
+    }, { duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] });
+    animateBurst(burstScope.current, { scale: [0.8, 3], opacity: [0.5, 0] },
+      { duration: 0.5, ease: "easeOut" });
+  }
+
+  async function runLightToDark() {
+    await animateSun(sunScope.current, { y: 80, scale: 0.5, opacity: [1, 0] },
+      { duration: 0.5, ease: [0.55, 0, 1, 0.45] });
+    await animateMoon(moonScope.current, {
+      y: [80, -8, 0], scale: [0.5, 1.05, 1], opacity: [0, 0.5, 1],
+    }, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] });
+  }
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -136,191 +128,232 @@ useEffect(() => {
 
   return (
     <div ref={containerRef} style={{ perspective: "800px" }}>
+      {/*
+        📖 드래그 가능한 외부 wrapper
+        drag: true → x/y 모두 드래그 가능
+        dragElastic: 0.15 → 경계 바깥으로 살짝 나갈 수 있게 (탱탱한 느낌)
+        dragConstraints: 이동 가능한 최대 범위 제한
+        x, y: dragX, dragY에 연결 → 이동 거리를 실시간으로 추적
+      */}
       <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }}
-        className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px]"
+        drag
+        dragElastic={0.15}
+        dragConstraints={{ left: -80, right: 80, top: -80, bottom: 80 }}
+        dragMomentum={false}
+        x={springX}
+        y={springY}
+        onDrag={(_, info) => {
+          dragX.set(info.offset.x);
+          dragY.set(info.offset.y);
+        }}
+        onDragEnd={() => {
+          // 📖 드래그 끝나면 원점으로 스프링 복귀
+          dragX.set(0);
+          dragY.set(0);
+        }}
+        style={{ cursor: "grab" }}
+        whileDrag={{ cursor: "grabbing" }}
       >
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            🌙 달 오브 (다크모드)
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div
-          ref={moonScope}
-          className="absolute inset-0"
-        >
-          {/* 가장 바깥 글로우 링 */}
-          <motion.div
-            className="absolute inset-[-40px] rounded-full"
-            animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.05, 1] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{
-              background: "radial-gradient(circle, rgba(77,124,254,0.2) 0%, transparent 70%)",
-            }}
-          />
-          {/* 중간 글로우 링 */}
-          <motion.div
-            className="absolute inset-[-16px] rounded-full"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            style={{
-              background: "radial-gradient(circle, rgba(77,124,254,0.15) 0%, transparent 70%)",
-            }}
-          />
-          {/* 달 본체 */}
-          <div
-            className="relative w-full h-full rounded-full overflow-hidden"
-            style={{
-              background:
-                "radial-gradient(ellipse at 35% 35%, #3a4f7a 0%, #1a2540 40%, #0a1020 100%)",
-              boxShadow: `
-                inset -20px -20px 40px rgba(0,0,0,0.8),
-                inset 10px 10px 30px rgba(100,140,220,0.15),
-                0 0 40px rgba(77,124,254,0.3),
-                0 0 80px rgba(77,124,254,0.15)
-              `,
-            }}
-          >
-            {/* 크레이터들 */}
-            {[
-              { w: "18%", h: "18%", t: "22%", l: "28%", o: 0.4 },
-              { w: "12%", h: "12%", t: "52%", l: "18%", o: 0.35 },
-              { w: "8%",  h: "8%",  t: "35%", l: "58%", o: 0.3 },
-              { w: "22%", h: "22%", t: "60%", l: "52%", o: 0.3 },
-            ].map((c, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  width: c.w, height: c.h, top: c.t, left: c.l,
-                  background: `radial-gradient(circle, rgba(0,0,0,${c.o}) 0%, transparent 70%)`,
-                }}
-              />
-            ))}
-            {/* 달빛 하이라이트 */}
-            <div
-              className="absolute rounded-full"
-              style={{
-                width: "45%", height: "45%", top: "8%", left: "10%",
-                background: "radial-gradient(circle, rgba(180,200,255,0.12) 0%, transparent 70%)",
-              }}
-            />
-          </div>
-          {/* 회전하는 별 링 */}
-          <motion.div
-            className="absolute inset-[-24px] rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            style={{ border: "1px dashed rgba(77,124,254,0.15)" }}
-          >
-            {[0, 72, 144, 216, 288].map((deg, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 rounded-full bg-luna-accent"
-                style={{
-                  top: "50%", left: "50%",
-                  transform: `rotate(${deg}deg) translateX(140px) translateY(-50%)`,
-                  opacity: 0.6,
-                }}
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
-              />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            ☀️ 해 오브 (라이트모드)
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div
-          ref={sunScope}
-          className="absolute inset-0"
-        >
-          {/* 햇빛 글로우 — 가장 바깥 */}
-          <motion.div
-            className="absolute inset-[-50px] rounded-full"
-            animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.08, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            style={{
-              background: "radial-gradient(circle, rgba(251,191,36,0.25) 0%, transparent 70%)",
-            }}
-          />
-          {/* 중간 글로우 */}
-          <motion.div
-            className="absolute inset-[-20px] rounded-full"
-            animate={{ opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            style={{
-              background: "radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%)",
-            }}
-          />
-          {/* 해 본체 */}
-          <div
-            className="relative w-full h-full rounded-full overflow-hidden"
-            style={{
-              background:
-                "radial-gradient(ellipse at 35% 30%, #FDE68A 0%, #F59E0B 45%, #D97706 100%)",
-              boxShadow: `
-                inset -15px -15px 30px rgba(180,80,0,0.4),
-                inset 10px 10px 25px rgba(255,240,180,0.5),
-                0 0 50px rgba(251,191,36,0.5),
-                0 0 100px rgba(251,191,36,0.25)
-              `,
-            }}
-          >
-            {/* 표면 텍스처 */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              style={{
-                background: `
-                  radial-gradient(ellipse at 30% 40%, rgba(255,255,200,0.15) 0%, transparent 50%),
-                  radial-gradient(ellipse at 70% 60%, rgba(180,80,0,0.1) 0%, transparent 40%)
-                `,
-              }}
-            />
-          </div>
-          {/* 회전하는 빛줄기 링 */}
-          <motion.div
-            className="absolute inset-[-24px] rounded-full"
-            animate={{ rotate: -360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{ border: "1px dashed rgba(251,191,36,0.2)" }}
-          >
-            {[0, 72, 144, 216, 288].map((deg, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1.5 h-1.5 rounded-full"
-                style={{
-                  top: "50%", left: "50%",
-                  transform: `rotate(${deg}deg) translateX(140px) translateY(-50%)`,
-                  background: "rgba(251,191,36,0.8)",
-                  boxShadow: "0 0 4px rgba(251,191,36,0.8)",
-                }}
-                animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.2, 0.8] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3, ease: "easeInOut" }}
-              />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            💥 빛 번짐 오버레이 (전환 순간에만)
-            다크→라이트 시 화면 전체로 퍼지는 플래시
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div
-          ref={burstScope}
-          className="absolute inset-[-100px] rounded-full pointer-events-none"
+        <motion.div
           style={{
-            background:
-              "radial-gradient(circle, rgba(251,191,36,0.35) 0%, transparent 70%)",
-            opacity: 0,
+            rotateX,
+            rotateY,
+            // 📖 드래그 거리에 따라 scaleX/scaleY 변환 → 늘어남 효과
+            scaleX,
+            scaleY,
+            transformStyle: "preserve-3d",
           }}
-        />
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }}
+          // 📖 크기 키움: 기존 280/380 → 320/440
+          className="relative w-[320px] h-[320px] md:w-[440px] md:h-[440px]"
+        >
 
+          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              🌙 초승달 (다크모드)
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+          <div ref={moonScope} className="absolute inset-0">
+
+            {/* 달빛 글로우 */}
+            <motion.div
+              className="absolute inset-[-60px] rounded-full pointer-events-none"
+              animate={{ opacity: [0.1, 0.28, 0.1], scale: [1, 1.08, 1] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                background: "radial-gradient(circle at 60% 40%, rgba(77,124,254,0.28) 0%, transparent 65%)",
+              }}
+            />
+            <motion.div
+              className="absolute inset-[-10px] rounded-full pointer-events-none"
+              animate={{ opacity: [0.2, 0.5, 0.2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              style={{
+                background: "radial-gradient(circle at 60% 40%, rgba(120,160,255,0.2) 0%, transparent 60%)",
+              }}
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.svg
+                viewBox="0 0 200 200"
+                className="w-full h-full"
+                animate={{ rotate: [0, 3, -2, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <defs>
+                  <mask id="crescent-mask">
+                    <circle cx="100" cy="100" r="75" fill="white" />
+                    <circle cx="132" cy="83"  r="64" fill="black" />
+                  </mask>
+                  <radialGradient id="moon-gradient" cx="32%" cy="32%" r="68%">
+                    <stop offset="0%"   stopColor="#A8C0F0" />
+                    <stop offset="25%"  stopColor="#6B90D8" />
+                    <stop offset="60%"  stopColor="#3060A8" />
+                    <stop offset="100%" stopColor="#0F1E40" />
+                  </radialGradient>
+                  <filter id="moon-glow">
+                    <feGaussianBlur stdDeviation="2" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+
+                {/* 달 본체 */}
+                <circle cx="100" cy="100" r="75"
+                  fill="url(#moon-gradient)"
+                  mask="url(#crescent-mask)"
+                  filter="url(#moon-glow)"
+                />
+                {/* 가장자리 하이라이트 */}
+                <circle cx="100" cy="100" r="75"
+                  fill="none"
+                  mask="url(#crescent-mask)"
+                  stroke="rgba(180,210,255,0.35)"
+                  strokeWidth="2"
+                />
+                {/* 크레이터 */}
+                <g mask="url(#crescent-mask)" opacity="0.5">
+                  <circle cx="78"  cy="85"  r="6"   fill="rgba(0,0,0,0.35)" />
+                  <circle cx="70"  cy="118" r="4"   fill="rgba(0,0,0,0.28)" />
+                  <circle cx="88"  cy="135" r="5"   fill="rgba(0,0,0,0.22)" />
+                  <circle cx="60"  cy="98"  r="3"   fill="rgba(0,0,0,0.2)"  />
+                </g>
+              </motion.svg>
+            </div>
+
+            {/* 주변 별들 */}
+{[
+  { x: "12%", y: "18%", size: 3,   delay: 0   },
+  { x: "78%", y: "12%", size: 2,   delay: 0.8 },
+  { x: "88%", y: "52%", size: 2.5, delay: 1.5 },
+  { x: "18%", y: "72%", size: 2,   delay: 0.4 },
+  { x: "62%", y: "82%", size: 3,   delay: 1.2 },
+  { x: "42%", y: "8%",  size: 1.5, delay: 2   },
+  { x: "5%",  y: "45%", size: 2,   delay: 0.6 },
+  { x: "90%", y: "28%", size: 1.5, delay: 1.8 },
+].map((s, i) => (
+  <motion.div
+    key={i}
+    className="absolute pointer-events-none"
+    style={{ left: s.x, top: s.y }}
+    animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+    transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: s.delay, ease: "easeInOut" }}
+  >
+    <svg width={s.size * 4} height={s.size * 4} viewBox="0 0 12 12">
+      <path
+        d="M6 0 L6.8 5.2 L12 6 L6.8 6.8 L6 12 L5.2 6.8 L0 6 L5.2 5.2 Z"
+        fill="rgba(180,210,255,0.9)"
+      />
+    </svg>
+  </motion.div>
+))}
+            
+            
+          </div>
+
+          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              ☀️ 귀여운 해 (라이트모드)
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+          <div ref={sunScope} className="absolute inset-0">
+
+            {/* 햇빛 글로우 */}
+            <motion.div
+              className="absolute inset-[-70px] rounded-full pointer-events-none"
+              animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(249,115,22,0.1) 55%, transparent 75%)",
+              }}
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.svg
+                viewBox="0 0 200 200"
+                className="w-full h-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <defs>
+                  <radialGradient id="sun-gradient" cx="38%" cy="33%" r="65%">
+                    <stop offset="0%"   stopColor="#FEF9C3" />
+                    <stop offset="20%"  stopColor="#FDE68A" />
+                    <stop offset="55%"  stopColor="#FBBF24" />
+                    <stop offset="100%" stopColor="#F59E0B" />
+                  </radialGradient>
+                  <filter id="sun-glow">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+
+                {/* 해 본체 */}
+                <circle cx="100" cy="100" r="62"
+                  fill="url(#sun-gradient)"
+                  filter="url(#sun-glow)"
+                />
+
+                {/* 볼터치 */}
+                <ellipse cx="76"  cy="122" rx="8" ry="5" fill="rgba(249,115,22,0.22)" />
+<ellipse cx="124" cy="122" rx="8" ry="5" fill="rgba(249,115,22,0.22)" />
+
+                {/* 하이라이트 */}
+                <circle cx="84" cy="78" r="13" fill="rgba(255,255,255,0.22)" />
+                <circle cx="80" cy="74" r="5"  fill="rgba(255,255,255,0.38)" />
+              </motion.svg>
+            </div>
+
+            {/* 반짝이 파티클 */}
+            {[
+              { x: "8%",  y: "22%", delay: 0   },
+              { x: "82%", y: "18%", delay: 0.6 },
+              { x: "86%", y: "72%", delay: 1.2 },
+              { x: "12%", y: "74%", delay: 0.3 },
+              { x: "50%", y: "5%",  delay: 0.9 },
+            ].map((p, i) => (
+              <motion.div
+                key={i}
+                className="absolute pointer-events-none"
+                style={{ left: p.x, top: p.y }}
+                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5], rotate: [0, 180, 360] }}
+                transition={{ duration: 1.8, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
+              >
+                <svg width="14" height="14" viewBox="0 0 12 12">
+                  <path d="M6 0 L6.8 5.2 L12 6 L6.8 6.8 L6 12 L5.2 6.8 L0 6 L5.2 5.2 Z" fill="#FBBF24" />
+                </svg>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* 빛 번짐 오버레이 */}
+          <div
+            ref={burstScope}
+            className="absolute inset-[-120px] rounded-full pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, transparent 70%)",
+              opacity: 0,
+            }}
+          />
+
+        </motion.div>
       </motion.div>
     </div>
   );

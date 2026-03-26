@@ -61,8 +61,7 @@ export function HeroSection() {
       <div
         className="absolute inset-0 -z-10"
         style={{
-          background:
-            "radial-gradient(ellipse at 70% 50%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+          background: "var(--hero-bg)",
           transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       />
@@ -167,8 +166,8 @@ export function HeroSection() {
                   key={tech}
                   className="px-3 py-1 text-xs font-mono text-luna-accent rounded-full"
                   style={{
-                    border: "1px solid rgba(77,124,254,0.3)",
-                    background: "rgba(77,124,254,0.05)",
+                    border: "1px solid var(--color-accent-glow)",
+                    background: "var(--color-accent-glow)",
                   }}
                 >
                   {tech}
@@ -182,10 +181,10 @@ export function HeroSection() {
                 <motion.button
                   className="relative px-6 py-3 text-sm font-medium text-white rounded-lg overflow-hidden"
                   style={{
-                    background: "linear-gradient(135deg, #4D7CFE 0%, #3a5fd9 100%)",
-                    boxShadow: "0 0 20px rgba(77,124,254,0.3)",
-                  }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 0 32px rgba(77,124,254,0.5)" }}
+                    background: "linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%)",
+                    boxShadow: "0 0 20px var(--color-accent-glow)",
+                      }}
+                  whileHover={{ scale: 1.03, boxShadow: "0 0 32px var(--color-accent-glow)" }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
@@ -207,7 +206,7 @@ export function HeroSection() {
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  소개 읽기
+                  나에 대해
                 </motion.button>
               </Link>
             </motion.div>

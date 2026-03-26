@@ -11,6 +11,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { ScrollRestoration } from 'next/navigation';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

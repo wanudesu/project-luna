@@ -15,6 +15,7 @@
 
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎬 애니메이션 Variants 정의
@@ -69,6 +70,14 @@ export function PageTransition({ children }: PageTransitionProps) {
   // "/", "/about", "/kumo", "/luna" 중 하나가 됩니다.
   // 경로가 바뀔 때마다 이 값이 변경되어 리렌더링됩니다.
   const pathname = usePathname();
+
+// // 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
+// useEffect(() => {
+//   const timer = setTimeout(() => {
+//     window.scrollTo({ top: 0, behavior: "instant" });
+//   }, 800); // PageTransition exit duration과 맞춤
+//   return () => clearTimeout(timer);
+// }, [pathname]);
 
   return (
     <>

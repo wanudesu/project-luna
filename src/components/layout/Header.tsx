@@ -41,8 +41,7 @@ export function Header() {
           opacity: backdropOpacity,
           background: "color-mix(in srgb, var(--color-bg) 85%, transparent)",
           backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          WebkitBackdropFilter: "blur(12px)"
         }}
       />
       {/* 하단 구분선 */}
@@ -66,7 +65,7 @@ export function Header() {
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path
                   d="M17.5 10.5A7.5 7.5 0 1 1 9.5 2.5a5.5 5.5 0 0 0 8 8z"
-                  fill="#4D7CFE"
+                  fill="var(--color-accent)"
                   opacity="0.9"
                 />
               </svg>
@@ -95,7 +94,7 @@ export function Header() {
                           className="absolute inset-0 rounded-lg"
                           style={{
                             background: "rgba(77,124,254,0.08)",
-                            border: "1px solid rgba(77,124,254,0.2)",
+                            border: "1px solid var(--color-accent-glow)",
                           }}
                           transition={{ type: "spring", stiffness: 400, damping: 30 }}
                         />

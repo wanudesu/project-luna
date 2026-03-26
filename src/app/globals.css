@@ -66,21 +66,29 @@
  *    var()를 쓰는 모든 컴포넌트가 자동으로 교체됩니다.
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .light {
-  --color-bg:          #F4F7FF;
-  --color-bg-navy:     #E8EDFA;
-  --color-bg-surface:  #FFFFFF;
-  --color-border:      #D0D9F0;
+  /* 배경: 크림빛 아이보리 */
+  --color-bg: #FDF8F0;
+  --color-bg-navy: #F5EDD8;
+  --color-bg-surface: #FFFCF5;
+  --color-border: #E8D8B8;
 
-  --color-text:        #2A3650;
-  --color-text-muted:  #5A6A88;
-  --color-text-glow:   #0F1E40;
+  /* 텍스트: 따뜻한 다크브라운 */
+  --color-text: #3D2E1E;
+  --color-text-muted: #7A6048;
+  --color-text-glow: #1E1408;
 
-  --color-accent:      #2952CC;
-  --color-accent-glow: rgba(41, 82, 204, 0.2);
+  /* 액센트: 따뜻한 앰버/골드 */
+  --color-accent: #E8761A;
+  --color-accent-glow: rgba(232, 118, 26, 0.2); 
 
-  --sun-opacity:       1;
-  --star-opacity:      0;
-  --orb-glow-color:    rgba(251, 191, 36, 0.4);
+  --sun-opacity: 1;
+  --star-opacity: 0;
+  --orb-glow-color: rgba(251, 191, 36, 0.4);
+  --hero-bg: radial-gradient(ellipse at 75% 45%, #FFE4A0 0%, #FDF3DC 35%, #FDF8F0 70%);
+}
+
+.dark {
+  --hero-bg: radial-gradient(ellipse at 70% 50%, #0D1E40 0%, #070C18 55%, #03050A 100%);
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

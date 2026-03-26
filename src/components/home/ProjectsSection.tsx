@@ -62,7 +62,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
     >
       {/* ── 이미지 영역 ── */}
       <Link
-        href={`/projects/${project.id}`}
+        href={`/${project.id}`}
         className="block group md:[direction:ltr]"
       >
         <motion.div
@@ -127,7 +127,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           <span>{project.subtitle}</span>
         </div>
 
-        <Link href={`/projects/${project.id}`}>
+        <Link href={`/${project.id}`}>
           <h3
             className="text-2xl md:text-3xl font-bold transition-colors duration-200"
             style={{ color: "var(--color-text-glow)" }}
@@ -206,9 +206,7 @@ export function ProjectsSection() {
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
-        </div>
-
-        {/* ── 더보기 링크 ── */}
+        </div>{/* ── 더보기 링크 ── */}
         <motion.div variants={itemVariants} className="mt-16 text-center">
           <Link
             href="/projects"

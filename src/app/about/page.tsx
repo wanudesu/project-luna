@@ -55,7 +55,7 @@ function ProfilePhoto() {
           animate={{ opacity: [0.12, 0.28, 0.12], scale: [1, 1.06, 1] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            background: "radial-gradient(circle, rgba(77,124,254,0.22) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%)"
           }}
         />
         <motion.div
@@ -63,7 +63,7 @@ function ProfilePhoto() {
           animate={{ opacity: [0.25, 0.55, 0.25] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           style={{
-            background: "radial-gradient(circle, rgba(77,124,254,0.18) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%)"
           }}
         />
         <div
@@ -73,8 +73,8 @@ function ProfilePhoto() {
             boxShadow: `
               inset -16px -16px 32px rgba(0,0,0,0.7),
               inset 8px 8px 24px rgba(100,140,220,0.12),
-              0 0 40px rgba(77,124,254,0.35),
-              0 0 80px rgba(77,124,254,0.15)
+              0 0 40px var(--color-accent-glow),
+              0 0 80px var(--color-accent-glow)
             `,
           }}
         >
@@ -105,7 +105,7 @@ function ProfilePhoto() {
           className="absolute inset-[-20px] rounded-full pointer-events-none"
           animate={{ rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          style={{ border: "1px dashed rgba(77,124,254,0.12)" }}
+          style={{ border: "1px dashed var(--color-accent-glow)" }}
         >
           {[0, 72, 144, 216, 288].map((deg, i) => (
             <motion.div
@@ -114,7 +114,7 @@ function ProfilePhoto() {
               style={{
                 top: "50%", left: "50%",
                 transform: `rotate(${deg}deg) translateX(170px) translateY(-50%)`,
-                background: "rgba(77,124,254,0.7)",
+                background: "var(--color-accent)",
               }}
               animate={{ opacity: [0.2, 0.9, 0.2] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
@@ -222,7 +222,7 @@ function MonozukuriSection() {
                   border: "1px solid var(--color-border)",
                   transition: "background 0.8s ease, border-color 0.8s ease",
                 }}
-                whileHover={{ borderColor: "rgba(77,124,254,0.3)", background: "var(--color-bg-surface)" }}
+                whileHover={{ borderColor: "var(--color-accent)", background: "var(--color-bg-surface)" }}
                 transition={{ duration: 0.2 }}
               >
                 <span className="text-2xl mb-3 block">{item.emoji}</span>
@@ -258,10 +258,10 @@ function JourneySection() {
             <div className="space-y-12 pl-8">
               {timeline.map((item, i) => (
                 <motion.div key={i} variants={fadeUpVariants} className="relative">
-                  <div className="absolute w-2 h-2 rounded-full" style={{ left: "-2.25rem", top: "0.4rem", background: "var(--color-accent)", boxShadow: "0 0 8px rgba(77,124,254,0.6)" }} />
+                  <div className="absolute w-2 h-2 rounded-full" style={{ left: "-2.25rem", top: "0.4rem", background: "var(--color-accent)", boxShadow: "0 0 8px var(--color-accent-glow)" }} />
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xs font-mono" style={{ color: "var(--color-text-muted)" }}>{item.period}</span>
-                    <span className="text-xs font-mono px-2 py-0.5 rounded-full" style={{ color: "var(--color-accent)", border: "1px solid rgba(77,124,254,0.3)", background: "rgba(77,124,254,0.05)" }}>{item.tag}</span>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded-full" style={{ color: "var(--color-accent)", border: "1px solid var(--color-accent-glow)", background: "var(--color-accent-glow)" }}>{item.tag}</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--color-text-glow)" }}>{item.title}</h3>
                   <p className="text-sm leading-relaxed max-w-lg" style={{ color: "var(--color-text-muted)" }}>{item.desc}</p>
@@ -301,7 +301,7 @@ function WhyJapanSection() {
             className="p-8 rounded-2xl"
             style={{
               background: "var(--color-bg-navy)",
-              border: "1px solid rgba(77,124,254,0.2)",
+              border: "1px solid var(--color-accent-glow)",
               transition: "background 0.8s ease",
             }}
           >
@@ -358,7 +358,7 @@ function SkillsSection() {
                         background: "var(--color-bg-navy)",
                         transition: "background 0.8s ease, border-color 0.8s ease",
                       }}
-                      whileHover={{ borderColor: "rgba(77,124,254,0.4)", color: "var(--color-text-glow)" }}
+                      whileHover={{ border: "1px solid var(--color-accent-glow)", background: "var(--color-accent-glow)" }}
                       transition={{ duration: 0.15 }}
                     >
                       {skill}
@@ -391,8 +391,8 @@ function ContactSection() {
             <motion.a
               href="mailto:your@email.com"
               className="px-6 py-3 text-sm font-medium rounded-lg"
-              style={{ background: "linear-gradient(135deg, #4D7CFE 0%, #3a5fd9 100%)", color: "white", boxShadow: "0 0 20px rgba(77,124,254,0.3)" }}
-              whileHover={{ scale: 1.03, boxShadow: "0 0 32px rgba(77,124,254,0.5)" }}
+              style={{ background: "linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%)", color: "white", boxShadow: "0 0 20px var(--color-accent-glow)" }}
+              whileHover={{ boxShadow: "0 0 32px var(--color-accent-glow)" }}
               whileTap={{ scale: 0.97 }}
             >
               이메일 보내기

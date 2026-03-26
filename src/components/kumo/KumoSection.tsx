@@ -327,7 +327,7 @@ function HeroBlock() {
           className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
           style={{
             background: "rgba(77,124,254,0.08)",
-            border: "1px solid rgba(77,124,254,0.3)",
+            border: "1px solid var(--color-accent-glow)",
             color: "#4D7CFE",
           }}
         >
@@ -478,7 +478,7 @@ function DemoSection() {
                 className="w-20 h-20 rounded-full flex items-center justify-center"
                 style={{
                   background: "rgba(77,124,254,0.1)",
-                  border: "1px solid rgba(77,124,254,0.3)",
+                  border: "1px solid var(--color-accent-glow)",
                   boxShadow: "0 0 40px rgba(77,124,254,0.15)",
                 }}
               >
@@ -627,7 +627,7 @@ function RoleSection() {
         className="relative p-6 rounded-2xl mb-8 overflow-hidden"
         style={{
           background: "rgba(77,124,254,0.06)",
-          border: "1px solid rgba(77,124,254,0.2)",
+          border: "1px solid var(--color-accent-glow)",
         }}
       >
         {/* 우상단 글로우 */}
