@@ -8,6 +8,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { LunaOrb } from "./LunaOrb";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎬 공통 Variants (Kumo와 동일)
@@ -199,6 +200,8 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
 function HeroBlock() {
   return (
     <section className="mb-28">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
+      <div className="flex-1">
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -275,7 +278,12 @@ function HeroBlock() {
           background: "linear-gradient(90deg, rgba(77,124,254,0.5), rgba(77,124,254,0.05) 70%, transparent)",
           transformOrigin: "left",
         }}
-      />
+          />
+          </div>
+        <div className="flex-shrink-0 flex justify-center md:justify-end">
+          <LunaOrb />
+        </div>
+      </div>
     </section>
   );
 }

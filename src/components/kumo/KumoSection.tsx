@@ -8,6 +8,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { KumoOrb } from "./KumoOrb";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎬 공통 Variants
@@ -258,111 +259,104 @@ function HeroBlock() {
 
   return (
     <section className="mb-28">
-      <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
-      >
-        / 첫 번째 팀 프로젝트
-      </motion.p>
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
 
-      {/* 타이틀 */}
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="flex items-end gap-4 mb-6"
-      >
-        <h1
-          className="text-6xl md:text-8xl font-bold text-luna-glow"
-          style={{ fontFamily: "var(--font-geist-sans)", letterSpacing: "-0.03em" }}
-        >
-          KUMO
-        </h1>
-        <span className="text-2xl md:text-3xl font-light text-luna-mist mb-2 md:mb-4">
-          雲
-        </span>
-      </motion.div>
+        {/* ── 왼쪽: 텍스트 블록 ── */}
+        <div className="flex-1">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
+          >
+            / 첫 번째 팀 프로젝트
+          </motion.p>
 
-      {/* 한 줄 소개 */}
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45, duration: 0.6 }}
-        className="text-luna-silver text-lg md:text-xl max-w-[560px] leading-relaxed mb-8"
-      >
-        일본(도쿄·오사카)의 구인구직 정보를{" "}
-        <span className="text-luna-glow font-medium">지도 위에서</span> 탐색하는
-        한·일 동시 지원 매칭 플랫폼.
-      </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex items-end gap-4 mb-6"
+          >
+            <h1
+              className="text-6xl md:text-8xl font-bold text-luna-glow"
+              style={{ fontFamily: "var(--font-geist-sans)", letterSpacing: "-0.03em" }}
+            >
+              KUMO
+            </h1>
+            <span className="text-2xl md:text-3xl font-light text-luna-mist mb-2 md:mb-4">
+              雲
+            </span>
+          </motion.div>
 
-      {/* 메타 배지 */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.5 }}
-        className="flex flex-wrap gap-3"
-      >
-        {badges.map((b) => (
-          <span
-            key={b.text}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+            className="text-luna-silver text-lg md:text-xl max-w-[560px] leading-relaxed mb-8"
+          >
+            일본(도쿄·오사카)의 구인구직 정보를{" "}
+            <span className="text-luna-glow font-medium">지도 위에서</span> 탐색하는
+            한·일 동시 지원 매칭 플랫폼.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="flex flex-wrap gap-3"
+          >
+            {badges.map((b) => (
+              <span
+                key={b.text}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
+                style={{
+                  background: "rgba(200,214,232,0.04)",
+                  border: "1px solid rgba(200,214,232,0.1)",
+                  color: "var(--color-text)",
+                }}
+              >
+                <span>{b.icon}</span>
+                <span>{b.text}</span>
+              </span>
+            ))}
+            <a
+              href="https://github.com/wanudesu/KUMO-KR-JP-Job-Platform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
+              style={{
+                background: "rgba(77,124,254,0.08)",
+                border: "1px solid var(--color-accent-glow)",
+                color: "#4D7CFE",
+              }}
+            >
+              <span>🔗</span>
+              <span>GitHub</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 2h8v8M2 10 10 2" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+              </svg>
+            </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-14 h-px"
             style={{
-              background: "rgba(200,214,232,0.04)",
-              border: "1px solid rgba(200,214,232,0.1)",
-              color: "var(--color-text)",
+              background: "linear-gradient(90deg, rgba(77,124,254,0.5), rgba(77,124,254,0.05) 70%, transparent)",
+              transformOrigin: "left",
             }}
-          >
-            <span>{b.icon}</span>
-            <span>{b.text}</span>
-          </span>
-        ))}
+          />
+        </div>
 
-        {/* GitHub 링크 — 별도 스타일 */}
-        <a
-          href="https://github.com/wanudesu/KUMO-KR-JP-Job-Platform"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
-          style={{
-            background: "rgba(77,124,254,0.08)",
-            border: "1px solid var(--color-accent-glow)",
-            color: "#4D7CFE",
-          }}
-        >
-          <span>🔗</span>
-          <span>GitHub</span>
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M2 2h8v8M2 10 10 2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </a>
-      </motion.div>
+        {/* ── 오른쪽: KumoOrb ── */}
+        <div className="flex-shrink-0 flex justify-center md:justify-end">
+          <KumoOrb />
+        </div>
 
-      {/* 구분선 */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 0.8, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="mt-14 h-px"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(77,124,254,0.5), rgba(77,124,254,0.05) 70%, transparent)",
-          originX: 0,
-          transformOrigin: "left",
-        }}
-      />
+      </div>
     </section>
   );
 }
@@ -439,6 +433,7 @@ function DemoSection() {
               ref={videoRef}
               className="w-full block"
               style={{ maxHeight: "720px", objectFit: "contain" }}
+              controls  
               muted
               loop
               playsInline
