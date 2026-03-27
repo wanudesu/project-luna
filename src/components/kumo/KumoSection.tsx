@@ -45,16 +45,16 @@ function useSectionInView() {
 // 📦 데이터
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const TECH_STACK = [
-  { name: "Java",            category: "Backend",  color: "#FB923C" },
-  { name: "Spring Boot",     category: "Backend",  color: "#FB923C" },
-  { name: "JavaScript",      category: "Frontend", color: "#4D7CFE" },
-  { name: "HTML / CSS",      category: "Frontend", color: "#4D7CFE" },
-  { name: "jQuery",          category: "Frontend", color: "#4D7CFE" },
-  { name: "Ajax",            category: "Frontend", color: "#4D7CFE" },
-  { name: "WebSocket",       category: "Infra",    color: "#34D399" },
-  { name: "STOMP",           category: "Infra",    color: "#34D399" },
-  { name: "Google Maps API", category: "API",      color: "#A78BFA" },
-  { name: "MySQL",           category: "DB",       color: "#F472B6" },
+  { name: "Java", category: "Backend", color: "#FB923C" },
+  { name: "Spring Boot", category: "Backend", color: "#FB923C" },
+  { name: "JavaScript", category: "Frontend", color: "#4D7CFE" },
+  { name: "HTML / CSS", category: "Frontend", color: "#4D7CFE" },
+  { name: "jQuery", category: "Frontend", color: "#4D7CFE" },
+  { name: "Ajax", category: "Frontend", color: "#4D7CFE" },
+  { name: "WebSocket", category: "Infra", color: "#34D399" },
+  { name: "STOMP", category: "Infra", color: "#34D399" },
+  { name: "Google Maps API", category: "API", color: "#A78BFA" },
+  { name: "MySQL", category: "DB", color: "#F472B6" },
 ];
 
 const MY_FEATURES = [
@@ -148,18 +148,19 @@ export function KumoSection() {
         size: Math.random() * 2 + 0.5,
         delay: Math.random() * 5,
         dur: Math.random() * 3 + 3,
-      }))
+      })),
     );
   }, []);
 
   return (
-<div
-  className="min-h-screen pt-24 pb-32"
-  style={{
-    background: "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
-    transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-  }}
->
+    <div
+      className="min-h-screen pt-24 pb-32"
+      style={{
+        background:
+          "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+        transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      }}
+    >
       {/* ── 별 파티클 배경 ── */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         {particles.map((p) => (
@@ -184,7 +185,6 @@ export function KumoSection() {
       </div>
 
       <div className="page-container">
-
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             1. HERO — 프로젝트 타이틀
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -219,7 +219,6 @@ export function KumoSection() {
             7. 회고
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <ReflectionSection />
-
       </div>
     </div>
   );
@@ -239,7 +238,7 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
       </span>
       <div
         className="flex-1 h-px"
-        style={{ background: "var(--color-accent-glow)", }}
+        style={{ background: "var(--color-accent-glow)" }}
       />
       <h2 className="text-xs font-mono tracking-[0.15em] text-luna-mist uppercase">
         {title}
@@ -261,7 +260,6 @@ function HeroBlock() {
   return (
     <section className="mb-28">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
-
         {/* ── 왼쪽: 텍스트 블록 ── */}
         <div className="flex-1">
           <motion.p
@@ -276,12 +274,19 @@ function HeroBlock() {
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{
+              delay: 0.3,
+              duration: 0.7,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
             className="flex items-end gap-4 mb-6"
           >
             <h1
               className="text-6xl md:text-8xl font-bold text-luna-glow"
-              style={{ fontFamily: "var(--font-geist-sans)", letterSpacing: "-0.03em" }}
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                letterSpacing: "-0.03em",
+              }}
             >
               KUMO
             </h1>
@@ -297,8 +302,8 @@ function HeroBlock() {
             className="text-luna-silver text-lg md:text-xl max-w-[560px] leading-relaxed mb-8"
           >
             일본(도쿄·오사카)의 구인구직 정보를{" "}
-            <span className="text-luna-glow font-medium">지도 위에서</span> 탐색하는
-            한·일 동시 지원 매칭 플랫폼.
+            <span className="text-luna-glow font-medium">지도 위에서</span>{" "}
+            탐색하는 한·일 동시 지원 매칭 플랫폼.
           </motion.p>
 
           <motion.div
@@ -329,13 +334,24 @@ function HeroBlock() {
               style={{
                 color: "var(--color-accent)",
                 border: "1px solid var(--color-accent-glow)",
-                background: "rgba(77,124,254,0.08)"
+                background: "rgba(77,124,254,0.08)",
               }}
             >
               <span>🔗</span>
               <span>GitHub</span>
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 2h8v8M2 10 10 2" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 2h8v8M2 10 10 2"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                />
               </svg>
             </a>
           </motion.div>
@@ -347,7 +363,8 @@ function HeroBlock() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="mt-14 h-px"
             style={{
-              background: "linear-gradient(90deg, var(--color-accent-glow), transparent 90%)",
+              background:
+                "linear-gradient(90deg, var(--color-accent-glow), transparent 90%)",
               transformOrigin: "left",
             }}
           />
@@ -357,7 +374,6 @@ function HeroBlock() {
         <div className="flex-shrink-0 flex justify-center md:justify-end">
           <KumoOrb />
         </div>
-
       </div>
     </section>
   );
@@ -385,7 +401,7 @@ function DemoSection() {
   useEffect(() => {
     const video = document.createElement("video");
     video.oncanplay = () => setHasFile(true);
-    video.onerror  = () => setHasFile(false);
+    video.onerror = () => setHasFile(false);
     video.src = VIDEO_SRC;
   }, []);
 
@@ -425,7 +441,11 @@ function DemoSection() {
                       className="w-1.5 h-1.5 rounded-full"
                       style={{ background: "rgba(77,124,254,0.5)" }}
                       animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 0.8, delay: i * 0.15, repeat: Infinity }}
+                      transition={{
+                        duration: 0.8,
+                        delay: i * 0.15,
+                        repeat: Infinity,
+                      }}
                     />
                   ))}
                 </div>
@@ -435,7 +455,7 @@ function DemoSection() {
               ref={videoRef}
               className="w-full block"
               style={{ maxHeight: "720px", objectFit: "contain" }}
-              controls  
+              controls
               muted
               loop
               playsInline
@@ -487,10 +507,7 @@ function DemoSection() {
                   fill="none"
                   aria-hidden="true"
                 >
-                  <path
-                    d="M8 5.14v14l11-7-11-7z"
-                    fill="rgba(77,124,254,0.8)"
-                  />
+                  <path d="M8 5.14v14l11-7-11-7z" fill="rgba(77,124,254,0.8)" />
                 </svg>
               </div>
               <div className="text-center">
@@ -564,9 +581,9 @@ function OverviewSection() {
         variants={fadeUp}
         className="text-luna-mist text-base md:text-lg leading-relaxed max-w-[640px] mb-12"
       >
-        구직자가 지도를 보며 주변 일자리를 탐색하고, 구인자에게 실시간으로 연락할 수
-        있는 플랫폼입니다. 한국어와 일본어를 동시에 지원하여 일본 현지 취업을 노리는
-        한국인 구직자를 주 타겟으로 설계했습니다.
+        구직자가 지도를 보며 주변 일자리를 탐색하고, 구인자에게 실시간으로
+        연락할 수 있는 플랫폼입니다. 한국어와 일본어를 동시에 지원하여 일본 현지
+        취업을 노리는 한국인 구직자를 주 타겟으로 설계했습니다.
       </motion.p>
 
       <motion.div
@@ -650,8 +667,8 @@ function RoleSection() {
           className="text-sm leading-relaxed max-w-[520px]"
           style={{ color: "var(--color-text-muted)" }}
         >
-          팀 5명이 각자 페이지를 담당하는 구조에서, 구인자와 관련된 모든 기능과 UI를
-          혼자 설계하고 구현했습니다. 분량이 팀 내에서 가장 많았습니다.
+          팀 5명이 각자 페이지를 담당하는 구조에서, 구인자와 관련된 모든 기능과
+          UI를 혼자 설계하고 구현했습니다. 분량이 팀 내에서 가장 많았습니다.
         </p>
       </motion.div>
 

@@ -39,13 +39,13 @@ function useSectionInView() {
 // 📦 데이터
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const TECH_STACK = [
-  { name: "Next.js 15",      category: "Framework", color: "#E8F0FF" },
-  { name: "TypeScript",      category: "Language",  color: "#4D7CFE" },
-  { name: "Tailwind CSS v4", category: "Styling",   color: "#34D399" },
-  { name: "Framer Motion",   category: "Animation", color: "#A78BFA" },
-  { name: "Claude AI",       category: "AI",        color: "#FB923C" },
-  { name: "Git / GitHub",    category: "Tooling",   color: "#F472B6" },
-  { name: "Vercel / AWS",    category: "Deploy",    color: "#60A5FA" },
+  { name: "Next.js 15", category: "Framework", color: "#E8F0FF" },
+  { name: "TypeScript", category: "Language", color: "#4D7CFE" },
+  { name: "Tailwind CSS v4", category: "Styling", color: "#34D399" },
+  { name: "Framer Motion", category: "Animation", color: "#A78BFA" },
+  { name: "Claude AI", category: "AI", color: "#FB923C" },
+  { name: "Git / GitHub", category: "Tooling", color: "#F472B6" },
+  { name: "Vercel / AWS", category: "Deploy", color: "#60A5FA" },
 ];
 
 const STORY_TIMELINE = [
@@ -126,7 +126,14 @@ const FUTURE_PLANS = [
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export function LunaSection() {
   const [particles, setParticles] = useState<
-    { id: number; x: number; y: number; size: number; delay: number; dur: number }[]
+    {
+      id: number;
+      x: number;
+      y: number;
+      size: number;
+      delay: number;
+      dur: number;
+    }[]
   >([]);
 
   useEffect(() => {
@@ -138,7 +145,7 @@ export function LunaSection() {
         size: Math.random() * 2 + 0.5,
         delay: Math.random() * 5,
         dur: Math.random() * 3 + 3,
-      }))
+      })),
     );
   }, []);
 
@@ -146,8 +153,9 @@ export function LunaSection() {
     <div
       className="min-h-screen pt-24 pb-32"
       style={{
-         background: "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
-         transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        background:
+          "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+        transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
       {/* ── 별 파티클 ── */}
@@ -163,7 +171,12 @@ export function LunaSection() {
               height: `${p.size}px`,
             }}
             animate={{ opacity: [0.05, 0.5, 0.05] }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: p.dur,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
         ))}
       </div>
@@ -194,7 +207,7 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
       </span>
       <div
         className="flex-1 h-px"
-        style={{ background: "var(--color-accent-glow)", }}
+        style={{ background: "var(--color-accent-glow)" }}
       />
       <h2 className="text-xs font-mono tracking-[0.15em] text-luna-mist uppercase">
         {title}
@@ -209,72 +222,79 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
 function HeroBlock() {
   return (
     <section className="mb-28">
-    <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
-      <div className="flex-1">
-      <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
-      >
-        / このサイトについて
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="flex items-end gap-4 mb-6"
-      >
-        <h1
-          className="text-6xl md:text-8xl font-bold text-luna-glow"
-          style={{ fontFamily: "var(--font-geist-sans)", letterSpacing: "-0.03em" }}
-        >
-          Luna
-        </h1>
-        <span className="text-2xl md:text-3xl font-light text-luna-mist mb-2 md:mb-4">
-          月
-        </span>
-      </motion.div>
-
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45, duration: 0.6 }}
-        className="text-luna-silver text-lg md:text-xl max-w-[560px] leading-relaxed mb-8"
-      >
-        이 포트폴리오 사이트 자체가{" "}
-        <span className="text-luna-glow font-medium">하나의 프로젝트</span>
-        입니다.
-        <br />
-        2주, 처음 쓰는 기술, AI와 함께.
-      </motion.p>
-
-      {/* 메타 배지 */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="flex flex-wrap gap-3"
-      >
-        {[
-          { icon: "📅", text: "2026.03.25 — 04.08" },
-          { icon: "⚡", text: "2주 제작" },
-          { icon: "🤖", text: "Claude와 페어 프로그래밍" },
-        ].map((b) => (
-          <span
-            key={b.text}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
-            style={{
-              background: "var(--color-bg-surface)",
-              border: "1px solid var(--color-border)",
-              color: "var(--color-text)",
-            }}
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
+        <div className="flex-1">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
           >
-            <span>{b.icon}</span>
-            <span>{b.text}</span>
-          </span>
-        ))}
+            / このサイトについて
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.7,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="flex items-end gap-4 mb-6"
+          >
+            <h1
+              className="text-6xl md:text-8xl font-bold text-luna-glow"
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              Luna
+            </h1>
+            <span className="text-2xl md:text-3xl font-light text-luna-mist mb-2 md:mb-4">
+              月
+            </span>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+            className="text-luna-silver text-lg md:text-xl max-w-[560px] leading-relaxed mb-8"
+          >
+            이 포트폴리오 사이트 자체가{" "}
+            <span className="text-luna-glow font-medium">하나의 프로젝트</span>
+            입니다.
+            <br />
+            2주, 처음 쓰는 기술, AI와 함께.
+          </motion.p>
+
+          {/* 메타 배지 */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-3"
+          >
+            {[
+              { icon: "📅", text: "2026.03.25 — 04.08" },
+              { icon: "⚡", text: "2주 제작" },
+              { icon: "🤖", text: "Claude와 페어 프로그래밍" },
+            ].map((b) => (
+              <span
+                key={b.text}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
+                style={{
+                  background: "var(--color-bg-surface)",
+                  border: "1px solid var(--color-border)",
+                  color: "var(--color-text)",
+                }}
+              >
+                <span>{b.icon}</span>
+                <span>{b.text}</span>
+              </span>
+            ))}
             <a
               href="https://github.com/wanudesu/project-luna"
               target="_blank"
@@ -283,29 +303,41 @@ function HeroBlock() {
               style={{
                 color: "var(--color-accent)",
                 border: "1px solid var(--color-accent-glow)",
-                background: "rgba(77,124,254,0.08)"
+                background: "rgba(77,124,254,0.08)",
               }}
             >
               <span>🔗</span>
               <span>GitHub</span>
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 2h8v8M2 10 10 2" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 2h8v8M2 10 10 2"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                />
               </svg>
             </a>
-      </motion.div>
+          </motion.div>
 
-      {/* 구분선 */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
-        className="mt-14 h-px"
-        style={{
-          background: "linear-gradient(90deg, var(--color-accent-glow), transparent 90%)",
-          transformOrigin: "left",
-        }}
+          {/* 구분선 */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-14 h-px"
+            style={{
+              background:
+                "linear-gradient(90deg, var(--color-accent-glow), transparent 90%)",
+              transformOrigin: "left",
+            }}
           />
-          </div>
+        </div>
         <div className="flex-shrink-0 flex justify-center md:justify-end">
           <LunaOrb />
         </div>
@@ -355,8 +387,8 @@ function PurposeSection() {
         variants={fadeUp}
         className="text-luna-mist text-base md:text-lg leading-relaxed max-w-[600px] mb-12"
       >
-        이 사이트를 만든 이유는 세 가지입니다.
-        기술 이해도 부족을 인정하고, 그것을 채우기 위해 시작했습니다.
+        이 사이트를 만든 이유는 세 가지입니다. 기술 이해도 부족을 인정하고,
+        그것을 채우기 위해 시작했습니다.
       </motion.p>
 
       <motion.div variants={stagger} className="flex flex-col gap-4">
@@ -372,7 +404,10 @@ function PurposeSection() {
           >
             <div
               className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-              style={{ background: `${r.color}12`, border: `1px solid ${r.color}30` }}
+              style={{
+                background: `${r.color}12`,
+                border: `1px solid ${r.color}30`,
+              }}
             >
               {r.icon}
             </div>
@@ -383,7 +418,10 @@ function PurposeSection() {
               >
                 {r.title}
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--color-text-muted)" }}
+              >
                 {r.desc}
               </p>
             </div>
@@ -425,7 +463,11 @@ function TechSection() {
           const items = TECH_STACK.filter((t) => t.category === cat);
           const color = items[0].color;
           return (
-            <motion.div key={cat} variants={fadeUp} className="flex items-center gap-4">
+            <motion.div
+              key={cat}
+              variants={fadeUp}
+              className="flex items-center gap-4"
+            >
               <span
                 className="text-[10px] font-mono tracking-[0.12em] uppercase shrink-0 w-20 text-right"
                 style={{ color: "var(--color-text-muted)" }}
@@ -482,7 +524,10 @@ function StorySection() {
           initial={{ scaleY: 0 }}
           animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          style={{ background: "rgba(77,124,254,0.12)", transformOrigin: "top" }}
+          style={{
+            background: "rgba(77,124,254,0.12)",
+            transformOrigin: "top",
+          }}
         />
 
         <div className="flex flex-col gap-10">
@@ -492,7 +537,11 @@ function StorySection() {
               className="relative"
               initial={{ opacity: 0, x: -12 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
-              transition={{ delay: 0.3 + i * 0.12, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{
+                delay: 0.3 + i * 0.12,
+                duration: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
             >
               {/* 타임라인 점 */}
               <div
@@ -509,7 +558,9 @@ function StorySection() {
               </div>
 
               <div className="flex items-center gap-3 mb-2">
-                <h3 className="text-luna-silver font-semibold text-sm">{item.title}</h3>
+                <h3 className="text-luna-silver font-semibold text-sm">
+                  {item.title}
+                </h3>
                 <span
                   className="text-[10px] font-mono px-2 py-0.5 rounded-full"
                   style={{
@@ -521,7 +572,10 @@ function StorySection() {
                   {item.period}
                 </span>
               </div>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--color-text-muted)" }}
+              >
                 {item.story}
               </p>
             </motion.div>
@@ -561,11 +615,15 @@ function LearningSection() {
           className="absolute right-0 top-0 w-48 h-48 rounded-full pointer-events-none"
           style={{
             transform: "translate(30%, -30%)",
-            background: "radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%)",
+            background:
+              "radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%)",
             filter: "blur(24px)",
           }}
         />
-        <p className="text-xs font-mono tracking-[0.2em] uppercase mb-2" style={{ color: "#FB923C" }}>
+        <p
+          className="text-xs font-mono tracking-[0.2em] uppercase mb-2"
+          style={{ color: "#FB923C" }}
+        >
           AI 협업 방식
         </p>
         <h3
@@ -574,38 +632,61 @@ function LearningSection() {
         >
           붙여넣기가 아닌 대화
         </h3>
-        <p className="text-sm leading-relaxed max-w-[520px]" style={{ color: "var(--color-text-muted)" }}>
+        <p
+          className="text-sm leading-relaxed max-w-[520px]"
+          style={{ color: "var(--color-text-muted)" }}
+        >
           코드를 받으면 먼저 읽었습니다. 모르는 부분은 주석 설명을 요청했고,
           이해한 뒤에 직접 고쳐봤습니다. Claude는 선생님이 아니라
-          <span className="text-luna-silver"> 같이 코딩하는 동료</span>에 가까웠습니다.
+          <span className="text-luna-silver"> 같이 코딩하는 동료</span>에
+          가까웠습니다.
         </p>
 
         {/* 협업 흐름 */}
         <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-mono">
-          {["코드 요청", "→", "직접 읽기", "→", "모르면 질문", "→", "수정해보기", "→", "이해 확인"].map((step, i) => (
+          {[
+            "코드 요청",
+            "→",
+            "직접 읽기",
+            "→",
+            "모르면 질문",
+            "→",
+            "수정해보기",
+            "→",
+            "이해 확인",
+          ].map((step, i) => (
             <span
               key={i}
               style={{
-                color: step === "→"
-                  ? "rgba(200,214,232,0.2)"
-                  : "rgba(251,146,60,0.7)",
+                color:
+                  step === "→"
+                    ? "rgba(200,214,232,0.2)"
+                    : "rgba(251,146,60,0.7)",
               }}
             >
               {step !== "→" ? (
                 <span
                   className="px-2 py-0.5 rounded"
-                  style={{ background: "rgba(251,146,60,0.08)", border: "1px solid rgba(251,146,60,0.2)" }}
+                  style={{
+                    background: "rgba(251,146,60,0.08)",
+                    border: "1px solid rgba(251,146,60,0.2)",
+                  }}
                 >
                   {step}
                 </span>
-              ) : step}
+              ) : (
+                step
+              )}
             </span>
           ))}
         </div>
       </motion.div>
 
       {/* 배운 기술들 */}
-      <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <motion.div
+        variants={stagger}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+      >
         {LEARNINGS.map((l) => (
           <motion.div
             key={l.title}
@@ -618,8 +699,13 @@ function LearningSection() {
           >
             <span className="text-2xl mt-0.5 shrink-0">{l.icon}</span>
             <div>
-              <h3 className="text-luna-silver text-sm font-semibold mb-1">{l.title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+              <h3 className="text-luna-silver text-sm font-semibold mb-1">
+                {l.title}
+              </h3>
+              <p
+                className="text-xs leading-relaxed"
+                style={{ color: "var(--color-text-muted)" }}
+              >
                 {l.desc}
               </p>
             </div>
@@ -649,8 +735,7 @@ function FuturePlanSection() {
         variants={fadeUp}
         className="text-luna-mist text-sm leading-relaxed max-w-[480px] mb-10"
       >
-        사이트는 제출로 끝나지 않습니다.
-        입사 후에도 계속 업데이트할 예정입니다.
+        사이트는 제출로 끝나지 않습니다. 입사 후에도 계속 업데이트할 예정입니다.
       </motion.p>
 
       <motion.div variants={stagger} className="flex flex-col gap-3 mb-14">
@@ -674,12 +759,11 @@ function FuturePlanSection() {
 
       {/* 마무리 문장 */}
       <ContactSection
-              title="함께 만들어요."
-              description1="언제든지 연락주세요."
-              description2="언제든지 연락주세요."
-              sectionNumber="06"
-            />
-      
+        title="함께 만들어요."
+        description1="언제든지 연락주세요."
+        description2="언제든지 연락주세요."
+        sectionNumber="06"
+      />
     </motion.section>
   );
 }

@@ -14,7 +14,8 @@ const projects = [
     id: "kumo",
     title: "Kumo",
     subtitle: "클라우드 대시보드",
-    description: "실시간 데이터 시각화와 직관적인 UX를 갖춘 클라우드 모니터링 대시보드",
+    description:
+      "실시간 데이터 시각화와 직관적인 UX를 갖춘 클라우드 모니터링 대시보드",
     tags: ["Next.js", "TypeScript", "D3.js", "Tailwind"],
     color: "#4D7CFE",
     year: "2024",
@@ -50,7 +51,13 @@ const itemVariants = {
   },
 };
 
-function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+}) {
   const isEven = index % 2 === 0;
 
   return (
@@ -61,10 +68,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       }`}
     >
       {/* ── 이미지 영역 ── */}
-      <Link
-        href={`/${project.id}`}
-        className="block group md:[direction:ltr]"
-      >
+      <Link href={`/${project.id}`} className="block group md:[direction:ltr]">
         <motion.div
           className="relative aspect-[16/10] rounded-2xl overflow-hidden"
           style={{ backgroundColor: "var(--color-bg-surface)" }}
@@ -91,9 +95,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
             className="absolute inset-0 opacity-0 group-hover:opacity-100
                         transition-opacity duration-300
                         flex items-end p-6"
-                      
             style={{
-                background: "linear-gradient(to top, var(--card-overlay) 0%, transparent 60%)"
+              background:
+                "linear-gradient(to top, var(--card-overlay) 0%, transparent 60%)",
             }}
           >
             <span className="text-white font-medium flex items-center gap-2">
@@ -117,7 +121,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       </Link>
 
       {/* ── 텍스트 영역 ── */}
-      <div className={`space-y-4 md:[direction:ltr] ${isEven ? "" : "md:text-right"}`}>
+      <div
+        className={`space-y-4 md:[direction:ltr] ${isEven ? "" : "md:text-right"}`}
+      >
         <div
           className="flex items-center gap-3 text-sm"
           style={{ color: "var(--color-text-muted)" }}
@@ -134,8 +140,12 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           <h3
             className="text-2xl md:text-3xl font-bold"
             style={{ color: "var(--color-text-glow)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-glow)")}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.color = "var(--color-accent)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = "var(--color-text-glow)")
+            }
           >
             {project.title}
           </h3>
@@ -148,7 +158,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           {project.description}
         </p>
 
-        <div className={`flex flex-wrap gap-2 ${isEven ? "" : "md:justify-end"}`}>
+        <div
+          className={`flex flex-wrap gap-2 ${isEven ? "" : "md:justify-end"}`}
+        >
           {project.tags.map((tag, i) => (
             <span
               key={i}
@@ -183,16 +195,25 @@ export function ProjectsSection() {
         viewport={{ once: true, margin: "-100px" }}
       >
         {/* ── 섹션 타이틀 ── */}
-      <motion.div variants={itemVariants} className="mb-16">
-        <div className="flex items-center gap-4 mb-4">
-            <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
-                02
+        <motion.div variants={itemVariants} className="mb-16">
+          <div className="flex items-center gap-4 mb-4">
+            <span
+              className="text-xs font-mono"
+              style={{ color: "var(--color-accent)", minWidth: "2rem" }}
+            >
+              02
             </span>
-        <div className="flex-1 h-px" style={{ background: "var(--color-accent-glow)" }} />
-        <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
-            Projects
-        </span>
-    </div>
+            <div
+              className="flex-1 h-px"
+              style={{ background: "var(--color-accent-glow)" }}
+            />
+            <span
+              className="text-xs font-mono tracking-[0.15em] uppercase"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              Projects
+            </span>
+          </div>
           <h2
             className="text-3xl md:text-4xl font-bold mt-2"
             style={{ color: "var(--color-text-glow)" }}

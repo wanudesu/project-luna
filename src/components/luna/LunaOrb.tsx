@@ -21,44 +21,62 @@ export function LunaOrb() {
   const isLight = mounted && theme === "light";
 
   // 📖 표시할 코드 라인들
-//    실제 이 사이트에서 쓴 코드 스니펫을 보여줘서
-//    "진짜로 만든 사이트"라는 느낌을 줍니다.
-const CODE_LINES = [
-  { indent: 0, tokens: [
-    { text: "const ",    color: isLight ? "#7C3AED" : "#569CD6" },
-    { text: "MoonOrb",  color: isLight ? "#1D4ED8" : "#9CDCFE" },
-    { text: " = () => {", color: isLight ? "#374151" : "#D4D4D4" },
-  ]},
-  { indent: 1, tokens: [
-    { text: "const ",      color: isLight ? "#7C3AED" : "#569CD6" },
-    { text: "{ theme }",   color: isLight ? "#1D4ED8" : "#9CDCFE" },
-    { text: " = ",         color: isLight ? "#374151" : "#D4D4D4" },
-    { text: "useTheme",    color: isLight ? "#059669" : "#4EC994" },
-    { text: "()",          color: isLight ? "#374151" : "#D4D4D4" },
-  ]},
-  { indent: 1, tokens: [
-    { text: "const ",       color: isLight ? "#7C3AED" : "#569CD6" },
-    { text: "isDark",       color: isLight ? "#1D4ED8" : "#9CDCFE" },
-    { text: " = theme === ", color: isLight ? "#374151" : "#D4D4D4" },
-    { text: '"dark"',       color: isLight ? "#B45309" : "#CE9178" },
-  ]},
-  { indent: 0, tokens: [] },
-  { indent: 1, tokens: [
-    { text: "// 🌙 달 → ☀️ 해 전환", color: isLight ? "#6B7280" : "#6A9955" },
-  ]},
-  { indent: 1, tokens: [
-    { text: "return ",   color: isLight ? "#7C3AED" : "#C586C0" },
-    { text: "isDark",    color: isLight ? "#1D4ED8" : "#9CDCFE" },
-    { text: " ? ",       color: isLight ? "#374151" : "#D4D4D4" },
-    { text: "<Moon />",  color: isLight ? "#1D4ED8" : "#4D7CFE" },
-    { text: " : ",       color: isLight ? "#374151" : "#D4D4D4" },
-    { text: "<Sun />",   color: isLight ? "#B45309" : "#FBBF24" },
-  ]},
-  { indent: 0, tokens: [
-    { text: "}",  color: isLight ? "#374151" : "#D4D4D4" },
-  ]},
-];
-
+  //    실제 이 사이트에서 쓴 코드 스니펫을 보여줘서
+  //    "진짜로 만든 사이트"라는 느낌을 줍니다.
+  const CODE_LINES = [
+    {
+      indent: 0,
+      tokens: [
+        { text: "const ", color: isLight ? "#7C3AED" : "#569CD6" },
+        { text: "MoonOrb", color: isLight ? "#1D4ED8" : "#9CDCFE" },
+        { text: " = () => {", color: isLight ? "#374151" : "#D4D4D4" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { text: "const ", color: isLight ? "#7C3AED" : "#569CD6" },
+        { text: "{ theme }", color: isLight ? "#1D4ED8" : "#9CDCFE" },
+        { text: " = ", color: isLight ? "#374151" : "#D4D4D4" },
+        { text: "useTheme", color: isLight ? "#059669" : "#4EC994" },
+        { text: "()", color: isLight ? "#374151" : "#D4D4D4" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { text: "const ", color: isLight ? "#7C3AED" : "#569CD6" },
+        { text: "isDark", color: isLight ? "#1D4ED8" : "#9CDCFE" },
+        { text: " = theme === ", color: isLight ? "#374151" : "#D4D4D4" },
+        { text: '"dark"', color: isLight ? "#B45309" : "#CE9178" },
+      ],
+    },
+    { indent: 0, tokens: [] },
+    {
+      indent: 1,
+      tokens: [
+        {
+          text: "// 🌙 달 → ☀️ 해 전환",
+          color: isLight ? "#6B7280" : "#6A9955",
+        },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { text: "return ", color: isLight ? "#7C3AED" : "#C586C0" },
+        { text: "isDark", color: isLight ? "#1D4ED8" : "#9CDCFE" },
+        { text: " ? ", color: isLight ? "#374151" : "#D4D4D4" },
+        { text: "<Moon />", color: isLight ? "#1D4ED8" : "#4D7CFE" },
+        { text: " : ", color: isLight ? "#374151" : "#D4D4D4" },
+        { text: "<Sun />", color: isLight ? "#B45309" : "#FBBF24" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [{ text: "}", color: isLight ? "#374151" : "#D4D4D4" }],
+    },
+  ];
 
   // 📖 isInView가 true가 되면 라인을 하나씩 순차적으로 표시
   useEffect(() => {
@@ -94,7 +112,8 @@ const CODE_LINES = [
         animate={{ opacity: [0.06, 0.15, 0.06], scale: [1, 1.05, 1] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: "radial-gradient(circle, rgba(77,124,254,0.2) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(77,124,254,0.2) 0%, transparent 70%)",
         }}
       />
 
@@ -102,12 +121,16 @@ const CODE_LINES = [
       <motion.div
         className="relative rounded-2xl overflow-hidden"
         style={{
-          background: isLight ? "rgba(250,250,255,0.95)" : "rgba(10,16,32,0.85)",
-          border: isLight ? "1px solid rgba(0,0,0,0.1)" : "1px solid rgba(77,124,254,0.15)",
+          background: isLight
+            ? "rgba(250,250,255,0.95)"
+            : "rgba(10,16,32,0.85)",
+          border: isLight
+            ? "1px solid rgba(0,0,0,0.1)"
+            : "1px solid rgba(77,124,254,0.15)",
           backdropFilter: "blur(16px)",
-          boxShadow: isLight 
-  ? "0 24px 60px rgba(180,120,60,0.15), 0 0 0 1px rgba(184,120,32,0.12)"
-  : "0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(77,124,254,0.08)"
+          boxShadow: isLight
+            ? "0 24px 60px rgba(180,120,60,0.15), 0 0 0 1px rgba(184,120,32,0.12)"
+            : "0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(77,124,254,0.08)",
         }}
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -115,7 +138,11 @@ const CODE_LINES = [
         {/* 상단 타이틀 바 */}
         <div
           className="flex items-center gap-3 px-4 py-3"
-          style={{ borderBottom: isLight ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(77,124,254,0.1)", }}
+          style={{
+            borderBottom: isLight
+              ? "1px solid rgba(0,0,0,0.08)"
+              : "1px solid rgba(77,124,254,0.1)",
+          }}
         >
           {/* 신호등 버튼 */}
           <div className="flex gap-1.5">
@@ -128,15 +155,17 @@ const CODE_LINES = [
             ))}
           </div>
           {/* 파일명 */}
-          <div
-            className="flex-1 flex justify-center"
-          >
+          <div className="flex-1 flex justify-center">
             <span
               className="text-[11px] font-mono px-3 py-0.5 rounded-md"
               style={{
                 color: isLight ? "#1D4ED8" : "rgba(173,209,255,0.36)",
-                background: isLight ? "rgba(77,124,254,0.08)" : "rgba(77,124,254,0.06)",
-                border: isLight ? "1px solid rgba(77,124,254,0.25)" : "1px solid rgba(77,124,254,0.1)",
+                background: isLight
+                  ? "rgba(77,124,254,0.08)"
+                  : "rgba(77,124,254,0.06)",
+                border: isLight
+                  ? "1px solid rgba(77,124,254,0.25)"
+                  : "1px solid rgba(77,124,254,0.1)",
               }}
             >
               MoonOrb.tsx
@@ -154,13 +183,20 @@ const CODE_LINES = [
               key={lineIdx}
               className="flex gap-4"
               initial={{ opacity: 0, x: -8 }}
-              animate={lineIdx < visibleLines ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
+              animate={
+                lineIdx < visibleLines
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: -8 }
+              }
               transition={{ duration: 0.2 }}
             >
               {/* 라인 번호 */}
               <span
                 className="select-none text-right shrink-0"
-                style={{ color: isLight ? "rgba(0,0,0,0.2)" : "rgba(200,214,232,0.18)", minWidth: "1.2rem" }}
+                style={{
+                  color: isLight ? "rgba(0,0,0,0.2)" : "rgba(200,214,232,0.18)",
+                  minWidth: "1.2rem",
+                }}
               >
                 {lineIdx + 1}
               </span>
@@ -195,15 +231,25 @@ const CODE_LINES = [
         <div
           className="flex items-center justify-between px-4 py-2"
           style={{
-            borderTop: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(77,124,254,0.08)",
+            borderTop: isLight
+              ? "1px solid rgba(0,0,0,0.06)"
+              : "1px solid rgba(77,124,254,0.08)",
             background: isLight ? "rgba(240,240,248,0.8)" : "rgba(7,12,24,0.5)",
           }}
         >
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-mono" style={{ color: "#4D7CFE" }}>
+            <span
+              className="text-[10px] font-mono"
+              style={{ color: "#4D7CFE" }}
+            >
               TypeScript
             </span>
-            <span className="text-[10px] font-mono" style={{ color: isLight ? "rgba(0,0,0,0.35)" : "rgba(200,214,232,0.25)" }}>
+            <span
+              className="text-[10px] font-mono"
+              style={{
+                color: isLight ? "rgba(0,0,0,0.35)" : "rgba(200,214,232,0.25)",
+              }}
+            >
               UTF-8
             </span>
           </div>
@@ -214,7 +260,10 @@ const CODE_LINES = [
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
-            <span className="text-[10px] font-mono" style={{ color: isLight ? "#059669" : "#34D399" }}>
+            <span
+              className="text-[10px] font-mono"
+              style={{ color: isLight ? "#059669" : "#34D399" }}
+            >
               Ln {Math.min(visibleLines, CODE_LINES.length)}
             </span>
           </div>

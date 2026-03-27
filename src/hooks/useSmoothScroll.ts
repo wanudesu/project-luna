@@ -31,7 +31,7 @@ export function useSmoothScroll() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 📌 네비게이션 사용 예시
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 
+//
 // "use client";
 // import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 //

@@ -75,17 +75,29 @@ export function AboutSection() {
         {/* ── 섹션 타이틀 ── */}
         <motion.div variants={itemVariants} className="mb-16">
           <div className="flex items-center gap-4 mb-10">
-            <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
-            01
+            <span
+              className="text-xs font-mono"
+              style={{ color: "var(--color-accent)", minWidth: "2rem" }}
+            >
+              01
             </span>
-            <div className="flex-1 h-px" style={{ background: "var(--color-accent-glow)" }} />
-              <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
-                About
-              </span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "var(--color-text-glow)" }}>
+            <div
+              className="flex-1 h-px"
+              style={{ background: "var(--color-accent-glow)" }}
+            />
+            <span
+              className="text-xs font-mono tracking-[0.15em] uppercase"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              About
+            </span>
+          </div>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-2"
+            style={{ color: "var(--color-text-glow)" }}
+          >
             저에 대해 알려드릴게요
-            </h2>   
+          </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
@@ -96,25 +108,34 @@ export function AboutSection() {
               style={{ color: "var(--color-text)" }}
             >
               안녕하세요! 저는{" "}
-              <strong style={{ color: "var(--color-text-glow)" }}>사용자 경험</strong>과{" "}
-              <strong style={{ color: "var(--color-text-glow)" }}>디테일</strong>에 
-              집착하는 프론트엔드 개발자입니다.
+              <strong style={{ color: "var(--color-text-glow)" }}>
+                사용자 경험
+              </strong>
+              과{" "}
+              <strong style={{ color: "var(--color-text-glow)" }}>
+                디테일
+              </strong>
+              에 집착하는 프론트엔드 개발자입니다.
             </p>
             <p
               className="leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              코드 한 줄에도 이유가 있어야 한다고 믿습니다. 
-              단순히 동작하는 것을 넘어, 사용자가 즐거운 경험을 할 수 있도록 
-              인터랙션과 애니메이션에 특히 관심을 가지고 있습니다.
+              코드 한 줄에도 이유가 있어야 한다고 믿습니다. 단순히 동작하는 것을
+              넘어, 사용자가 즐거운 경험을 할 수 있도록 인터랙션과 애니메이션에
+              특히 관심을 가지고 있습니다.
             </p>
             <p
               className="leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              새로운 기술을 배우는 것을 좋아하며, 
-              최근에는 <span style={{ color: "var(--color-accent)" }}>Framer Motion</span>과{" "}
-              <span style={{ color: "var(--color-accent)" }}>3D 웹 그래픽</span>에 푹 빠져 있습니다.
+              새로운 기술을 배우는 것을 좋아하며, 최근에는{" "}
+              <span style={{ color: "var(--color-accent)" }}>
+                Framer Motion
+              </span>
+              과{" "}
+              <span style={{ color: "var(--color-accent)" }}>3D 웹 그래픽</span>
+              에 푹 빠져 있습니다.
             </p>
 
             {/* ── 경력 타임라인 ── */}

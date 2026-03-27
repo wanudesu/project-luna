@@ -30,7 +30,7 @@ import { useEffect } from "react";
 const pageVariants = {
   // 페이지 진입 전 상태
   initial: {
-    opacity: 0,           // 16px 아래에서 시작
+    opacity: 0, // 16px 아래에서 시작
     filter: "blur(4px)", // 약간의 블러로 '나타나는' 느낌
   },
   // 페이지가 완전히 보이는 상태
@@ -46,12 +46,12 @@ const pageVariants = {
     },
   },
   // 페이지가 사라지는 상태
-exit: {
-  opacity: 0,
-  transition: {
-    duration: 0.08,
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.08,
+    },
   },
-},
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -67,17 +67,18 @@ export function PageTransition({ children }: PageTransitionProps) {
   // 경로가 바뀔 때마다 이 값이 변경되어 리렌더링됩니다.
   const pathname = usePathname();
 
-// 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
-useEffect(() => {
-  const timer = setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, 800); // PageTransition exit duration과 맞춤
-  return () => clearTimeout(timer);
-}, [pathname]);
+  // 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, 800); // PageTransition exit duration과 맞춤
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
     <>
-      {/*
+      {
+        /*
         📖 AnimatePresence: 컴포넌트가 React 트리에서
         '제거'될 때도 애니메이션을 실행할 수 있게 해줍니다.
 
@@ -85,12 +86,11 @@ useEffect(() => {
           새 페이지 enter 애니메이션을 시작합니다.
           (동시 실행하면 두 페이지가 겹쳐 보입니다)
       */
-      // initial={false} 없을 때
-      // → 앱 첫 로드 시 "이미 화면에 있는" 컴포넌트도 initial → animate 실행
-
-      // initial={false} 있을 때
-      // → 앱 첫 로드 시 이미 있는 컴포넌트는 애니메이션 건너뜀
-      //   새로 추가되는 컴포넌트만 애니메이션 실행
+        // initial={false} 없을 때
+        // → 앱 첫 로드 시 "이미 화면에 있는" 컴포넌트도 initial → animate 실행
+        // initial={false} 있을 때
+        // → 앱 첫 로드 시 이미 있는 컴포넌트는 애니메이션 건너뜀
+        //   새로 추가되는 컴포넌트만 애니메이션 실행
       }
       <AnimatePresence mode="wait">
         {/*
