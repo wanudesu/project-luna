@@ -13,10 +13,10 @@ const projects = [
   {
     id: "kumo",
     title: "Kumo",
-    subtitle: "클라우드 대시보드",
+    subtitle: "구인구직 매칭 플랫폼",
     description:
-      "실시간 데이터 시각화와 직관적인 UX를 갖춘 클라우드 모니터링 대시보드",
-    tags: ["Next.js", "TypeScript", "D3.js", "Tailwind"],
+      "일본(도쿄·오사카)의 구인구직 정보를 지도 위에서 탐색하는 한·일 동시 지원 매칭 플랫폼.",
+    tags: ["Java", "Spring Boot", "JavaScript", "CSS"],
     color: "#4D7CFE",
     year: "2024",
   },
@@ -24,7 +24,7 @@ const projects = [
     id: "luna",
     title: "Luna",
     subtitle: "포트폴리오 사이트",
-    description: "달과 태양의 테마 전환이 특징인 개인 포트폴리오 웹사이트",
+    description: "처음 쓰는 기술로, AI와 함께 만든 포트폴리오",
     tags: ["Next.js", "Framer Motion", "Tailwind"],
     color: "#FBBF24",
     year: "2024",

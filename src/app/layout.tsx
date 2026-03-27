@@ -11,6 +11,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { ScrollButtons } from "@/components/layout/ScrollButtons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
           <Header />
           <PageTransition>{children}</PageTransition>
         </ThemeProvider>
+        <ScrollButtons />
       </body>
     </html>
   );
