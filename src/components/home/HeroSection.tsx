@@ -248,14 +248,10 @@ export function HeroSection() {
           style={{
             background:
               "linear-gradient(to bottom, var(--color-accent), transparent)",
+            originY: 0,
           }}
           animate={{ scaleY: [0, 1, 0], opacity: [0, 1, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          style={{
-            originY: 0,
-            background:
-              "linear-gradient(to bottom, var(--color-accent), transparent)",
-          }}
         />
       </motion.div>
     </section>

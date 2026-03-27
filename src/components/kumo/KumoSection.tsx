@@ -934,9 +934,9 @@ function ReflectionSection() {
       </motion.div>
 
       <ContactSection
-        title="함께 만들어요."
-        description1="언제든지 연락주세요."
-        description2="언제든지 연락주세요."
+        title="편하게 연락주세요."
+        description1="인사도 좋아요."
+        description2="언제든지 기다리고 있어요."
         sectionNumber="07"
       />
     </motion.section>

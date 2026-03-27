@@ -185,21 +185,21 @@ function IntroSection() {
               className="text-5xl md:text-7xl font-bold leading-tight mb-8"
               style={{ color: "var(--color-text-glow)" }}
             >
-              만드는 것을
+              완성보다
               <br />
               <span style={{ color: "var(--color-accent)" }}>
-                좋아하는
+                완성도가
               </span>{" "}
-              사람.
+              먼저에요
             </motion.h1>
             <motion.p
               variants={fadeUpVariants}
               className="text-lg md:text-xl leading-relaxed"
               style={{ color: "var(--color-text)" }}
             >
-              요리, 미술, 코드 — 형태는 달라도 항상 무언가를 만들어왔습니다.
+              이 사이트도 그렇게 만들었어요. 처음 쓰는 기술인데도
               <br />
-              디테일에 집착하고, 이유를 묻고, 끝까지 완성하려는 사람입니다.
+              대충 만들자는 생각은 한 번도 안 했어요.
             </motion.p>
             <motion.div
               variants={fadeUpVariants}
@@ -245,11 +245,6 @@ function MonozukuriSection() {
   const { ref, isInView } = useScrollReveal();
   const items = [
     {
-      emoji: "🍳",
-      title: "요리 (특히 일식)",
-      desc: "자취하면서 직접 만들기 시작했어요. 레시피대로만 하면 재미없어서 조금씩 바꿔보는 게 즐거워요.",
-    },
-    {
       emoji: "🎨",
       title: "미술 & 디자인",
       desc: "어릴 때부터 그리고 만드는 걸 좋아했어요. 지금은 UI 디자인으로 이어지고 있고요.",
@@ -257,7 +252,12 @@ function MonozukuriSection() {
     {
       emoji: "💻",
       title: "코드",
-      desc: "나만의 코드로 뭔가를 만들 수 있다는 게 신기해서 시작했어요. 처음 화면에 무언가 뜨는 그 순간이 좋아요.",
+      desc: "노트북 하나로 언제 어디서나 만들 수 있다는게 좋아서 시작했어요. ",
+    },
+    {
+      emoji: "🍳",
+      title: "요리 (특히 일식)",
+      desc: "자취하면서 직접 만들기 시작했어요. 레시피대로만 하면 재미없어서 조금씩 바꿔보는 게 즐거워요.",
     },
     {
       emoji: "🏙️",
@@ -274,30 +274,17 @@ function MonozukuriSection() {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div variants={fadeUpVariants}>
-            <SectionLabel number="01" label="ものづくり" />
+            <SectionLabel number="01" label="INTERESTS" />
           </motion.div>
           <motion.h2
             variants={fadeUpVariants}
             className="text-3xl md:text-4xl font-bold mb-6"
             style={{ color: "var(--color-text-glow)" }}
           >
-            눈치채면 항상
+            형태는 달라도
             <br />
-            무언가를 만들고 있어요.
+            항상 뭔가에 빠져있어요.
           </motion.h2>
-          <motion.p
-            variants={fadeUpVariants}
-            className="text-base leading-relaxed mb-16 max-w-xl"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            The SSS 설명회에서 사이토상이 말했어요.
-            <br />
-            <span style={{ color: "var(--color-text)" }}>
-              "휴일이라도 어느 순간 코드를 쓰고 있는 사람."
-            </span>
-            <br />
-            저는 코드뿐 아니라 요리도, 그림도 그렇게 하더라고요.
-          </motion.p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {items.map((item, i) => (
               <motion.div
@@ -344,25 +331,25 @@ function JourneySection() {
       period: "고등학생",
       title: "일본어와의 첫 만남",
       desc: "수업에서 처음 일본어를 접했어요. 처음엔 잘 몰랐는데, 알아가면서 재밌어졌고 일본에서 일하고 싶다는 생각이 생겼어요.",
-      tag: "きっかけ",
+      tag: "시작",
     },
     {
       period: "군 복무 중",
       title: "학점은행제 + 공부 시작",
-      desc: "시간이 생겨서 학점은행제 수업을 들었어요. 솔직히 집중은 못 했지만, 준비는 멈추지 않으려 했어요.",
-      tag: "継続",
+      desc: "군대에서도 학업을 이어가기 위해 학점은행제를 이용했어요. 집중하지 못한 날도 있지만, 준비는 멈추지 않으려 했어요.",
+      tag: "계속",
     },
     {
       period: "2025 ~ 2026",
       title: "SCIT 마스터 과정",
-      desc: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어를 동시에 배웠어요. 팀 프로젝트에서 CSS를 주로 맡았는데 너무 재밌었어요. 그게 프론트엔드로 방향을 잡은 계기가 됐어요.",
-      tag: "転換点",
+      desc: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어를 동시에 배웠어요. 팀 프로젝트에서 UI/UX 설계를 맡았는데 너무 재밌었어요. 그게 UI/UX 엔지니어로 방향을 잡은 계기가 됐어요.",
+      tag: "전환점",
     },
     {
       period: "지금",
       title: "Project Luna",
-      desc: "학원에서 배운 Java가 아닌, 스스로 선택한 Next.js로 포트폴리오를 만들고 있어요. AI와 페어 프로그래밍하면서 코드 하나하나 이해하는 중이에요.",
-      tag: "現在",
+      desc: "학원에서 배운 Java가 아닌, 스스로 선택한 Next.js로 포트폴리오를 만들고 있어요. AI와 함께 프로그래밍하면서 공부해나가는 중이에요.",
+      tag: "현재",
     },
   ];
   return (
@@ -381,9 +368,9 @@ function JourneySection() {
             className="text-3xl md:text-4xl font-bold mb-16"
             style={{ color: "var(--color-text-glow)" }}
           >
-            거창하지 않아요.
+            멈추지
             <br />
-            그냥 계속 했을 뿐이에요.
+            않았어요.
           </motion.h2>
           <div className="relative">
             <div
@@ -468,9 +455,9 @@ function WhyJapanSection() {
               className="text-3xl md:text-4xl font-bold mb-6"
               style={{ color: "var(--color-text-glow)" }}
             >
-              좋아서 시작했고,
+              일본어가 좋았어요.
               <br />
-              계속했을 뿐입니다.
+              그게 전부에요.
             </h2>
             <p
               className="text-base leading-relaxed max-w-xl"
@@ -482,7 +469,7 @@ function WhyJapanSection() {
               <br />
               <br />
               거창한 이유는 없어요. 그냥 좋았고, 그 마음을 놓지 않았더니 N1
-              취득, SCIT 과정, 그리고 지금 여기까지 왔어요.
+              취득, SCIT 마스터, 그리고 지금 여기까지 왔어요.
             </p>
           </motion.div>
           <motion.div
@@ -498,21 +485,21 @@ function WhyJapanSection() {
               className="text-xl font-bold mb-4"
               style={{ color: "var(--color-accent)" }}
             >
-              왜 The SSS인가요?
+              왜 THE SSS인가요?
             </h3>
             <div className="space-y-4">
               {[
                 {
                   title: "프론트엔드 특화",
-                  desc: "백엔드는 파트너사에 맡기고 프론트에 집중하는 환경이 저에게 맞아요. CSS로 화면을 만드는 게 제일 재밌거든요.",
+                  desc: "프론트에 집중할 수 있는 환경이 좋아요. 실제로 보이는 화면을 만드는 게 제일 재밌거든요. 백엔드보다 사용자가 직접 느끼는 부분을 다루고 싶어요.",
                 },
                 {
                   title: "AI를 적극 활용하는 문화",
-                  desc: "새로운 모델이 나오면 바로 써보는 팀. 저도 그렇게 일하고 싶어요. 도구를 잘 쓰는 게 실력이라고 생각해요.",
+                  desc: "AI를 도구로 자연스럽게 쓰는 팀이 좋아요. 이 포트폴리오도 Claude와 함께 만들었어요.",
                 },
                 {
-                  title: "자사 빌딩, 파견 없음",
-                  desc: "한 팀과 오래 함께하면서 성장하고 싶어요. 3개월마다 다른 회사에 나가는 환경보다 같은 팀에서 깊이 일하는 게 맞아요.",
+                  title: "소수정예 팀",
+                  desc: "헤어지지 않고 한 팀에서 즐겁게, 함께 성장해나가고 싶어요. 작은 팀일수록 한 사람 한 사람의 영향이 크다고 생각해요.",
                 },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4">
@@ -559,7 +546,7 @@ function SkillsSection() {
       "jQuery",
       "Ajax",
     ],
-    "스스로 익힌 것": [
+    "스스로 배우는 중": [
       "Next.js",
       "TypeScript",
       "Framer Motion",
@@ -646,9 +633,9 @@ export function AboutSection() {
       <WhyJapanSection />
       <SkillsSection />
       <ContactSection
-        title="함께 만들어요."
-        description1="언제든지 연락주세요."
-        description2="언제든지 연락주세요."
+        title="편하게 연락주세요."
+        description1="인사도 좋아요."
+        description2="언제든지 기다리고 있어요."
         sectionNumber="05"
       />
     </>

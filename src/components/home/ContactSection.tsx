@@ -37,44 +37,53 @@ const socialLinks = [
     ),
   },
   {
-  name: "Wantedly",
-  href: "https://www.wantedly.com/id/wanudesu",
-  icon: (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M2.2 4.5L8.7 19.5H11.1L4.6 4.5H2.2ZM10.5 4.5L17 19.5H19.4L12.9 4.5H10.5ZM20.7 4.3a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3Z" />
-    </svg>
-  ),
-},
+    name: "Wantedly",
+    href: "https://www.wantedly.com/id/wanudesu",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M2.2 4.5L8.7 19.5H11.1L4.6 4.5H2.2ZM10.5 4.5L17 19.5H19.4L12.9 4.5H10.5ZM20.7 4.3a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3Z" />
+      </svg>
+    ),
+  },
   {
     name: "Email",
     href: "mailto:wanudesu@gmail.com",
     icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        />
       </svg>
     ),
   },
 ];
 
 interface ContactSectionProps {
-    title?: string;
-    description1?: string;
-    description2?: string;
-    sectionNumber?: string;
+  title?: string;
+  description1?: string;
+  description2?: string;
+  sectionNumber?: string;
 }
 
 export function ContactSection({
-    title = "함께 일해요",
-    description1 = "새로운 프로젝트, 협업 제안, 또는 그냥 인사도 좋아요.",
-    description2 = "편하게 연락주세요!",
-    sectionNumber = "03",
+  title = "함께 일해요.",
+  description1 = "새로운 프로젝트나 협업 제안,",
+  description2 = "편하게 연락주세요!",
+  sectionNumber = "03",
 }: ContactSectionProps) {
-
   return (
     <section
       id="contact"
@@ -94,12 +103,18 @@ export function ContactSection({
           className="font-mono text-sm tracking-wider"
           style={{ color: "var(--color-accent)" }}
         >
-                  <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
-                      {sectionNumber}
-                  </span>
-                  <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
-                      . CONTACT
-                  </span>
+          <span
+            className="text-xs font-mono"
+            style={{ color: "var(--color-accent)", minWidth: "2rem" }}
+          >
+            {sectionNumber}
+          </span>
+          <span
+            className="text-xs font-mono tracking-[0.15em] uppercase"
+            style={{ color: "var(--color-text-muted)" }}
+          >
+            . CONTACT
+          </span>
         </motion.span>
 
         <motion.h2
@@ -107,9 +122,7 @@ export function ContactSection({
           className="text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6"
           style={{ color: "var(--color-text-glow)" }}
         >
-                  <span>
-                      {title}
-          </span>
+          <span>{title}</span>
         </motion.h2>
 
         <motion.p
@@ -117,11 +130,11 @@ export function ContactSection({
           className="text-lg mb-12 max-w-xl mx-auto"
           style={{ color: "var(--color-text-muted)" }}
         >
-                  <span>
-                      {description1}
-                  <br />
-                      {description2}
-                  </span>
+          <span>
+            {description1}
+            <br />
+            {description2}
+          </span>
         </motion.p>
 
         {/* ── 이메일 버튼 (메인 CTA) ── */}
@@ -137,8 +150,18 @@ export function ContactSection({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
             </svg>
             이메일 보내기
           </motion.a>
@@ -151,21 +174,21 @@ export function ContactSection({
         >
           {socialLinks.map((link) => (
             <motion.a
-  key={link.name}
-  href={link.href}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="p-3 rounded-full"
-  style={{
-    color: "var(--color-text-muted)",
-    backgroundColor: "var(--color-bg-surface)",
-  }}
-  whileHover={{ scale: 1.1, y: -2 }}
-  whileTap={{ scale: 0.95 }}
-  title={link.name}
->
-  {link.icon}
-</motion.a>
+              key={link.name}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full"
+              style={{
+                color: "var(--color-text-muted)",
+                backgroundColor: "var(--color-bg-surface)",
+              }}
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              title={link.name}
+            >
+              {link.icon}
+            </motion.a>
           ))}
         </motion.div>
 
@@ -175,12 +198,11 @@ export function ContactSection({
           className="mt-24 pt-8"
           style={{ borderTop: "1px solid var(--color-border)" }}
         >
-          <p
-            className="text-sm"
-            style={{ color: "var(--color-text-muted)" }}
-          >
+          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
             Designed & Built by{" "}
-            <span style={{ color: "var(--color-accent)" }}>이원우 with Claude</span>
+            <span style={{ color: "var(--color-accent)" }}>
+              이원우 with Claude
+            </span>
           </p>
           <p
             className="text-xs mt-2"

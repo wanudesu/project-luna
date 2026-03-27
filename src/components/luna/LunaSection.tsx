@@ -118,7 +118,7 @@ const FUTURE_PLANS = [
   { icon: "🌅", text: "라이트/다크 모드 토글 + 해 떠오르는 애니메이션" },
   { icon: "☁️", text: "AWS S3 + CloudFront 배포" },
   { icon: "📱", text: "모바일 반응형 완성도 높이기" },
-  { icon: "🇯🇵", text: "The SSS 입사 후 실제 프로젝트로 계속 성장" },
+  { icon: "🇯🇵", text: "THE SSS 입사 후 실제 프로젝트로 계속 성장" },
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -356,7 +356,7 @@ function PurposeSection() {
     {
       icon: "📋",
       title: "포트폴리오 제출",
-      desc: "The SSS 채용 전형에 포트폴리오를 제출해야 했다. 형식은 자유지만 웹사이트 형식을 가장 좋게 본다고 했다.",
+      desc: "THE SSS 채용 전형에 포트폴리오를 제출해야 했다. 형식은 자유지만 웹사이트 형식을 가장 좋게 본다고 했다.",
       color: "#4D7CFE",
     },
     {
@@ -368,7 +368,7 @@ function PurposeSection() {
     {
       icon: "🤖",
       title: "AI 활용 능력 증명",
-      desc: "SSS는 AI를 적극 활용하는 문화를 강조했다. 코드를 이해하면서 AI와 협업하는 것 자체를 보여주고 싶었다.",
+      desc: "THE SSS는 AI를 적극 활용하는 문화를 강조했다. 코드를 이해하면서 AI와 협업하는 것 자체를 보여주고 싶었다.",
       color: "#FB923C",
     },
   ];
@@ -759,9 +759,9 @@ function FuturePlanSection() {
 
       {/* 마무리 문장 */}
       <ContactSection
-        title="함께 만들어요."
-        description1="언제든지 연락주세요."
-        description2="언제든지 연락주세요."
+        title="편하게 연락주세요."
+        description1="인사도 좋아요."
+        description2="언제든지 기다리고 있어요."
         sectionNumber="06"
       />
     </motion.section>

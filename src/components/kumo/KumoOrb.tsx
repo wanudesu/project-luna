@@ -16,6 +16,13 @@ const MAP_PINS = [
   { x: "34%", y: "62%", label: "大阪", delay: 0.3, color: "#A78BFA" },
   { x: "68%", y: "55%", label: "渋谷", delay: 0.6, color: "#34D399" },
 ];
+// 지도 위 구름
+const MAP_CLOUDS = [
+  { x: "20%", y: "10%", scale: 1.2, delay: 0.6, floatX: 6, floatY: -3 },
+  { x: "69%", y: "20%", scale: 1.5, delay: 1.0, floatX: -5, floatY: -3 },
+  { x: "72%", y: "72%", scale: 0.9, delay: 0.8, floatX: 4, floatY: -5 },
+  { x: "10%", y: "58%", scale: 1.2, delay: 1.2, floatX: 6, floatY: -4 },
+];
 
 export function KumoOrb() {
   const [particles, setParticles] = useState<
@@ -280,16 +287,11 @@ export function KumoOrb() {
       </motion.div>
 
       {/* ── 구름들 (카드 주변에 흩뿌림) ── */}
-      {[
-        { x: "-5%", y: "8%", scale: 0.7, delay: 0.6 },
-        { x: "78%", y: "4%", scale: 0.5, delay: 1.0 },
-        { x: "82%", y: "72%", scale: 0.6, delay: 0.8 },
-        { x: "-8%", y: "65%", scale: 0.55, delay: 1.2 },
-      ].map((cloud, i) => (
+      {MAP_CLOUDS.map((cloud, i) => (
         <motion.div
           key={i}
           className="absolute pointer-events-none"
-          style={{ left: cloud.x, top: cloud.y }}
+          style={{ left: cloud.x, top: cloud.y, zIndex: 10 }}
           initial={{ opacity: 0, scale: 0.3 }}
           animate={{ opacity: 1, scale: cloud.scale }}
           transition={{
@@ -299,7 +301,7 @@ export function KumoOrb() {
           }}
         >
           <motion.div
-            animate={{ x: [0, 6, 0], y: [0, -3, 0] }}
+            animate={{ x: [0, cloud.floatX, 0], y: [0, cloud.floatY, 0] }}
             transition={{
               duration: 5 + i,
               repeat: Infinity,
@@ -307,7 +309,11 @@ export function KumoOrb() {
               delay: i * 0.5,
             }}
           >
-            <CloudSVG opacity={0.25 + i * 0.03} accentColor={accentColor} />
+            <CloudSVG
+              opacity={0.25 + i * 0.03}
+              accentColor={accentColor}
+              isLight={mounted && theme === "light"}
+            />
           </motion.div>
         </motion.div>
       ))}
@@ -319,24 +325,21 @@ export function KumoOrb() {
 function CloudSVG({
   opacity,
   accentColor,
+  isLight,
 }: {
   opacity: number;
   accentColor: string;
+  isLight: boolean;
 }) {
-  const c = `${accentColor}${opacity})`;
+  const c = isLight
+    ? `rgba(255, 252, 245, ${opacity + 0.35})`
+    : `rgba(200, 215, 255, ${opacity + 0.15})`;
+
   return (
     <svg width="90" height="50" viewBox="0 0 90 50" fill="none">
       <path
         d="M15 38 Q8 38 8 31 Q8 24 15 24 Q15 16 24 16 Q28 10 36 12 Q40 6 50 8 Q62 8 64 20 Q72 20 72 28 Q72 38 62 38 Z"
         fill={c}
-      />
-      {/* 하이라이트 */}
-      <path
-        d="M22 22 Q30 16 40 18 Q50 14 56 20"
-        stroke={`rgba(180,210,255,${opacity * 0.6})`}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
       />
     </svg>
   );
