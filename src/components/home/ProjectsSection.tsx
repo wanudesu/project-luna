@@ -125,7 +125,7 @@ function ProjectCard({
         className={`space-y-4 md:[direction:ltr] ${isEven ? "" : "md:text-right"}`}
       >
         <div
-          className="flex items-center gap-3 text-sm"
+          className={`flex items-center gap-3 text-sm ${isEven ? "" : "md:justify-end"}`}
           style={{ color: "var(--color-text-muted)" }}
         >
           <span className="font-mono">{project.year}</span>

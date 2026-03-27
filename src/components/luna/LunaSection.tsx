@@ -301,9 +301,9 @@ function HeroBlock() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
               style={{
+                background: "var(--color-accent-glow)",
+                border: "1px solid var(--color-accent)",
                 color: "var(--color-accent)",
-                border: "1px solid var(--color-accent-glow)",
-                background: "rgba(77,124,254,0.08)",
               }}
             >
               <span>🔗</span>
