@@ -173,12 +173,9 @@ export function AboutSection() {
                         backgroundColor: "var(--color-bg-surface)",
                         color: "var(--color-text)",
                         border: "1px solid var(--color-border)",
-                        transition: "border-color 0.2s, color 0.2s",
                       }}
                       whileHover={{
                         scale: 1.05,
-                        borderColor: "var(--color-accent)",
-                        color: "var(--color-accent)",
                       }}
                       whileTap={{ scale: 0.95 }}
                     >

@@ -151,23 +151,21 @@ export function ContactSection({
         >
           {socialLinks.map((link) => (
             <motion.a
-              key={link.name}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full transition-colors duration-200"
-              style={{
-                color: "var(--color-text-muted)",
-                backgroundColor: "var(--color-bg-surface)",
-              }}
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
-              title={link.name}
-            >
-              {link.icon}
-            </motion.a>
+  key={link.name}
+  href={link.href}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-3 rounded-full"
+  style={{
+    color: "var(--color-text-muted)",
+    backgroundColor: "var(--color-bg-surface)",
+  }}
+  whileHover={{ scale: 1.1, y: -2 }}
+  whileTap={{ scale: 0.95 }}
+  title={link.name}
+>
+  {link.icon}
+</motion.a>
           ))}
         </motion.div>
 

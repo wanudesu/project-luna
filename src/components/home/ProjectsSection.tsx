@@ -132,7 +132,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 
         <Link href={`/${project.id}`}>
           <h3
-            className="text-2xl md:text-3xl font-bold transition-colors duration-200"
+            className="text-2xl md:text-3xl font-bold"
             style={{ color: "var(--color-text-glow)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-glow)")}
