@@ -188,7 +188,7 @@ export function ProjectsSection() {
             <span className="text-xs font-mono" style={{ color: "var(--color-accent)", minWidth: "2rem" }}>
                 02
             </span>
-        <div className="flex-1 h-px" style={{ background: "rgba(77,124,254,0.12)" }} />
+        <div className="flex-1 h-px" style={{ background: "var(--color-accent-glow)" }} />
         <span className="text-xs font-mono tracking-[0.15em] uppercase" style={{ color: "var(--color-text-muted)" }}>
             Projects
         </span>

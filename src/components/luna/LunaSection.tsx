@@ -186,11 +186,19 @@ export function LunaSection() {
 function SectionLabel({ index, title }: { index: string; title: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
-      <span className="text-xs font-mono tracking-[0.2em] text-luna-accent" style={{ minWidth: "2rem" }}>
+      <span
+        className="text-xs font-mono tracking-[0.2em] text-luna-accent"
+        style={{ minWidth: "2rem" }}
+      >
         {index}
       </span>
-      <div className="flex-1 h-px" style={{ background: "rgba(77,124,254,0.12)" }} />
-      <h2 className="text-xs font-mono tracking-[0.15em] text-luna-mist uppercase">{title}</h2>
+      <div
+        className="flex-1 h-px"
+        style={{ background: "var(--color-accent-glow)", }}
+      />
+      <h2 className="text-xs font-mono tracking-[0.15em] text-luna-mist uppercase">
+        {title}
+      </h2>
     </div>
   );
 }
@@ -258,8 +266,8 @@ function HeroBlock() {
             key={b.text}
             className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
             style={{
-              background: "rgba(200,214,232,0.04)",
-              border: "1px solid rgba(200,214,232,0.1)",
+              background: "var(--color-bg-surface)",
+              border: "1px solid var(--color-border)",
               color: "var(--color-text)",
             }}
           >
@@ -273,9 +281,9 @@ function HeroBlock() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono transition-opacity hover:opacity-80"
               style={{
-                background: "rgba(77,124,254,0.08)",
+                color: "var(--color-accent)",
                 border: "1px solid var(--color-accent-glow)",
-                color: "#4D7CFE",
+                background: "rgba(77,124,254,0.08)"
               }}
             >
               <span>🔗</span>
@@ -293,7 +301,7 @@ function HeroBlock() {
         transition={{ delay: 0.8, duration: 0.8 }}
         className="mt-14 h-px"
         style={{
-          background: "linear-gradient(90deg, rgba(77,124,254,0.5), rgba(77,124,254,0.05) 70%, transparent)",
+          background: "linear-gradient(90deg, var(--color-accent-glow), transparent 90%)",
           transformOrigin: "left",
         }}
           />

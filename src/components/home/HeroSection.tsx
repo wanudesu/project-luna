@@ -95,8 +95,7 @@ export function HeroSection() {
       <div
         className="absolute bottom-0 left-0 right-0 h-px -z-10"
         style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(77,124,254,0.3), transparent)",
+          background: "linear-gradient(90deg, transparent, var(--color-accent-glow), transparent)",
         }}
       />
 
