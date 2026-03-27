@@ -294,11 +294,9 @@ function MonozukuriSection() {
                 style={{
                   background: "var(--color-bg-navy)",
                   border: "1px solid var(--color-border)",
-                  transition: "background 0.8s ease, border-color 0.8s ease",
                 }}
                 whileHover={{
-                  borderColor: "var(--color-accent)",
-                  background: "var(--color-bg-surface)",
+                  scale: 1.02,
                 }}
                 transition={{ duration: 0.2 }}
               >
@@ -593,12 +591,9 @@ function SkillsSection() {
                         color: "var(--color-text)",
                         border: "1px solid var(--color-border)",
                         background: "var(--color-bg-navy)",
-                        transition:
-                          "background 0.8s ease, border-color 0.8s ease",
                       }}
                       whileHover={{
-                        border: "1px solid var(--color-accent-glow)",
-                        background: "var(--color-accent-glow)",
+                        scale: 1.05,
                       }}
                       transition={{ duration: 0.15 }}
                     >

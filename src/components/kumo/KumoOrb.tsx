@@ -1,27 +1,68 @@
 "use client";
 // src/components/kumo/KumoOrb.tsx
-//
-// 📖 학습 포인트:
-// 1. SVG path로 구름 모양 만들기
-// 2. staggerChildren으로 요소들이 순차적으로 등장
-// 3. 각 요소에 독립적인 float 애니메이션 → 자연스러운 움직임
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
-// 지도 핀 데이터 (도쿄, 오사카 기반)
 const MAP_PINS = [
-  { x: "52%", y: "38%", label: "東京", delay: 0, color: "#4D7CFE" },
-  { x: "34%", y: "62%", label: "大阪", delay: 0.3, color: "#A78BFA" },
-  { x: "68%", y: "55%", label: "渋谷", delay: 0.6, color: "#34D399" },
+  { x: "53%", y: "56%", label: "東京", delay: 0, color: "#4D7CFE" },
+  { x: "40%", y: "61%", label: "大阪", delay: 0.3, color: "#03a436" },
 ];
-// 지도 위 구름
+
 const MAP_CLOUDS = [
   { x: "20%", y: "10%", scale: 1.2, delay: 0.6, floatX: 6, floatY: -3 },
   { x: "69%", y: "20%", scale: 1.5, delay: 1.0, floatX: -5, floatY: -3 },
-  { x: "72%", y: "72%", scale: 0.9, delay: 0.8, floatX: 4, floatY: -5 },
+  { x: "65%", y: "67%", scale: 1.9, delay: 0.8, floatX: 4, floatY: -5 },
   { x: "10%", y: "58%", scale: 1.2, delay: 1.2, floatX: 6, floatY: -4 },
+];
+
+// 300x300 viewBox에 직접 설계 — transform 없음
+// 일본 지도: 중앙~오른쪽에 배치, 혼슈는 SW→NE 대각선
+const JAPAN_ISLANDS = [
+  {
+    name: "홋카이도",
+    // 하코다테(남서) → 삿포로 → 왓카나이(북) → 네무로(동) → 에리모(남동) → 하코다테
+    d: `M 178,72
+        L 180,65 L 182,55 L 183,44
+        L 170,34 L 191,30 L 200,32
+        L 210,39 L 218,34 L 221,50
+        L 218,56 L 210,65 L 202,63
+        L 193,60 L 185,66 Z`,
+    delay: 0.4,
+    tx: -11,
+    ty: -22,
+  },
+  {
+    name: "혼슈",
+    d: `M 166,52
+        L 174,62 L 172,86 L 168,103
+        L 160,113 L 156,121 L 148,125
+        L 143,124 L 132,132 L 120,137
+        L 116,127 L 94,127 L 80,135
+        L 80,125 L 96,119 L 122,115
+        L 136,99 L 152,87 L 158,74
+        L 166,58 Z`,
+    delay: 0.8,
+  },
+  {
+    name: "시코쿠",
+    d: `M 91,134
+        L 106,129 L 118,132 L 118,139
+        L 105,143 L 90,141 L 86,137 Z`,
+    delay: 1.1,
+    tx: -4,
+    ty: 1,
+  },
+  {
+    name: "규슈",
+    d: `M 66,138
+        L 75,146 L 71,160 L 62,164
+        L 55,159 L 57,148 L 61,140 Z`,
+    delay: 1.4,
+    tx: 3,
+    ty: -5,
+  },
 ];
 
 export function KumoOrb() {
@@ -39,8 +80,6 @@ export function KumoOrb() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // 📖 mounted 전에는 테마를 알 수 없으니
-  //    클라이언트에서 마운트된 후에만 테마 적용
   const accentColor =
     mounted && theme === "light" ? "rgba(232,118,26," : "rgba(77,124,254,";
 
@@ -64,7 +103,6 @@ export function KumoOrb() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
     >
-      {/* ── 배경 글로우 ── */}
       <motion.div
         className="absolute inset-[-20px] rounded-full pointer-events-none"
         animate={{ opacity: [0.08, 0.18, 0.08], scale: [1, 1.06, 1] }}
@@ -74,7 +112,6 @@ export function KumoOrb() {
         }}
       />
 
-      {/* ── 메인 카드 (지도 느낌) ── */}
       <motion.div
         className="absolute inset-[20px] rounded-3xl overflow-hidden"
         style={{
@@ -85,7 +122,6 @@ export function KumoOrb() {
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       >
-        {/* 격자 패턴 (지도 그리드) */}
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -97,58 +133,36 @@ export function KumoOrb() {
           }}
         />
 
-        {/* 도로선 느낌 */}
+        {/* 일본 지도 — transform 없음 */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 300 300"
           fill="none"
         >
-          {/* 가로 도로 */}
-          <motion.path
-            d="M 0 120 Q 80 100 150 130 Q 220 160 300 140"
-            stroke={`${accentColor}0.12)`}
-            strokeWidth="8"
-            strokeLinecap="round"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 0.8, ease: "easeInOut" }}
-          />
-          {/* 세로 도로 */}
-          <motion.path
-            d="M 100 0 Q 120 80 110 150 Q 100 220 115 300"
-            stroke={`${accentColor}0.1)`}
-            strokeWidth="6"
-            strokeLinecap="round"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 1.0, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M 200 0 Q 190 60 210 150 Q 225 220 205 300"
-            stroke={`${accentColor}0.08)`}
-            strokeWidth="5"
-            strokeLinecap="round"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 1.2, ease: "easeInOut" }}
-          />
-          {/* 곡선 도로 */}
-          <motion.path
-            d="M 0 200 Q 100 180 150 220 Q 200 260 300 240"
-            stroke={`${accentColor}0.08)`}
-            strokeWidth="5"
-            strokeLinecap="round"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 1.4, ease: "easeInOut" }}
-          />
+          <g transform="translate(-36, 15) scale(1.4)">
+            {JAPAN_ISLANDS.map((island, i) => (
+              <motion.path
+                key={i}
+                d={island.d}
+                fill={`${accentColor}0.10)`}
+                stroke={`${accentColor}0.45)`}
+                strokeWidth="1.2"
+                strokeLinejoin="round"
+                style={{
+                  transform: `translate(${island.tx ?? 0}px, ${island.ty ?? 0}px)`,
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 1.2,
+                  delay: island.delay,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
+          </g>
         </svg>
 
-        {/* 지도 핀들 */}
         {MAP_PINS.map((pin, i) => (
           <motion.div
             key={i}
@@ -157,16 +171,16 @@ export function KumoOrb() {
               left: pin.x,
               top: pin.y,
               transform: "translate(-50%, -100%)",
+              zIndex: 20,
             }}
             initial={{ opacity: 0, y: 16, scale: 0.5 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
-              delay: 1.2 + pin.delay,
+              delay: 1.4 + pin.delay,
               duration: 0.5,
               ease: [0.34, 1.56, 0.64, 1],
             }}
           >
-            {/* 핀 본체 */}
             <motion.div
               className="flex items-center justify-center rounded-full mb-1"
               style={{
@@ -194,20 +208,16 @@ export function KumoOrb() {
                 />
               </svg>
             </motion.div>
-
-            {/* 라벨 */}
             <div
               className="px-2 py-0.5 rounded-full text-[10px] font-mono whitespace-nowrap"
               style={{
-                background: "rgba(13,22,44,0.9)",
+                background: "var(--color-bg-surface)",
                 border: `1px solid ${pin.color}30`,
                 color: pin.color,
               }}
             >
               {pin.label}
             </div>
-
-            {/* 핀 아래 펄스 */}
             <motion.div
               className="absolute rounded-full"
               style={{
@@ -230,7 +240,6 @@ export function KumoOrb() {
           </motion.div>
         ))}
 
-        {/* 파티클 */}
         {particles.map((p) => (
           <motion.div
             key={p.id}
@@ -252,12 +261,12 @@ export function KumoOrb() {
           />
         ))}
 
-        {/* 하단 정보 바 */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center justify-between"
           style={{
             background: "var(--color-bg-surface)",
             borderTop: "1px solid var(--color-border)",
+            zIndex: 30,
           }}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -286,7 +295,6 @@ export function KumoOrb() {
         </motion.div>
       </motion.div>
 
-      {/* ── 구름들 (카드 주변에 흩뿌림) ── */}
       {MAP_CLOUDS.map((cloud, i) => (
         <motion.div
           key={i}
@@ -321,7 +329,6 @@ export function KumoOrb() {
   );
 }
 
-// ── 구름 SVG ──
 function CloudSVG({
   opacity,
   accentColor,
@@ -334,7 +341,6 @@ function CloudSVG({
   const c = isLight
     ? `rgba(255, 252, 245, ${opacity + 0.35})`
     : `rgba(200, 215, 255, ${opacity + 0.15})`;
-
   return (
     <svg width="90" height="50" viewBox="0 0 90 50" fill="none">
       <path
