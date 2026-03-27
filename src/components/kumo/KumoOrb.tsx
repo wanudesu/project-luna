@@ -12,22 +12,30 @@ import { useTheme } from "next-themes";
 
 // 지도 핀 데이터 (도쿄, 오사카 기반)
 const MAP_PINS = [
-  { x: "52%", y: "38%", label: "東京", delay: 0,   color: "#4D7CFE" },
+  { x: "52%", y: "38%", label: "東京", delay: 0, color: "#4D7CFE" },
   { x: "34%", y: "62%", label: "大阪", delay: 0.3, color: "#A78BFA" },
   { x: "68%", y: "55%", label: "渋谷", delay: 0.6, color: "#34D399" },
 ];
 
 export function KumoOrb() {
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; size: number; delay: number; dur: number }[]>([]);
-  const { theme } = useTheme();
+  const [particles, setParticles] = useState<
+    {
+      id: number;
+      x: number;
+      y: number;
+      size: number;
+      delay: number;
+      dur: number;
+    }[]
+  >([]);
+  const { resolvedTheme: theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   // 📖 mounted 전에는 테마를 알 수 없으니
   //    클라이언트에서 마운트된 후에만 테마 적용
-  const accentColor = mounted && theme === "light"
-    ? "rgba(232,118,26,"
-    : "rgba(77,124,254,";
+  const accentColor =
+    mounted && theme === "light" ? "rgba(232,118,26," : "rgba(77,124,254,";
 
   useEffect(() => {
     setParticles(
@@ -38,7 +46,7 @@ export function KumoOrb() {
         size: Math.random() * 3 + 1.5,
         delay: Math.random() * 3,
         dur: Math.random() * 2 + 3,
-      }))
+      })),
     );
   }, []);
 
@@ -83,7 +91,11 @@ export function KumoOrb() {
         />
 
         {/* 도로선 느낌 */}
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 300" fill="none">
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 300 300"
+          fill="none"
+        >
           {/* 가로 도로 */}
           <motion.path
             d="M 0 120 Q 80 100 150 130 Q 220 160 300 140"
@@ -134,10 +146,18 @@ export function KumoOrb() {
           <motion.div
             key={i}
             className="absolute flex flex-col items-center"
-            style={{ left: pin.x, top: pin.y, transform: "translate(-50%, -100%)" }}
+            style={{
+              left: pin.x,
+              top: pin.y,
+              transform: "translate(-50%, -100%)",
+            }}
             initial={{ opacity: 0, y: 16, scale: 0.5 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.2 + pin.delay, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+            transition={{
+              delay: 1.2 + pin.delay,
+              duration: 0.5,
+              ease: [0.34, 1.56, 0.64, 1],
+            }}
           >
             {/* 핀 본체 */}
             <motion.div
@@ -150,12 +170,21 @@ export function KumoOrb() {
                 boxShadow: `0 0 12px ${pin.color}40`,
               }}
               animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+              transition={{
+                duration: 2.5 + i * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.4,
+              }}
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <circle cx="6" cy="5" r="2.5" fill={pin.color} />
-                <path d="M6 12 C6 12 2 7.5 2 5 C2 2.8 3.8 1 6 1 C8.2 1 10 2.8 10 5 C10 7.5 6 12 6 12Z"
-                  fill={`${pin.color}30`} stroke={pin.color} strokeWidth="0.8" />
+                <path
+                  d="M6 12 C6 12 2 7.5 2 5 C2 2.8 3.8 1 6 1 C8.2 1 10 2.8 10 5 C10 7.5 6 12 6 12Z"
+                  fill={`${pin.color}30`}
+                  stroke={pin.color}
+                  strokeWidth="0.8"
+                />
               </svg>
             </motion.div>
 
@@ -184,7 +213,12 @@ export function KumoOrb() {
                 opacity: 0,
               }}
               animate={{ scale: [0.5, 1.5], opacity: [0.5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.7, ease: "easeOut" }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: i * 0.7,
+                ease: "easeOut",
+              }}
             />
           </motion.div>
         ))}
@@ -202,7 +236,12 @@ export function KumoOrb() {
               background: "rgba(77,124,254,0.6)",
             }}
             animate={{ opacity: [0.1, 0.6, 0.1] }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: p.dur,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
         ))}
 
@@ -217,7 +256,10 @@ export function KumoOrb() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 0.5 }}
         >
-          <span className="text-[10px] font-mono" style={{ color: "var(--color-text-muted)" }}>
+          <span
+            className="text-[10px] font-mono"
+            style={{ color: "var(--color-text-muted)" }}
+          >
             도쿄 · 오사카
           </span>
           <div className="flex items-center gap-1.5">
@@ -227,7 +269,10 @@ export function KumoOrb() {
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
-            <span className="text-[10px] font-mono" style={{ color: "#34D399" }}>
+            <span
+              className="text-[10px] font-mono"
+              style={{ color: "#34D399" }}
+            >
               실시간
             </span>
           </div>
@@ -236,10 +281,10 @@ export function KumoOrb() {
 
       {/* ── 구름들 (카드 주변에 흩뿌림) ── */}
       {[
-        { x: "-5%",  y: "8%",  scale: 0.7, delay: 0.6 },
-        { x: "78%",  y: "4%",  scale: 0.5, delay: 1.0 },
-        { x: "82%",  y: "72%", scale: 0.6, delay: 0.8 },
-        { x: "-8%",  y: "65%", scale: 0.55, delay: 1.2 },
+        { x: "-5%", y: "8%", scale: 0.7, delay: 0.6 },
+        { x: "78%", y: "4%", scale: 0.5, delay: 1.0 },
+        { x: "82%", y: "72%", scale: 0.6, delay: 0.8 },
+        { x: "-8%", y: "65%", scale: 0.55, delay: 1.2 },
       ].map((cloud, i) => (
         <motion.div
           key={i}
@@ -247,11 +292,20 @@ export function KumoOrb() {
           style={{ left: cloud.x, top: cloud.y }}
           initial={{ opacity: 0, scale: 0.3 }}
           animate={{ opacity: 1, scale: cloud.scale }}
-          transition={{ delay: 1.5 + cloud.delay, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+          transition={{
+            delay: 1.5 + cloud.delay,
+            duration: 0.8,
+            ease: [0.34, 1.56, 0.64, 1],
+          }}
         >
           <motion.div
             animate={{ x: [0, 6, 0], y: [0, -3, 0] }}
-            transition={{ duration: 5 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
+            transition={{
+              duration: 5 + i,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.5,
+            }}
           >
             <CloudSVG opacity={0.25 + i * 0.03} accentColor={accentColor} />
           </motion.div>
@@ -262,8 +316,14 @@ export function KumoOrb() {
 }
 
 // ── 구름 SVG ──
-function CloudSVG({ opacity, accentColor }: { opacity: number; accentColor: string }) {
-  const c = `${accentColor}${opacity})`; 
+function CloudSVG({
+  opacity,
+  accentColor,
+}: {
+  opacity: number;
+  accentColor: string;
+}) {
+  const c = `${accentColor}${opacity})`;
   return (
     <svg width="90" height="50" viewBox="0 0 90 50" fill="none">
       <path

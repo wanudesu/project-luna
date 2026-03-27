@@ -75,6 +75,10 @@ export function PageTransition({ children }: PageTransitionProps) {
     return () => clearTimeout(timer);
   }, [pathname]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+
   return (
     <>
       {

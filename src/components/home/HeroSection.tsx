@@ -153,10 +153,10 @@ export function HeroSection() {
             >
               디테일에 집착하는{" "}
               <span style={{ color: "var(--color-text)", fontWeight: 500 }}>
-                Frontend Engineer.
+                UI/UX 엔지니어 지망생
               </span>
               <br />
-              코드 한 줄에도 이유가 있어야 한다고 믿습니다.
+              아직 배우는 중이지만, 방향은 분명합니다.
             </motion.p>
 
             {/* 기술 스택 태그 */}

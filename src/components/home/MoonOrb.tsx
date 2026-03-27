@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function MoonOrb() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { theme } = useTheme();
+  const { resolvedTheme: theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(true);
 

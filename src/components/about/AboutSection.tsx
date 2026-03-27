@@ -26,7 +26,7 @@ const containerVariants = {
 
 function useScrollReveal() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
+  const isInView = useInView(ref, { once: true, amount: 0.05 });
   return { ref, isInView };
 }
 

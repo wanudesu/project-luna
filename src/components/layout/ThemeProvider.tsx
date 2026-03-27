@@ -18,11 +18,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // 📖 attribute: "class" → <html class="dark"> 방식으로 테마 적용
       //    globals.css의 .dark / .light 셀렉터와 연결됩니다.
       attribute="class"
-      // 기본 테마: 다크
-      defaultTheme="dark"
-      // 시스템 테마(OS 설정) 자동 감지 비활성화
-      // 우리 사이트는 항상 다크로 시작하게 고정
-      enableSystem={false}
+      defaultTheme="system"
+      enableSystem
       // 📖 disableTransitionOnChange: false
       //    테마 전환 시 CSS transition이 동작하게 허용합니다.
       //    true로 하면 깜빡임 방지를 위해 transition을 잠깐 끄는데

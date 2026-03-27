@@ -7,6 +7,7 @@
 // 3. CSS 변수 사용 → 테마 전환 시 자동으로 색상 변경
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,16 +31,16 @@ const itemVariants = {
 
 const skills = [
   {
-    category: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    category: "배운 것",
+    items: ["Java", "JavaScript", "HTML5/CSS3", "Spring Boot"],
   },
   {
-    category: "Animation",
-    items: ["Framer Motion", "GSAP", "CSS Animations"],
+    category: "배우는 중",
+    items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   },
   {
-    category: "Tools",
-    items: ["Git", "Figma", "VS Code", "Vercel"],
+    category: "사용 중",
+    items: ["Git", "Figma", "VS Code", "AWS"],
   },
 ];
 
@@ -108,33 +109,17 @@ export function AboutSection() {
             >
               안녕하세요! 저는{" "}
               <strong style={{ color: "var(--color-text-glow)" }}>
-                사용자 경험
-              </strong>
-              과{" "}
-              <strong style={{ color: "var(--color-text-glow)" }}>
-                디테일
-              </strong>
-              에 집착하는 프론트엔드 개발자입니다.
+                디테일에 집착하는
+              </strong>{" "}
+              이원우입니다.
             </p>
             <p
               className="leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              코드 한 줄에도 이유가 있어야 한다고 믿습니다. 단순히 동작하는 것을
-              넘어, 사용자가 즐거운 경험을 할 수 있도록 인터랙션과 애니메이션에
-              특히 관심을 가지고 있습니다.
-            </p>
-            <p
-              className="leading-relaxed"
-              style={{ color: "var(--color-text-muted)" }}
-            >
-              새로운 기술을 배우는 것을 좋아하며, 최근에는{" "}
-              <span style={{ color: "var(--color-accent)" }}>
-                Framer Motion
-              </span>
-              과{" "}
-              <span style={{ color: "var(--color-accent)" }}>3D 웹 그래픽</span>
-              에 푹 빠져 있습니다.
+              아직 배우는 중이지만, 모르면 찾아보고 납득이 될 때까지 파고드는
+              편이에요.
+              {<br />}이 포트폴리오도 그렇게 만들었어요.
             </p>
 
             {/* ── 경력 타임라인 ── */}
@@ -237,6 +222,26 @@ export function AboutSection() {
             </motion.div>
           </motion.div>
         </div>
+        {/* ── 더 보기 버튼 ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-8 flex justify-end"
+        >
+          <Link href="/about">
+            <motion.span
+              className="flex items-center gap-2 text-sm font-mono"
+              style={{ color: "var(--color-accent)" }}
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+            >
+              더 보기
+              <span>→</span>
+            </motion.span>
+          </Link>
+        </motion.div>
       </motion.div>
     </section>
   );

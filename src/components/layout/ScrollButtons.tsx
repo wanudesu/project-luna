@@ -45,13 +45,14 @@ export function ScrollButtons() {
   return (
     <motion.div
       layout
-      transition={{ layout: { duration: 0.2, ease: "easeInOut" } }}
+      transition={{ layout: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] } }}
       className="fixed right-6 bottom-8 z-40 flex flex-col gap-2"
     >
       <AnimatePresence>
         {showUp && (
           <motion.button
             key="up"
+            layout
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}

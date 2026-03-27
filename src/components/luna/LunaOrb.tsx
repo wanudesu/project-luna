@@ -15,7 +15,7 @@ export function LunaOrb() {
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [visibleLines, setVisibleLines] = useState(0);
   const [cursorVisible, setCursorVisible] = useState(true);
-  const { theme } = useTheme();
+  const { resolvedTheme: theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isLight = mounted && theme === "light";
