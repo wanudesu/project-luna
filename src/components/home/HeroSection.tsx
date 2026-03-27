@@ -25,9 +25,11 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden:   { opacity: 0, y: 24, filter: "blur(8px)" },
-  visible:  {
-    opacity: 1, y: 0, filter: "blur(0px)",
+  hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
     transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
@@ -44,13 +46,12 @@ export function HeroSection() {
         size: Math.random() * 2 + 0.5,
         delay: Math.random() * 4,
         duration: Math.random() * 3 + 2,
-      }))
+      })),
     );
   }, []);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-
       {/* ── 배경: 메인 그라데이션 ── */}
       {/*
         📖 var(--color-bg-navy), var(--color-bg) 를 쓰면
@@ -95,13 +96,13 @@ export function HeroSection() {
       <div
         className="absolute bottom-0 left-0 right-0 h-px -z-10"
         style={{
-          background: "linear-gradient(90deg, transparent, var(--color-accent-glow), transparent)",
+          background:
+            "linear-gradient(90deg, transparent, var(--color-accent-glow), transparent)",
         }}
       />
 
       <div className="page-container w-full">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-4 py-20 md:py-0 min-h-screen">
-
           {/* ── 좌측: 텍스트 블록 ── */}
           <motion.div
             className="flex-1 flex flex-col gap-6 max-w-[560px]"
@@ -159,31 +160,43 @@ export function HeroSection() {
             </motion.p>
 
             {/* 기술 스택 태그 */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
-              {["Next.js", "TypeScript", "React", "Framer Motion"].map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 text-xs font-mono text-luna-accent rounded-full"
-                  style={{
-                    border: "1px solid var(--color-accent-glow)",
-                    background: "var(--color-accent-glow)",
-                  }}
-                >
-                  {tech}
-                </span>
-              ))}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-2"
+            >
+              {["Next.js", "TypeScript", "React", "Framer Motion"].map(
+                (tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 text-xs font-mono text-luna-accent rounded-full"
+                    style={{
+                      border: "1px solid var(--color-accent-glow)",
+                      background: "var(--color-accent-glow)",
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ),
+              )}
             </motion.div>
 
             {/* CTA 버튼 */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 pt-2">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-3 pt-2"
+            >
               <Link href="/kumo">
                 <motion.button
                   className="relative px-6 py-3 text-sm font-medium text-white rounded-lg overflow-hidden"
                   style={{
-                    background: "linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%)",
+                    background:
+                      "linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%)",
                     boxShadow: "0 0 20px var(--color-accent-glow)",
-                      }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 0 32px var(--color-accent-glow)" }}
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    boxShadow: "0 0 32px var(--color-accent-glow)",
+                  }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
@@ -200,7 +213,6 @@ export function HeroSection() {
                   }}
                   whileHover={{
                     scale: 1.03,
-                    borderColor: "var(--color-text-muted)",
                   }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -234,11 +246,16 @@ export function HeroSection() {
         <motion.div
           className="w-px h-8"
           style={{
-            background: "linear-gradient(to bottom, var(--color-accent), transparent)",
+            background:
+              "linear-gradient(to bottom, var(--color-accent), transparent)",
           }}
           animate={{ scaleY: [0, 1, 0], opacity: [0, 1, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ originY: 0, background: "linear-gradient(to bottom, var(--color-accent), transparent)" }}
+          style={{
+            originY: 0,
+            background:
+              "linear-gradient(to bottom, var(--color-accent), transparent)",
+          }}
         />
       </motion.div>
     </section>

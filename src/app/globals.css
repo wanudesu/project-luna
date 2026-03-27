@@ -87,8 +87,8 @@
 
   --hero-bg: radial-gradient(
     ellipse at 75% 45%,
-    #ffe4a0 0%,
-    #fdf3dc 35%,
+    #ffd580 0%,
+    #fdf8f0 45%,
     #fdf8f0 70%
   );
   --card-overlay: rgba(100, 60, 20, 0.5);

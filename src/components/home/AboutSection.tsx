@@ -45,16 +45,15 @@ const skills = [
 
 const experiences = [
   {
-    period: "2024 - Present",
-    role: "Frontend Developer",
-    company: "프리랜서",
-    description: "다양한 웹 프로젝트 개발 및 UI/UX 개선",
+    period: "2022 - 2024",
+    role: "군 복무 / 학점은행제",
+    description1: "일본어 공부 병행, 학점은행제 수강",
   },
   {
-    period: "2023 - 2024",
-    role: "Junior Developer",
-    company: "스타트업",
-    description: "React 기반 서비스 개발 참여",
+    period: "2025 - Present",
+    role: "Smart Cloud IT Master 48기",
+    description1: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어 동시 수련",
+    description2: "팀 프로젝트 KUMO 장려상 수상",
   },
 ];
 
@@ -152,7 +151,7 @@ export function AboutSection() {
                 >
                   <div
                     className="text-sm font-mono whitespace-nowrap"
-                    style={{ color: "var(--color-accent)" }}
+                    style={{ color: "var(--color-accent)", minWidth: "8rem" }}
                   >
                     {exp.period}
                   </div>
@@ -167,7 +166,9 @@ export function AboutSection() {
                       className="text-sm"
                       style={{ color: "var(--color-text-muted)" }}
                     >
-                      {exp.company} · {exp.description}
+                      {exp.description1}
+                      <br />
+                      {exp.description2}
                     </div>
                   </div>
                 </motion.div>
@@ -214,9 +215,9 @@ export function AboutSection() {
               style={{ borderTop: "1px solid var(--color-border)" }}
             >
               {[
-                { number: "2+", label: "Years Exp." },
-                { number: "10+", label: "Projects" },
-                { number: "∞", label: "Curiosity" },
+                { number: "N1", label: "JLPT" },
+                { number: "2", label: "Projects" },
+                { number: "48기", label: "Smart Cloud IT Master" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div

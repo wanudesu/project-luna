@@ -102,7 +102,7 @@ export function Header() {
                           layoutId="active-nav-bg"
                           className="absolute inset-0 rounded-lg"
                           style={{
-                            background: "rgba(77,124,254,0.08)",
+                            background: "var(--color-accent-glow)",
                             border: "1px solid var(--color-accent-glow)",
                           }}
                           transition={{
@@ -128,8 +128,11 @@ export function Header() {
                       {isActive && (
                         <motion.div
                           layoutId="active-nav-dot"
-                          className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-luna-accent"
-                          style={{ boxShadow: "0 0 6px rgba(77,124,254,0.8)" }}
+                          className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                          style={{
+                            background: "var(--color-accent)",
+                            boxShadow: "0 0 6px var(--color-accent-glow)",
+                          }}
                           transition={{
                             type: "spring",
                             stiffness: 400,
