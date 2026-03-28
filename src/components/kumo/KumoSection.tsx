@@ -151,11 +151,19 @@ export function KumoSection() {
   return (
     <div
       className="min-h-screen pt-24 pb-32"
-      style={{
-        background:
-          "radial-gradient(ellipse at 55% 20%, var(--color-bg-surface) 0%, var(--color-bg) 45%)",
-        transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-      }}
+      style={
+        {
+          "--page-bg-gradient-position": "50% 20%",
+          background: `
+      radial-gradient(
+        ellipse at var(--page-bg-gradient-position),
+        var(--page-bg-gradient-core) var(--page-bg-gradient-stop-1),
+        var(--page-bg-gradient-base) var(--page-bg-gradient-stop-2)
+      )
+    `,
+          transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        } as React.CSSProperties
+      }
     >
       {/* ── 별 파티클 배경 ── */}
       <div className="fixed inset-0 -z-10 pointer-events-none">

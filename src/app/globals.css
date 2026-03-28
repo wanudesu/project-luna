@@ -56,6 +56,32 @@
   --sun-opacity: 0;
   --star-opacity: 1;
   --orb-glow-color: rgba(77, 124, 254, 0.3);
+
+  /* 그라데이션 전용 */
+  --page-bg-gradient-core: var(--color-bg-surface);
+  --page-bg-gradient-base: var(--color-bg);
+  --page-bg-gradient-stop-1: 0%;
+  --page-bg-gradient-stop-2: 45%;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-bg-gradient-core: color-mix(
+      in srgb,
+      var(--color-bg-surface) 28%,
+      transparent
+    );
+    --page-bg-gradient-stop-1: 0%;
+    --page-bg-gradient-stop-2: 32%;
+  }
+
+  .light {
+    --page-bg-gradient-core: color-mix(
+      in srgb,
+      var(--color-bg-surface) 18%,
+      transparent
+    );
+  }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
