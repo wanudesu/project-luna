@@ -153,7 +153,7 @@ export function KumoSection() {
       className="min-h-screen pt-24 pb-32"
       style={{
         background:
-          "radial-gradient(ellipse at 60% 10%, var(--color-bg-navy) 0%, var(--color-bg) 55%, var(--color-bg) 100%)",
+          "radial-gradient(ellipse at 55% 20%, var(--color-bg-surface) 0%, var(--color-bg) 45%)",
         transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
@@ -725,20 +725,10 @@ function RoleSection() {
         variants={fadeUp}
         className="relative p-6 rounded-2xl mb-4 overflow-hidden"
         style={{
-          background: "rgba(77,124,254,0.06)",
-          border: "1px solid var(--color-accent-glow)",
+          background: "var(--color-bg-navy)",
+          border: "1px solid var(--color-border)",
         }}
       >
-        {/* 우상단 글로우 */}
-        <div
-          className="absolute right-0 top-0 w-48 h-48 rounded-full pointer-events-none"
-          style={{
-            transform: "translate(30%, -30%)",
-            background:
-              "radial-gradient(circle, rgba(77,124,254,0.1) 0%, transparent 70%)",
-            filter: "blur(24px)",
-          }}
-        />
         <p className="text-xs font-mono tracking-[0.2em] text-luna-accent uppercase mb-2">
           담당 파트
         </p>

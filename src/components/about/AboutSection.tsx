@@ -669,7 +669,7 @@ export function AboutSection() {
         className="fixed inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(ellipse at 30% 20%, var(--color-bg-navy) 0%, var(--color-bg) 50%, var(--color-bg) 100%)",
+            "radial-gradient(ellipse at 25% 20%, var(--color-bg-surface) 0%, var(--color-bg) 45%)",
           transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       />
