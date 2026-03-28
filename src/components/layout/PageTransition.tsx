@@ -49,7 +49,7 @@ const pageVariants = {
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.08,
+      duration: 0,
     },
   },
 };
@@ -62,68 +62,22 @@ interface PageTransitionProps {
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
-  // 📖 usePathname(): 현재 URL 경로를 반환합니다.
-  // "/", "/about", "/kumo", "/luna" 중 하나가 됩니다.
-  // 경로가 바뀔 때마다 이 값이 변경되어 리렌더링됩니다.
   const pathname = usePathname();
-
-  // 바꾸기 — exit 애니메이션(0.25s) 끝난 후 스크롤
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }, 800); // PageTransition exit duration과 맞춤
-    return () => clearTimeout(timer);
-  }, [pathname]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [pathname]);
 
   return (
-    <>
-      {
-        /*
-        📖 AnimatePresence: 컴포넌트가 React 트리에서
-        '제거'될 때도 애니메이션을 실행할 수 있게 해줍니다.
-
-        - mode="wait": 이전 페이지 exit 애니메이션이 끝난 후
-          새 페이지 enter 애니메이션을 시작합니다.
-          (동시 실행하면 두 페이지가 겹쳐 보입니다)
-      */
-        // initial={false} 없을 때
-        // → 앱 첫 로드 시 "이미 화면에 있는" 컴포넌트도 initial → animate 실행
-        // initial={false} 있을 때
-        // → 앱 첫 로드 시 이미 있는 컴포넌트는 애니메이션 건너뜀
-        //   새로 추가되는 컴포넌트만 애니메이션 실행
-      }
-      <AnimatePresence mode="wait">
-        {/*
-          📖 key={pathname}: React가 경로별로 다른 컴포넌트 인스턴스를
-          만들도록 강제합니다. key가 바뀌면 AnimatePresence가
-          이전 컴포넌트의 exit → 새 컴포넌트의 enter를 실행합니다.
-
-          initial={false}: 앱 첫 로드 시 enter 애니메이션을 건너뜁니다.
-          첫 방문자에게 즉시 콘텐츠를 보여주기 위해서입니다.
-        */}
-        <motion.div
-          key={pathname}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          // will-change: GPU 레이어를 미리 생성해 애니메이션을 매끄럽게 합니다.
-          style={{ willChange: "transform, opacity" }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-
-      {/*
-        ✨ 페이지 전환 시 화면을 가로지르는 슬라이드 오버레이 효과
-        (선택 사항 — 더 극적인 전환 효과를 원한다면 아래 주석을 해제하세요)
-      */}
-      {/* <TransitionOverlay pathname={pathname} /> */}
-    </>
+    <motion.div
+      key={pathname}
+      initial={{ opacity: 0, filter: "blur(4px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+      style={{ willChange: "opacity" }}
+    >
+      {children}
+    </motion.div>
   );
 }
 

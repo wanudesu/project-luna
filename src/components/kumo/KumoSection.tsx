@@ -9,6 +9,7 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { KumoOrb } from "./KumoOrb";
+import { useTheme } from "next-themes";
 import { ContactSection } from "@/components/home/ContactSection";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -250,11 +251,6 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 1. Hero 블록
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const shimmerVariants = {
-  rest: { x: "-100%", transition: { duration: 0 } },
-  hover: { x: "100%", transition: { duration: 0.6, ease: "easeInOut" } },
-};
-
 function HeroBlock() {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -426,13 +422,26 @@ function HeroBlock() {
 //   나중에 AWS S3 배포 시:
 //   const VIDEO_SRC = "https://[CloudFront도메인]/kumo-demo.mp4";
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const VIDEO_SRC = "/videos/kumo-demo.mp4"; // ← 영상 파일 경로. 준비되면 여기만 교체
+const VIDEO_SRC = "/videos/kumo-demo.mp4";
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 타임스탬프 — time은 초 단위로 수정하세요
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const CHAPTERS = [
+  { label: "홈", time: 0 },
+  { label: "로그인 / 회원가입", time: 20 },
+  { label: "리쿠르터 페이지", time: 105 },
+  { label: "메인 지도 화면", time: 150 },
+  { label: "합격처리 & 스케줄 등록", time: 200 },
+  { label: "어드민 페이지", time: 290 },
+];
 
 function DemoSection() {
   const { ref, isInView } = useSectionInView();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isReady, setIsReady] = useState(false);
   const [hasFile, setHasFile] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // 영상 파일 존재 여부 확인
   useEffect(() => {
@@ -448,6 +457,14 @@ function DemoSection() {
     videoRef.current.play().catch(() => {});
   }, [isInView, hasFile]);
 
+  const seekTo = (index: number, time: number) => {
+    setActiveIndex(index);
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
   return (
     <motion.section
       ref={ref}
@@ -460,46 +477,89 @@ function DemoSection() {
 
       <motion.div variants={fadeUp}>
         {hasFile ? (
-          /* ── 실제 영상 ── */
-          <div
-            className="relative rounded-2xl overflow-hidden"
-            style={{ border: "1px solid var(--color-border)" }}
-          >
-            {/* 로딩 전 스켈레톤 */}
-            {!isReady && (
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{ background: "rgba(13,22,44,0.8)" }}
-              >
-                <div className="flex gap-1.5">
-                  {[0, 1, 2].map((i) => (
-                    <motion.div
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: "rgba(77,124,254,0.5)" }}
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{
-                        duration: 0.8,
-                        delay: i * 0.15,
-                        repeat: Infinity,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            <video
-              ref={videoRef}
-              className="w-full block"
-              style={{ maxHeight: "720px", objectFit: "contain" }}
-              controls
-              muted
-              loop
-              playsInline
-              onCanPlay={() => setIsReady(true)}
+          /* ── 실제 영상 + 타임라인 ── */
+          <div className="flex flex-col gap-3">
+            <div
+              className="relative rounded-2xl overflow-hidden"
+              style={{ border: "1px solid var(--color-border)" }}
             >
-              <source src={VIDEO_SRC} type="video/mp4" />
-            </video>
+              {/* 로딩 전 스켈레톤 */}
+              {!isReady && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ background: "rgba(13,22,44,0.8)" }}
+                >
+                  <div className="flex gap-1.5">
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{ background: "rgba(77,124,254,0.5)" }}
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{
+                          duration: 0.8,
+                          delay: i * 0.15,
+                          repeat: Infinity,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              <video
+                ref={videoRef}
+                className="w-full block"
+                style={{ maxHeight: "720px", objectFit: "contain" }}
+                controls
+                muted
+                loop
+                playsInline
+                onCanPlay={() => setIsReady(true)}
+              >
+                <source src={VIDEO_SRC} type="video/mp4" />
+              </video>
+            </div>
+
+            {/* 타임라인 버튼 */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {CHAPTERS.map((chapter, i) => (
+                <motion.button
+                  key={chapter.label}
+                  onClick={() => seekTo(i, chapter.time)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono"
+                  style={{
+                    background:
+                      activeIndex === i
+                        ? "var(--color-accent-glow)"
+                        : "var(--color-bg-surface)",
+                    border:
+                      activeIndex === i
+                        ? "1px solid var(--color-accent)"
+                        : "1px solid var(--color-border)",
+                    color:
+                      activeIndex === i
+                        ? "var(--color-accent)"
+                        : "var(--color-text-muted)",
+                    cursor: "pointer",
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span style={{ opacity: 0.4 }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{chapter.label}</span>
+                </motion.button>
+              ))}
+            </div>
+
+            {/* 영상 캡션 */}
+            <p
+              className="text-xs font-mono text-center"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              KUMO — 지도 기반 한·일 구인구직 플랫폼 시연
+            </p>
           </div>
         ) : (
           /* ── 영상 없을 때 placeholder ── */
@@ -536,7 +596,6 @@ function DemoSection() {
                   boxShadow: "0 0 40px rgba(77,124,254,0.15)",
                 }}
               >
-                {/* 삼각형 재생 아이콘 */}
                 <svg
                   width="28"
                   height="28"
@@ -555,21 +614,12 @@ function DemoSection() {
                   className="text-xs font-mono"
                   style={{ color: "var(--color-text-muted)" }}
                 >
-                  {/* 📖 이 텍스트는 영상 추가 후 자동으로 사라집니다 */}
                   public/videos/kumo-demo.mp4
                 </p>
               </div>
             </motion.div>
           </div>
         )}
-
-        {/* 영상 캡션 */}
-        <p
-          className="mt-3 text-xs font-mono text-center"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          KUMO — 지도 기반 한·일 구인구직 플랫폼 시연
-        </p>
       </motion.div>
     </motion.section>
   );
@@ -661,6 +711,9 @@ function OverviewSection() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function RoleSection() {
   const { ref, isInView } = useSectionInView();
+  const { resolvedTheme: theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
     <motion.section
@@ -714,7 +767,11 @@ function RoleSection() {
           style={{ border: "1px solid var(--color-border)" }}
         >
           <img
-            src="/images/kumo-figma.png"
+            src={
+              mounted && theme === "dark"
+                ? "/images/kumo-figma-dark.png"
+                : "/images/kumo-figma-light.png"
+            }
             alt="KUMO 피그마 전체 설계 화면"
             className="w-full object-cover"
           />
