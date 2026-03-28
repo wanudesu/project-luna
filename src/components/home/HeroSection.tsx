@@ -159,27 +159,6 @@ export function HeroSection() {
               아직 배우는 중이지만, 방향은 분명합니다.
             </motion.p>
 
-            {/* 기술 스택 태그 */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap gap-2"
-            >
-              {["Next.js", "TypeScript", "React", "Framer Motion"].map(
-                (tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 text-xs font-mono text-luna-accent rounded-full"
-                    style={{
-                      border: "1px solid var(--color-accent-glow)",
-                      background: "var(--color-accent-glow)",
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ),
-              )}
-            </motion.div>
-
             {/* CTA 버튼 */}
             <motion.div
               variants={itemVariants}
@@ -224,7 +203,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* ── 우측: 달/해 오브 ── */}
-          <div className="flex-1 flex justify-center md:justify-end items-center">
+          <div className="flex-1 flex ustify-center md:justify-end items-center">
             <MoonOrb />
           </div>
         </div>

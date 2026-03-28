@@ -230,7 +230,7 @@ function HeroBlock() {
             transition={{ delay: 0.2 }}
             className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
           >
-            / このサイトについて
+            / Portfolio Site
           </motion.p>
 
           <motion.div

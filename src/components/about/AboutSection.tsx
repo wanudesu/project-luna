@@ -177,7 +177,7 @@ function IntroSection() {
                 className="text-xs font-mono tracking-widest uppercase"
                 style={{ color: "var(--color-accent)" }}
               >
-                About me
+                / About me
               </span>
             </motion.div>
             <motion.h1
@@ -340,7 +340,7 @@ function JourneySection() {
     {
       period: "2025 ~ 2026",
       title: "SCIT 마스터 과정",
-      desc: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어를 동시에 배웠어요. 팀 프로젝트에서 UI/UX 설계를 맡았는데 너무 재밌었어요. 그게 UI/UX 엔지니어로 방향을 잡은 계기가 됐어요.",
+      desc: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어를 동시에 배웠어요. 팀 프로젝트에서 UI/UX 설계를 맡았는데 너무 재밌었어요. 그게 프론트엔드 개발자로 방향을 잡은 계기가 됐어요.",
       tag: "전환점",
     },
     {
@@ -476,7 +476,6 @@ function WhyJapanSection() {
             style={{
               background: "var(--color-bg-navy)",
               border: "1px solid var(--color-accent-glow)",
-              transition: "background 0.8s ease",
             }}
           >
             <h3
@@ -524,6 +523,58 @@ function WhyJapanSection() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* 구분선 */}
+            <div
+              className="mt-8 mb-6 h-px"
+              style={{ background: "var(--color-border)" }}
+            />
+
+            {/* 빈자리 */}
+            <div className="flex gap-6 items-center">
+              <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+                {[...Array(15)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 rounded-full"
+                    style={{
+                      background: "var(--color-bg-surface)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                  />
+                ))}
+                <motion.div
+                  className="w-8 h-8 rounded-full"
+                  style={{ border: "1.5px dashed var(--color-accent)" }}
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <p
+                  className="text-xs font-mono"
+                  style={{ color: "var(--color-text-muted)" }}
+                >
+                  THE SSS의 사이트를 보던 중,
+                </p>
+                <p
+                  className="text-xs font-mono"
+                  style={{ color: "var(--color-text-muted)" }}
+                >
+                  저 빈칸이 유독 눈에 들어왔습니다.
+                </p>
+                <p
+                  className="text-xs font-mono mt-1"
+                  style={{ color: "var(--color-accent)" }}
+                >
+                  빈칸에 어울리는 사람이 되고 싶습니다.
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>

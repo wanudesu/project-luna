@@ -266,7 +266,7 @@ function HeroBlock() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-mono tracking-[0.25em] text-luna-accent uppercase mb-6"
           >
-            / 첫 번째 팀 프로젝트
+            / First Team Project
           </motion.p>
 
           <motion.div
