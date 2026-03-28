@@ -61,23 +61,18 @@ const TECH_STACK = [
 const MY_FEATURES = [
   {
     icon: "👤",
-    title: "리쿠르터 마이페이지",
-    desc: "회원가입부터 프로필 편집, 등록 공고 관리까지 구인자 전용 페이지를 전담 구현",
+    title: "리쿠르터 페이지",
+    desc: "메인 대시보드부터 공고 등록 및 관리, 지원자 관리까지 구인자 전용 페이지를 전담 구현",
   },
   {
     icon: "📋",
-    title: "공고 등록 / 수정 / 삭제",
-    desc: "구인자가 직접 채용 공고를 작성하고 관리할 수 있는 CRUD 기능 전체 구현",
+    title: "리쿠르터 켈린더",
+    desc: "구인자가 어느 페이지에서도 일정을 확인할 수 있도록 미니 켈린더를 만들어 캘린더와 연동하였습니다.",
   },
   {
-    icon: "📌",
-    title: "공고 상세 페이지",
-    desc: "지도에서 선택한 공고의 상세 정보를 보여주는 바텀시트 및 상세 뷰 구현",
-  },
-  {
-    icon: "💬",
-    title: "채팅 연동",
-    desc: "STOMP/WebSocket 기반의 실시간 1:1 채팅방을 리쿠르터 페이지와 연결",
+    icon: "🌓",
+    title: "테마 플리커 방지",
+    desc: "다크/라이트 모드 전환 시 발생하는 깜빡임 현상을 직접 발견하고 해결했습니다.",
   },
 ];
 
@@ -429,11 +424,11 @@ const VIDEO_SRC = "/videos/kumo-demo.mp4";
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const CHAPTERS = [
   { label: "홈", time: 0 },
-  { label: "로그인 / 회원가입", time: 20 },
-  { label: "리쿠르터 페이지", time: 105 },
-  { label: "메인 지도 화면", time: 150 },
-  { label: "합격처리 & 스케줄 등록", time: 200 },
-  { label: "어드민 페이지", time: 290 },
+  { label: "로그인 / 회원가입", time: 9 },
+  { label: "리쿠르터 페이지", time: 78 },
+  { label: "메인 지도 화면", time: 168 },
+  { label: "스케줄 등록", time: 244 },
+  { label: "어드민 페이지", time: 270 },
 ];
 
 function DemoSection() {
@@ -669,8 +664,8 @@ function OverviewSection() {
         className="text-luna-mist text-base md:text-lg leading-relaxed max-w-[640px] mb-12"
       >
         구직자가 지도를 보며 주변 일자리를 탐색하고, 구인자에게 실시간으로
-        연락할 수 있는 플랫폼입니다. 한국어와 일본어를 동시에 지원하여 일본 현지
-        취업을 노리는 한국인 구직자를 주 타겟으로 설계했습니다.
+        연락할 수 있는 플랫폼입니다. 한일 양국의 구직자, 구인자를 주 타겟으로
+        설계했습니다.
       </motion.p>
 
       <motion.div
@@ -751,14 +746,14 @@ function RoleSection() {
           className="text-2xl md:text-3xl font-bold text-luna-glow mb-3"
           style={{ fontFamily: "var(--font-geist-sans)" }}
         >
-          UI/UX 설계 전담 + 리쿠르터 페이지 구현
+          UI/UX 설계 전담
         </h3>
         <p
           className="text-sm leading-relaxed max-w-[520px] mb-5"
           style={{ color: "var(--color-text-muted)" }}
         >
-          전체 페이지의 UI/UX를 피그마로 설계했습니다. 리쿠르터 관련 기능과 CSS
-          구현도 전담했고, 팀 내에서 분량이 가장 많았습니다.
+          어드민 페이지를 제외한 전체 페이지의 UI/UX를 피그마로 설계 및
+          구현하였습니다.
         </p>
 
         {/* 피그마 캡처 이미지 */}

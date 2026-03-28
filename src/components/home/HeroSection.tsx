@@ -153,7 +153,7 @@ export function HeroSection() {
             >
               디테일에 집착하는{" "}
               <span style={{ color: "var(--color-text)", fontWeight: 500 }}>
-                UI/UX 엔지니어 지망생
+                프론트엔드 개발자 지망생
               </span>
               <br />
               아직 배우는 중이지만, 방향은 분명합니다.

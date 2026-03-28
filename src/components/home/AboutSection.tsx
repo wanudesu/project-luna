@@ -117,9 +117,10 @@ export function AboutSection() {
               className="leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              아직 배우는 중이지만, 모르면 찾아보고 납득이 될 때까지 파고드는
-              편이에요.
-              {<br />}이 포트폴리오도 그렇게 만들었어요.
+              한국에서 일본 취업을 준비 중인 23살 프론트엔드 개발자
+              지망생입니다.
+              {<br />}현재 Smart Cloud IT Master 48기에서 웹 개발과 일본어를
+              함께 공부하고 있어요.
             </p>
 
             {/* ── 경력 타임라인 ── */}
