@@ -162,7 +162,6 @@ export function LunaSection() {
         var(--page-bg-gradient-base) var(--page-bg-gradient-stop-2)
       )
     `,
-          transition: "background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         } as React.CSSProperties
       }
     >
