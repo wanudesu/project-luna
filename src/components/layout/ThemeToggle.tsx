@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 📖 mounted 패턴 (next-themes 필수)
@@ -25,7 +25,7 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return <div className="w-9 h-9" />; // 자리만 차지하는 빈 박스
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   function handleToggle() {
     setTheme(isDark ? "light" : "dark");
