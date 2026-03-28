@@ -10,11 +10,53 @@ const MAP_PINS = [
   { x: "40%", y: "61%", label: "大阪", delay: 0.3, color: "#03a436" },
 ];
 
+// ☁️ 하단 바 침범 방지 & 꽉 찬 느낌을 위한 구름 재배치
 const MAP_CLOUDS = [
-  { x: "20%", y: "10%", scale: 1.2, delay: 0.6, floatX: 6, floatY: -3 },
-  { x: "69%", y: "20%", scale: 1.5, delay: 1.0, floatX: -5, floatY: -3 },
-  { x: "65%", y: "67%", scale: 1.9, delay: 0.8, floatX: 4, floatY: -5 },
-  { x: "10%", y: "58%", scale: 1.2, delay: 1.2, floatX: 6, floatY: -4 },
+  {
+    // 1. 상단 약간 왼쪽 (빈 공간 채우기)
+    x: "30%",
+    y: "10%",
+    scale: 1.2,
+    delay: 0.8,
+    floatX: -4,
+    floatY: -2,
+  },
+  {
+    // 2. 상단 오른쪽 (지도 북쪽을 감싸기)
+    x: "75%",
+    y: "15%",
+    scale: 1.4,
+    delay: 1.2,
+    floatX: 5,
+    floatY: -3,
+  },
+  {
+    // 3. 중앙 왼쪽 (가장 크고 꽉 차 보이게 닻 역할)
+    x: "8%",
+    y: "45%",
+    scale: 1.9,
+    delay: 0.6,
+    floatX: -6,
+    floatY: 4,
+  },
+  {
+    // 4. 중앙 오른쪽 (도쿄/오사카 핀 옆의 허전함 채우기)
+    x: "82%",
+    y: "55%",
+    scale: 1.5,
+    delay: 1.0,
+    floatX: 4,
+    floatY: -5,
+  },
+  {
+    // 5. 하단 왼쪽 (⚠️ y를 85% -> 68%로 확 올려서 하단 바 절대 안 건드림!)
+    x: "22%",
+    y: "68%",
+    scale: 1.3,
+    delay: 1.4,
+    floatX: -5,
+    floatY: 3,
+  },
 ];
 
 // 300x300 viewBox에 직접 설계 — transform 없음
@@ -50,7 +92,7 @@ const JAPAN_ISLANDS = [
     d: `M 91,134
         L 106,129 L 118,132 L 118,139
         L 105,143 L 90,141 L 86,137 Z`,
-    delay: 1.1,
+    delay: 0.9,
     tx: -4,
     ty: 1,
   },
@@ -59,7 +101,7 @@ const JAPAN_ISLANDS = [
     d: `M 66,138
         L 75,146 L 71,160 L 62,164
         L 55,159 L 57,148 L 61,140 Z`,
-    delay: 1.4,
+    delay: 1.1,
     tx: 3,
     ty: -5,
   },

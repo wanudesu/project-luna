@@ -250,7 +250,14 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 1. Hero 블록
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const shimmerVariants = {
+  rest: { x: "-100%", transition: { duration: 0 } },
+  hover: { x: "100%", transition: { duration: 0.6, ease: "easeInOut" } },
+};
+
 function HeroBlock() {
+  const [isHovered, setIsHovered] = useState(false);
+
   const badges = [
     { icon: "👥", text: "5인 팀 프로젝트" },
     { icon: "📅", text: "2025.01 — 2025.03" },
@@ -312,20 +319,50 @@ function HeroBlock() {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="flex flex-wrap gap-3"
           >
-            {badges.map((b) => (
-              <span
-                key={b.text}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
-                style={{
-                  background: "var(--color-bg-surface)",
-                  border: "1px solid var(--color-border)",
-                  color: "var(--color-text)",
-                }}
-              >
-                <span>{b.icon}</span>
-                <span>{b.text}</span>
-              </span>
-            ))}
+            {badges.map((b) =>
+              b.text.includes("장려상") ? (
+                <motion.span
+                  key={b.text}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono relative overflow-hidden cursor-default"
+                  style={{
+                    background: "var(--color-bg-surface)",
+                    border: "1px solid var(--color-border)",
+                    color: "var(--color-text)",
+                  }}
+                  onHoverStart={() => setIsHovered(true)}
+                  onHoverEnd={() => setIsHovered(false)}
+                >
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.15) 50%, transparent 100%)",
+                    }}
+                    animate={{ x: isHovered ? "100%" : "-100%" }}
+                    transition={
+                      isHovered
+                        ? { duration: 0.6, ease: "easeInOut" }
+                        : { duration: 0 }
+                    }
+                  />
+                  <span>{b.icon}</span>
+                  <span>{b.text}</span>
+                </motion.span>
+              ) : (
+                <span
+                  key={b.text}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-mono"
+                  style={{
+                    background: "var(--color-bg-surface)",
+                    border: "1px solid var(--color-border)",
+                    color: "var(--color-text)",
+                  }}
+                >
+                  <span>{b.icon}</span>
+                  <span>{b.text}</span>
+                </span>
+              ),
+            )}
             <a
               href="https://github.com/wanudesu/KUMO-KR-JP-Job-Platform"
               target="_blank"
@@ -619,7 +656,7 @@ function OverviewSection() {
   );
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 3. 내 역할
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function RoleSection() {
@@ -635,10 +672,10 @@ function RoleSection() {
     >
       <SectionLabel index="03" title="My Role" />
 
-      {/* 역할 강조 박스 */}
+      {/* UI/UX 설계 카드 */}
       <motion.div
         variants={fadeUp}
-        className="relative p-6 rounded-2xl mb-8 overflow-hidden"
+        className="relative p-6 rounded-2xl mb-4 overflow-hidden"
         style={{
           background: "rgba(77,124,254,0.06)",
           border: "1px solid var(--color-accent-glow)",
@@ -661,15 +698,27 @@ function RoleSection() {
           className="text-2xl md:text-3xl font-bold text-luna-glow mb-3"
           style={{ fontFamily: "var(--font-geist-sans)" }}
         >
-          리쿠르터 (구인자) 페이지 전담
+          UI/UX 설계 전담 + 리쿠르터 페이지 구현
         </h3>
         <p
-          className="text-sm leading-relaxed max-w-[520px]"
+          className="text-sm leading-relaxed max-w-[520px] mb-5"
           style={{ color: "var(--color-text-muted)" }}
         >
-          팀 5명이 각자 페이지를 담당하는 구조에서, 구인자와 관련된 모든 기능과
-          UI를 혼자 설계하고 구현했습니다. 분량이 팀 내에서 가장 많았습니다.
+          전체 페이지의 UI/UX를 피그마로 설계했습니다. 리쿠르터 관련 기능과 CSS
+          구현도 전담했고, 팀 내에서 분량이 가장 많았습니다.
         </p>
+
+        {/* 피그마 캡처 이미지 */}
+        <div
+          className="rounded-xl overflow-hidden"
+          style={{ border: "1px solid var(--color-border)" }}
+        >
+          <img
+            src="/images/kumo-figma.png"
+            alt="KUMO 피그마 전체 설계 화면"
+            className="w-full object-cover"
+          />
+        </div>
       </motion.div>
 
       {/* 기능 목록 */}
