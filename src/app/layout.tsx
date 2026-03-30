@@ -12,6 +12,7 @@ import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { ScrollButtons } from "@/components/layout/ScrollButtons";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,8 +44,10 @@ export default function RootLayout({
       */}
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider>
-          <Header />
-          <PageTransition>{children}</PageTransition>
+          <LanguageProvider>
+            <Header />
+            <PageTransition>{children}</PageTransition>
+          </LanguageProvider>
         </ThemeProvider>
         <ScrollButtons />
       </body>

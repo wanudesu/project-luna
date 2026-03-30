@@ -1,19 +1,15 @@
 "use client";
 // src/components/home/ContactSection.tsx
-//
-// 📖 CSS 변수 시스템 사용
-// 테마 전환 시 자동으로 색상 변경 + transition 애니메이션
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { homeTranslations } from "@/locales/home";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
 };
 
@@ -40,12 +36,7 @@ const socialLinks = [
     name: "Wantedly",
     href: "https://www.wantedly.com/id/wanudesu",
     icon: (
-      <svg
-        className="w-5 h-5"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
         <path d="M2.2 4.5L8.7 19.5H11.1L4.6 4.5H2.2ZM10.5 4.5L17 19.5H19.4L12.9 4.5H10.5ZM20.7 4.3a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3Z" />
       </svg>
     ),
@@ -72,18 +63,26 @@ const socialLinks = [
 ];
 
 interface ContactSectionProps {
+  sectionNumber?: string;
+  // title, description1, description2는 이제 언어 파일에서 가져오므로 optional
   title?: string;
   description1?: string;
   description2?: string;
-  sectionNumber?: string;
 }
 
 export function ContactSection({
-  title = "더 이야기하고 싶어요.",
-  description1 = "새프로젝트와 방향에 대해",
-  description2 = "편하게 봐주세요.",
   sectionNumber = "03",
+  title,
+  description1,
+  description2,
 }: ContactSectionProps) {
+  const { lang } = useLanguage();
+  const t = homeTranslations[lang].contact;
+
+  const displayTitle = title ?? t.title;
+  const displayDesc1 = description1 ?? t.description1;
+  const displayDesc2 = description2 ?? t.description2;
+
   return (
     <section
       id="contact"
@@ -97,7 +96,6 @@ export function ContactSection({
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* ── 섹션 타이틀 ── */}
         <motion.span
           variants={itemVariants}
           className="font-mono text-sm tracking-wider"
@@ -122,7 +120,7 @@ export function ContactSection({
           className="text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6"
           style={{ color: "var(--color-text-glow)" }}
         >
-          <span>{title}</span>
+          {displayTitle}
         </motion.h2>
 
         <motion.p
@@ -130,19 +128,15 @@ export function ContactSection({
           className="text-lg mb-12 max-w-xl mx-auto"
           style={{ color: "var(--color-text-muted)" }}
         >
-          <span>
-            {description1}
-            <br />
-            {description2}
-          </span>
+          {displayDesc1}
+          <br />
+          {displayDesc2}
         </motion.p>
 
-        {/* ── 이메일 버튼 (메인 CTA) ── */}
         <motion.div variants={itemVariants}>
           <motion.a
             href="mailto:wanudesu@gmail.com"
-            className="inline-flex items-center gap-3 px-8 py-4
-                       text-white font-medium text-lg rounded-full"
+            className="inline-flex items-center gap-3 px-8 py-4 text-white font-medium text-lg rounded-full"
             style={{
               backgroundColor: "var(--color-accent)",
               boxShadow: "0 10px 40px var(--color-accent-glow)",
@@ -163,11 +157,10 @@ export function ContactSection({
                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
             </svg>
-            이메일 보내기
+            {t.btnEmail}
           </motion.a>
         </motion.div>
 
-        {/* ── 소셜 링크 ── */}
         <motion.div
           variants={itemVariants}
           className="flex justify-center gap-6 mt-12"
@@ -192,7 +185,6 @@ export function ContactSection({
           ))}
         </motion.div>
 
-        {/* ── Footer ── */}
         <motion.div
           variants={itemVariants}
           className="mt-24 pt-8"
@@ -200,9 +192,7 @@ export function ContactSection({
         >
           <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
             Designed & Built by{" "}
-            <span style={{ color: "var(--color-accent)" }}>
-              이원우 with Claude
-            </span>
+            <span style={{ color: "var(--color-accent)" }}>{t.footer}</span>
           </p>
           <p
             className="text-xs mt-2"

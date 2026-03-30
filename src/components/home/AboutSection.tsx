@@ -1,22 +1,16 @@
 "use client";
 // src/components/home/AboutSection.tsx
-//
-// 📖 학습 포인트:
-// 1. whileInView → 스크롤해서 화면에 들어오면 애니메이션 실행
-// 2. viewport={{ once: true }} → 한 번만 실행
-// 3. CSS 변수 사용 → 테마 전환 시 자동으로 색상 변경
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
+import { homeTranslations } from "@/locales/home";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
   },
 };
 
@@ -29,36 +23,67 @@ const itemVariants = {
   },
 };
 
-const skills = [
-  {
-    category: "배운 것",
-    items: ["Java", "JavaScript", "HTML5/CSS3", "Spring Boot"],
-  },
-  {
-    category: "배우는 중",
-    items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    category: "사용 중",
-    items: ["Git", "Figma", "VS Code", "AWS"],
-  },
-];
+const skills = {
+  ko: [
+    {
+      category: "배운 것",
+      items: ["Java", "JavaScript", "HTML5/CSS3", "Spring Boot"],
+    },
+    {
+      category: "배우는 중",
+      items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    },
+    { category: "사용 중", items: ["Git", "Figma", "VS Code", "AWS"] },
+  ],
+  ja: [
+    {
+      category: "学んだこと",
+      items: ["Java", "JavaScript", "HTML5/CSS3", "Spring Boot"],
+    },
+    {
+      category: "学習中",
+      items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    },
+    { category: "使用中", items: ["Git", "Figma", "VS Code", "AWS"] },
+  ],
+};
 
-const experiences = [
-  {
-    period: "2022 - 2024",
-    role: "군 복무 / 학점은행제",
-    description1: "일본어 공부 병행, 학점은행제 수강",
-  },
-  {
-    period: "2025 - Present",
-    role: "Smart Cloud IT Master 48기",
-    description1: "Java, Spring Boot, JavaScript 등 IT 기술과 일본어 동시 수련",
-    description2: "팀 프로젝트 KUMO 장려상 수상",
-  },
-];
+const experiences = {
+  ko: [
+    {
+      period: "2022 - 2024",
+      role: "군 복무 / 학점은행제",
+      description1: "일본어 공부 병행, 학점은행제 수강",
+    },
+    {
+      period: "2025 - Present",
+      role: "Smart Cloud IT Master 48기",
+      description1:
+        "Java, Spring Boot, JavaScript 등 IT 기술과 일본어 동시 수련",
+      description2: "팀 프로젝트 KUMO 장려상 수상",
+    },
+  ],
+  ja: [
+    {
+      period: "2022 - 2024",
+      role: "軍服務 / 単位履修生",
+      description1: "日本語学習を並行、単位履修生として受講",
+    },
+    {
+      period: "2025 - Present",
+      role: "Smart Cloud IT Master 48期",
+      description1: "Java、Spring Boot、JavaScriptなどIT技術と日本語を同時習得",
+      description2: "チームプロジェクトKUMO 奨励賞受賞",
+    },
+  ],
+};
 
 export function AboutSection() {
+  const { lang } = useLanguage();
+  const t = homeTranslations[lang].about;
+  const currentSkills = skills[lang];
+  const currentExperiences = experiences[lang];
+
   return (
     <section
       id="about"
@@ -72,7 +97,6 @@ export function AboutSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* ── 섹션 타이틀 ── */}
         <motion.div variants={itemVariants} className="mb-16">
           <div className="flex items-center gap-4 mb-10">
             <span
@@ -89,43 +113,40 @@ export function AboutSection() {
               className="text-xs font-mono tracking-[0.15em] uppercase"
               style={{ color: "var(--color-text-muted)" }}
             >
-              About
+              {t.sectionLabel}
             </span>
           </div>
           <h2
             className="text-3xl md:text-4xl font-bold mb-2"
             style={{ color: "var(--color-text-glow)" }}
           >
-            저에 대해 알려드릴게요
+            {t.title}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-          {/* ── 왼쪽: 소개 텍스트 ── */}
           <motion.div variants={itemVariants} className="space-y-6">
             <p
               className="text-lg leading-relaxed"
               style={{ color: "var(--color-text)" }}
             >
-              안녕하세요! 저는{" "}
+              {t.intro1}{" "}
               <strong style={{ color: "var(--color-text-glow)" }}>
-                디테일에 집착하는
+                {t.intro1}
               </strong>{" "}
-              이원우입니다.
+              {t.intro2}
             </p>
             <p
               className="leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              한국에서 일본 취업을 준비 중인 23살 프론트엔드 개발자
-              지망생입니다.
-              {<br />}현재 Smart Cloud IT Master 48기에서 웹 개발과 일본어를
-              함께 공부하고 있어요.
+              {t.intro3}
+              <br />
+              {t.intro4}
             </p>
 
-            {/* ── 경력 타임라인 ── */}
             <div className="pt-6 space-y-4">
-              {experiences.map((exp, i) => (
+              {currentExperiences.map((exp, i) => (
                 <motion.div
                   key={i}
                   variants={itemVariants}
@@ -162,9 +183,8 @@ export function AboutSection() {
             </div>
           </motion.div>
 
-          {/* ── 오른쪽: 스킬 그리드 ── */}
           <motion.div variants={itemVariants} className="space-y-8">
-            {skills.map((skillGroup, i) => (
+            {currentSkills.map((skillGroup, i) => (
               <div key={i}>
                 <h3
                   className="text-sm font-mono mb-3 tracking-wider"
@@ -182,9 +202,7 @@ export function AboutSection() {
                         color: "var(--color-text)",
                         border: "1px solid var(--color-border)",
                       }}
-                      whileHover={{
-                        scale: 1.05,
-                      }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       {skill}
@@ -194,16 +212,15 @@ export function AboutSection() {
               </div>
             ))}
 
-            {/* ── 숫자 통계 ── */}
             <motion.div
               variants={itemVariants}
               className="grid grid-cols-3 gap-4 pt-8"
               style={{ borderTop: "1px solid var(--color-border)" }}
             >
               {[
-                { number: "N1", label: "JLPT" },
-                { number: "2", label: "Projects" },
-                { number: "48기", label: "Smart Cloud IT Master" },
+                { number: "N1", label: t.stats.jlpt },
+                { number: "2", label: t.stats.projects },
+                { number: "48", label: t.stats.course },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div
@@ -223,7 +240,7 @@ export function AboutSection() {
             </motion.div>
           </motion.div>
         </div>
-        {/* ── 더 보기 버튼 ── */}
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -238,7 +255,7 @@ export function AboutSection() {
               whileHover={{ x: 4 }}
               transition={{ duration: 0.2 }}
             >
-              더 보기
+              {t.more}
               <span>→</span>
             </motion.span>
           </Link>

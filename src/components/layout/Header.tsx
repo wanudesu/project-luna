@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
+import { useLanguage } from "@/context/LanguageContext";
 
 const NAV_LINKS = [
   { href: "/about", label: "About", labelJa: "私について" },
@@ -27,6 +28,7 @@ export function Header() {
   const { scrollY } = useScroll();
   const backdropOpacity = useTransform(scrollY, [0, 80], [0, 1]);
   const borderOpacity = useTransform(scrollY, [0, 80], [0, 1]);
+  const { lang, setLang } = useLanguage();
 
   return (
     <motion.header
@@ -145,6 +147,24 @@ export function Header() {
                 );
               })}
             </ul>
+
+            {/* 번역 토글 */}
+            <motion.button
+              onClick={() => setLang(lang === "ko" ? "ja" : "ko")}
+              className="relative px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
+              style={{
+                background: "rgba(200,214,232,0.04)",
+                border: "1px solid rgba(200,214,232,0.1)",
+                color: "var(--color-text-muted)",
+              }}
+              whileHover={{
+                background: "rgba(200,214,232,0.08)",
+                borderColor: "rgba(200,214,232,0.2)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {lang === "ko" ? "한" : "日"}
+            </motion.button>
 
             {/* 📖 ThemeToggle: 네비 오른쪽 끝에 배치 */}
             <ThemeToggle />

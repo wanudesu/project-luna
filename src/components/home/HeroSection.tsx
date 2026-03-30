@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { MoonOrb } from "./MoonOrb";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { homeTranslations } from "@/locales/home";
 
 const STAR_COUNT = 80;
 
@@ -36,6 +38,8 @@ const itemVariants = {
 
 export function HeroSection() {
   const [stars, setStars] = useState<Star[]>([]);
+  const { lang } = useLanguage();
+  const t = homeTranslations[lang].hero;
 
   useEffect(() => {
     setStars(
@@ -52,13 +56,6 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* ── 배경: 메인 그라데이션 ── */}
-      {/*
-        📖 var(--color-bg-navy), var(--color-bg) 를 쓰면
-           globals.css의 .dark / .light 변수가 자동으로 교체됩니다.
-           하드코딩된 #070C18 같은 값은 테마가 바뀌어도 그대로라
-           반드시 var()로 써야 합니다.
-      */}
       <div
         className="absolute inset-0 -z-10"
         style={{
@@ -67,7 +64,6 @@ export function HeroSection() {
         }}
       />
 
-      {/* ── 배경: 별빛 파티클 ── */}
       <div className="absolute inset-0 -z-10">
         {stars.map((star) => (
           <motion.div
@@ -78,7 +74,6 @@ export function HeroSection() {
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              // 📖 별색도 텍스트 색상 변수 사용 — 라이트모드에서 자동으로 어두워짐
               background: "var(--color-text-muted)",
             }}
             animate={{ opacity: [0.1, 0.8, 0.1] }}
@@ -92,7 +87,6 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* ── 배경: 수평선 그라데이션 라인 ── */}
       <div
         className="absolute bottom-0 left-0 right-0 h-px -z-10"
         style={{
@@ -103,14 +97,12 @@ export function HeroSection() {
 
       <div className="page-container w-full">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-4 py-20 md:py-0 min-h-screen">
-          {/* ── 좌측: 텍스트 블록 ── */}
           <motion.div
             className="flex-1 flex flex-col gap-6 max-w-[560px]"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            {/* 소형 레이블 */}
             <motion.div variants={itemVariants}>
               <span className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-luna-accent uppercase">
                 <span
@@ -120,46 +112,46 @@ export function HeroSection() {
                     animation: "moon-pulse 2s ease-in-out infinite",
                   }}
                 />
-                Available for work
+                {t.available}
               </span>
             </motion.div>
 
-            {/* 메인 헤드라인 */}
             <div className="flex flex-col gap-1">
               <motion.p
                 variants={itemVariants}
                 className="text-lg font-light tracking-wide"
-                // 📖 style에 color를 직접 쓰는 대신 CSS 변수 사용
                 style={{ color: "var(--color-text-muted)" }}
               >
-                안녕하세요,
+                {t.greeting}
               </motion.p>
               <motion.h1
                 variants={itemVariants}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
                 style={{ fontFamily: "var(--font-geist-sans)" }}
               >
-                <span style={{ color: "var(--color-text-glow)" }}>저는 </span>
-                <span className="text-gradient-luna">이원우</span>
-                <span style={{ color: "var(--color-text-glow)" }}>입니다.</span>
+                <span style={{ color: "var(--color-text-glow)" }}>
+                  {t.namePrefix}
+                </span>
+                <span className="text-gradient-luna">{t.name}</span>
+                <span style={{ color: "var(--color-text-glow)" }}>
+                  {t.nameSuffix}
+                </span>
               </motion.h1>
             </div>
 
-            {/* 서브 헤드라인 */}
             <motion.p
               variants={itemVariants}
               className="text-lg md:text-xl leading-relaxed max-w-[420px]"
               style={{ color: "var(--color-text-muted)" }}
             >
-              디테일에 집착하는{" "}
+              {t.subtitle1}{" "}
               <span style={{ color: "var(--color-text)", fontWeight: 500 }}>
-                프론트엔드 개발자 지망생
+                {t.subtitle2}
               </span>
               <br />
-              아직 배우는 중이지만, 방향은 분명합니다.
+              {t.subtitle3}
             </motion.p>
 
-            {/* CTA 버튼 */}
             <motion.div
               variants={itemVariants}
               className="flex flex-wrap gap-3 pt-2"
@@ -179,7 +171,7 @@ export function HeroSection() {
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  프로젝트 보기
+                  {t.btnProject}
                 </motion.button>
               </Link>
               <Link href="/about">
@@ -190,26 +182,22 @@ export function HeroSection() {
                     background: "transparent",
                     color: "var(--color-text)",
                   }}
-                  whileHover={{
-                    scale: 1.03,
-                  }}
+                  whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  나에 대해
+                  {t.btnAbout}
                 </motion.button>
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* ── 우측: 달/해 오브 ── */}
-          <div className="flex-1 flex ustify-center md:justify-end items-center">
+          <div className="flex-1 flex justify-center md:justify-end items-center">
             <MoonOrb />
           </div>
         </div>
       </div>
 
-      {/* ── 스크롤 인디케이터 ── */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}

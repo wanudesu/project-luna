@@ -1,44 +1,16 @@
 "use client";
 // src/components/home/ProjectsSection.tsx
-//
-// 📖 CSS 변수 시스템 사용
-// - var(--color-bg-navy): 섹션 배경 (살짝 다른 톤)
-// - var(--color-bg-surface): 카드 배경
-// - 테마 전환 시 자동으로 색상 변경
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
-const projects = [
-  {
-    id: "kumo",
-    title: "Kumo",
-    subtitle: "구인구직 매칭 플랫폼",
-    description:
-      "일본(도쿄·오사카)의 구인구직 정보를 지도 위에서 탐색하는 한·일 동시 지원 매칭 플랫폼.",
-    tags: ["Java", "Spring Boot", "JavaScript", "CSS"],
-    color: "#4D7CFE",
-    year: "2026",
-  },
-  {
-    id: "luna",
-    title: "Luna",
-    subtitle: "포트폴리오 사이트",
-    description: "처음 쓰는 기술로, AI와 함께 만든 포트폴리오",
-    tags: ["Next.js", "Framer Motion", "Tailwind"],
-    color: "#FBBF24",
-    year: "2026",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import { homeTranslations } from "@/locales/home";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.2, delayChildren: 0.1 },
   },
 };
 
@@ -51,23 +23,38 @@ const itemVariants = {
   },
 };
 
+const projectsData = [
+  {
+    id: "kumo",
+    color: "#4D7CFE",
+    year: "2025",
+    tags: ["Java", "Spring Boot", "JavaScript", "CSS"],
+  },
+  {
+    id: "luna",
+    color: "#FBBF24",
+    year: "2026",
+    tags: ["Next.js", "Framer Motion", "Tailwind"],
+  },
+];
+
 function ProjectCard({
   project,
   index,
+  t,
 }: {
-  project: (typeof projects)[0];
+  project: (typeof projectsData)[0];
   index: number;
+  t: any;
 }) {
   const isEven = index % 2 === 0;
+  const projectT = t[project.id as "kumo" | "luna"];
 
   return (
     <motion.div
       variants={itemVariants}
-      className={`grid md:grid-cols-2 gap-8 items-center ${
-        isEven ? "" : "md:[direction:rtl]"
-      }`}
+      className={`grid md:grid-cols-2 gap-8 items-center ${isEven ? "" : "md:[direction:rtl]"}`}
     >
-      {/* ── 이미지 영역 ── */}
       <Link href={`/${project.id}`} className="block group md:[direction:ltr]">
         <motion.div
           className="relative aspect-[16/10] rounded-2xl overflow-hidden"
@@ -75,7 +62,6 @@ function ProjectCard({
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
-          {/* 플레이스홀더 */}
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{
@@ -83,25 +69,21 @@ function ProjectCard({
             }}
           >
             <span
-              className="text-6xl font-bold opacity-20"
+              className="text-6xl font-bold opacity-20 capitalize"
               style={{ color: project.color }}
             >
-              {project.title}
+              {project.id}
             </span>
           </div>
-
-          {/* 호버 오버레이 */}
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100
-                        transition-opacity duration-300
-                        flex items-end p-6"
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"
             style={{
               background:
                 "linear-gradient(to top, var(--card-overlay) 0%, transparent 60%)",
             }}
           >
             <span className="text-white font-medium flex items-center gap-2">
-              프로젝트 보기
+              {t.viewProject}
               <svg
                 className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
                 fill="none"
@@ -120,7 +102,6 @@ function ProjectCard({
         </motion.div>
       </Link>
 
-      {/* ── 텍스트 영역 ── */}
       <div
         className={`space-y-4 md:[direction:ltr] ${isEven ? "" : "md:text-right"}`}
       >
@@ -133,12 +114,12 @@ function ProjectCard({
             className="w-8 h-px"
             style={{ backgroundColor: "var(--color-border)" }}
           />
-          <span>{project.subtitle}</span>
+          <span>{projectT.subtitle}</span>
         </div>
 
         <Link href={`/${project.id}`}>
           <h3
-            className="text-2xl md:text-3xl font-bold"
+            className="text-2xl md:text-3xl font-bold capitalize"
             style={{ color: "var(--color-text-glow)" }}
             onMouseEnter={(e) =>
               (e.currentTarget.style.color = "var(--color-accent)")
@@ -147,7 +128,7 @@ function ProjectCard({
               (e.currentTarget.style.color = "var(--color-text-glow)")
             }
           >
-            {project.title}
+            {project.id.charAt(0).toUpperCase() + project.id.slice(1)}
           </h3>
         </Link>
 
@@ -155,7 +136,7 @@ function ProjectCard({
           className="leading-relaxed"
           style={{ color: "var(--color-text-muted)" }}
         >
-          {project.description}
+          {projectT.description}
         </p>
 
         <div
@@ -181,6 +162,9 @@ function ProjectCard({
 }
 
 export function ProjectsSection() {
+  const { lang } = useLanguage();
+  const t = homeTranslations[lang].projects;
+
   return (
     <section
       id="projects"
@@ -194,7 +178,6 @@ export function ProjectsSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* ── 섹션 타이틀 ── */}
         <motion.div variants={itemVariants} className="mb-16">
           <div className="flex items-center gap-4 mb-4">
             <span
@@ -211,27 +194,26 @@ export function ProjectsSection() {
               className="text-xs font-mono tracking-[0.15em] uppercase"
               style={{ color: "var(--color-text-muted)" }}
             >
-              Projects
+              {t.sectionLabel}
             </span>
           </div>
           <h2
             className="text-3xl md:text-4xl font-bold mt-2"
             style={{ color: "var(--color-text-glow)" }}
           >
-            제가 만든 것들
+            {t.title}
           </h2>
           <p
             className="mt-4 max-w-xl"
             style={{ color: "var(--color-text-muted)" }}
           >
-            각 프로젝트는 새로운 도전이었고, 그 과정에서 많은 것을 배웠습니다.
+            {t.subtitle}
           </p>
         </motion.div>
 
-        {/* ── 프로젝트 리스트 ── */}
         <div className="space-y-24">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+          {projectsData.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} t={t} />
           ))}
         </div>
       </motion.div>
