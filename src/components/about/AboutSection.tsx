@@ -686,9 +686,9 @@ export function AboutSection() {
       <WhyJapanSection />
       <SkillsSection />
       <ContactSection
-        title="편하게 연락주세요."
-        description1="인사도 좋아요."
-        description2="언제든지 기다리고 있어요."
+        title="저를 더 알고 싶다면"
+        description1="어떻게 만들고 생각하는지"
+        description2="더 말씀드릴 수 있어요."
         sectionNumber="05"
       />
     </>

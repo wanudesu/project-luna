@@ -24,7 +24,7 @@ export function MoonOrb() {
   const [isDark, setIsDark] = useState(true);
 
   const [moonScope, animateMoon] = useAnimate();
-  const [sunScope, animateSun] = useAnimate();
+  const [fullMoonScope, animatefullMoon] = useAnimate();
   const [burstScope, animateBurst] = useAnimate();
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -86,8 +86,8 @@ export function MoonOrb() {
         { opacity: 1, y: 0, scale: 1 },
         { duration: 0 },
       );
-      animateSun(
-        sunScope.current,
+      animatefullMoon(
+        fullMoonScope.current,
         { opacity: 0, y: 80, scale: 0.5 },
         { duration: 0 },
       );
@@ -97,8 +97,8 @@ export function MoonOrb() {
         { opacity: 0, y: 80, scale: 0.5 },
         { duration: 0 },
       );
-      animateSun(
-        sunScope.current,
+      animatefullMoon(
+        fullMoonScope.current,
         { opacity: 1, y: 0, scale: 1 },
         { duration: 0 },
       );
@@ -123,8 +123,8 @@ export function MoonOrb() {
       { y: 80, scale: 0.5, opacity: 0 },
       { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
     );
-    await animateSun(
-      sunScope.current,
+    await animatefullMoon(
+      fullMoonScope.current,
       {
         y: [80, 40, -8, 0],
         scale: [0.4, 0.7, 1.05, 1],
@@ -140,8 +140,8 @@ export function MoonOrb() {
   }
 
   async function runLightToDark() {
-    await animateSun(
-      sunScope.current,
+    await animatefullMoon(
+      fullMoonScope.current,
       { y: 80, scale: 0.5, opacity: [1, 0] },
       { duration: 0.5, ease: [0.55, 0, 1, 0.45] },
     );
@@ -340,7 +340,7 @@ export function MoonOrb() {
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           🌕 보름달 (라이트모드)
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <div ref={sunScope} className="absolute inset-0">
+          <div ref={fullMoonScope} className="absolute inset-0">
             {/* 달빛 글로우 — 초승달이랑 동일 스타일 */}
             <motion.div
               className="absolute inset-[-60px] rounded-full pointer-events-none"

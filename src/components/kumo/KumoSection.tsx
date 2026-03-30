@@ -55,6 +55,9 @@ const TECH_STACK = [
   { name: "WebSocket", category: "Infra", color: "#34D399" },
   { name: "STOMP", category: "Infra", color: "#34D399" },
   { name: "Google Maps API", category: "API", color: "#A78BFA" },
+  { name: "DeepL API", category: "API", color: "#A78BFA" },
+  { name: "reCAPTCHA", category: "API", color: "#A78BFA" },
+  { name: "Gmail SMTP", category: "API", color: "#A78BFA" },
   { name: "MySQL", category: "DB", color: "#F472B6" },
 ];
 
@@ -83,7 +86,7 @@ const TIMELINE = [
     period: "1월 말",
     color: "#4D7CFE",
     story:
-      "태어나서 처음 해보는 팀 프로젝트. 브랜치를 왜 나누는지, 컨펌은 어떻게 받는지도 몰랐다. 팀원들이 다들 나보다 실력이 좋아 보여서 솔직히 위축됐다.",
+      "태어나서 처음 해보는 팀 프로젝트. 브랜치를 왜 나누는지, 컨펌은 어떻게 받는지도 몰랐다. 팀원 중 실력자들이 많아 솔직히 위축됐다.",
   },
   {
     phase: "02",
@@ -91,7 +94,7 @@ const TIMELINE = [
     period: "2월 초",
     color: "#A78BFA",
     story:
-      "리쿠르터 페이지 전담을 맡았다. 다른 팀에 비해 우리 프로젝트 분량이 컸고, 그 중에서도 내 분량이 제일 많았다. 처음엔 솔직히 막막했다.",
+      "리쿠르터 페이지 전담을 맡았다. 다른 팀에 비해 우리 프로젝트 분량이 컸고, 그에 따라 나의 분량도 많아서 처음엔 솔직히 막막했다.",
   },
   {
     phase: "03",
@@ -99,7 +102,7 @@ const TIMELINE = [
     period: "2월",
     color: "#FB923C",
     story:
-      "분량이 많아 AI를 적극적으로 활용했다. 퀄리티는 나왔지만 코드를 이해 못 한 채 붙여넣기만 했다. '내가 지금 개발을 하고 있는 건가?' 라는 생각이 들었다.",
+      "분량이 많아 AI를 적극적으로 활용했다. AI에게 모든것을 맡기는 것은 안되지만 도구로서 활용하면 굉장한 효율을 낼 수 있다는 것을 배웠다.",
   },
   {
     phase: "04",
@@ -107,7 +110,7 @@ const TIMELINE = [
     period: "2월 중순 ~ 3월",
     color: "#34D399",
     story:
-      "팀원에게 민폐를 끼치지 않기 위해 매일 학원에 남아서 했다. 이해가 안 되면 잡고 늘어졌고, 결국 담당 파트는 전부 마쳤다.",
+      "팀원에게 민폐를 끼치지 않기 위해 매일 학원에 남아서 했다. 완성시키기 위해 잡고 늘어졌고, 결국 담당 파트는 전부 마칠 수 있었다.",
   },
   {
     phase: "05",
@@ -115,7 +118,7 @@ const TIMELINE = [
     period: "3월",
     color: "#F472B6",
     story:
-      "SCIT 프로젝트 발표에서 장려상(3등)을 받았다. 솔직히 코드 이해도는 낮았지만, 결과물은 제대로 냈다. 다음엔 코드도 내 것으로 만들어야 한다는 걸 느꼈다.",
+      "SCIT 프로젝트 발표에서 장려상(3등)을 받았다. 솔직히 코드를 완벽하게 이해하지는 못했지만, 결과물은 제대로 냈다. 다음엔 코드도 내 것으로 만들어야 한다는 걸 느꼈다.",
   },
 ];
 
@@ -973,13 +976,13 @@ function ReflectionSection() {
       label: "아쉬운 점",
       color: "#FB923C",
       icon: "△",
-      text: "AI가 써준 코드를 이해하지 못한 채 붙여넣기만 했다. 프로젝트는 끝났지만 내 실력으로 소화한 코드가 거의 없었다.",
+      text: "AI를 도구로서 적극 활용하였지만, 그만큼 코드를 작성하면서 배울 수 있는 기회가 부족했다.",
     },
     {
       label: "다음에는",
       color: "#4D7CFE",
       icon: "→",
-      text: "그래서 이 포트폴리오를 만들고 있다. AI를 쓰되, 코드 한 줄 한 줄을 이해하면서. 그게 이 사이트를 만드는 이유다.",
+      text: "그래서 이 포트폴리오를 만들고 있다. AI를 쓰되, 코드를 이해하면서 만들었다. 그게 이 사이트를 만드는 이유다.",
     },
   ];
 
@@ -1032,9 +1035,9 @@ function ReflectionSection() {
       </motion.div>
 
       <ContactSection
-        title="편하게 연락주세요."
-        description1="인사도 좋아요."
-        description2="언제든지 기다리고 있어요."
+        title="KUMO에 대해 더 말해보면"
+        description1="처음 만든 팀 프로젝트라"
+        description2="더 배운 점이 많았어요."
         sectionNumber="07"
       />
     </motion.section>

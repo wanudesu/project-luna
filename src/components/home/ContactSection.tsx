@@ -79,9 +79,9 @@ interface ContactSectionProps {
 }
 
 export function ContactSection({
-  title = "함께 일해요.",
-  description1 = "새로운 프로젝트나 협업 제안,",
-  description2 = "편하게 연락주세요!",
+  title = "더 이야기하고 싶어요.",
+  description1 = "새프로젝트와 방향에 대해",
+  description2 = "편하게 봐주세요.",
   sectionNumber = "03",
 }: ContactSectionProps) {
   return (

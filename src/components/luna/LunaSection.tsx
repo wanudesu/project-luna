@@ -39,13 +39,13 @@ function useSectionInView() {
 // 📦 데이터
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const TECH_STACK = [
-  { name: "Next.js 15", category: "Framework", color: "#E8F0FF" },
+  { name: "Next.js 15", category: "Framework", color: "#1351c5" },
   { name: "TypeScript", category: "Language", color: "#4D7CFE" },
   { name: "Tailwind CSS v4", category: "Styling", color: "#34D399" },
   { name: "Framer Motion", category: "Animation", color: "#A78BFA" },
   { name: "Claude AI", category: "AI", color: "#FB923C" },
   { name: "Git / GitHub", category: "Tooling", color: "#F472B6" },
-  { name: "Vercel / AWS", category: "Deploy", color: "#60A5FA" },
+  { name: "AWS", category: "Deploy", color: "#60A5FA" },
 ];
 
 const STORY_TIMELINE = [
@@ -55,7 +55,7 @@ const STORY_TIMELINE = [
     period: "2026.03.25",
     color: "#4D7CFE",
     story:
-      "포트폴리오 제출 마감까지 2주. Java로 만들 수도 있었지만 학원에서 배운 것 말고, 스스로 선택한 기술로 만들고 싶었다. 그게 Next.js였다.",
+      "포트폴리오 제출 마감까지 2주. 설명회에서 들은 기술 스택이 머릿속에 남아있었다. 배워두면 입사 후에도 쓸 수 있겠다 싶어서 Next.js를 선택했다.",
   },
   {
     phase: "02",
@@ -63,7 +63,7 @@ const STORY_TIMELINE = [
     period: "1일차",
     color: "#A78BFA",
     story:
-      "Next.js도, TypeScript도, Framer Motion도 처음이었다. 학원에서 한 번도 안 배운 것들. AI 없이는 시작도 못 했을 거다. 그게 부끄럽지 않았다.",
+      "Next.js도, TypeScript도, Tailwind CSS도 처음이었다. 학원에서 한 번도 안 배운 것들. AI 없이는 시작도 못 했을 거다. 그게 부끄럽지 않았다.",
   },
   {
     phase: "03",
@@ -71,7 +71,7 @@ const STORY_TIMELINE = [
     period: "매일",
     color: "#FB923C",
     story:
-      "Kumo 때와 달리 이번엔 코드를 붙여넣기 전에 먼저 읽었다. 이해가 안 되면 물었다. Claude가 주석을 달아줬고, 나는 그걸 직접 고쳐가며 익혔다. 속도는 느렸지만 달랐다.",
+      "코드를 그냥 넘기지 않으려 했다. 이해가 안 되면 물어보고, 직접 고쳐보려 했다. 속도는 느렸지만 달랐다.",
   },
   {
     phase: "04",
@@ -79,7 +79,7 @@ const STORY_TIMELINE = [
     period: "디자인 결정",
     color: "#34D399",
     story:
-      "밤에 학원에 혼자 남아서 코드를 쳤던 기억. 사이트 이름을 Luna(月)로 지었다. 사이트 안에 있는 프로젝트 이름이 Kumo(雲)가 된 것도 자연스러웠다.",
+      "지금 당장 태양이 될 수는 없어도, 태양 빛을 받아 빛나는 달처럼. 그래서 이름을 Luna로 지었다. ",
   },
   {
     phase: "05",
@@ -87,7 +87,7 @@ const STORY_TIMELINE = [
     period: "목표",
     color: "#F472B6",
     story:
-      "2주 안에 완성. 완벽하지 않아도 된다. 코드를 이해하면서 만들었다는 것, 그게 이 사이트의 목적이다.",
+      "2주 안에 완성. AI를 도구로 사용하는 만큼 최대한 완벽하게 만들기로 결심했다.",
   },
 ];
 
@@ -115,10 +115,11 @@ const LEARNINGS = [
 ];
 
 const FUTURE_PLANS = [
-  { icon: "🌅", text: "라이트/다크 모드 토글 + 해 떠오르는 애니메이션" },
-  { icon: "☁️", text: "AWS S3 + CloudFront 배포" },
+  {
+    icon: "🇯🇵",
+    text: "THE SSS 입사 후 프로젝트를 추가, 하나의 스토리 흐름으로 정리하기",
+  },
   { icon: "📱", text: "모바일 반응형 완성도 높이기" },
-  { icon: "🇯🇵", text: "THE SSS 입사 후 실제 프로젝트로 계속 성장" },
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -363,19 +364,19 @@ function PurposeSection() {
     {
       icon: "📋",
       title: "포트폴리오 제출",
-      desc: "THE SSS 채용 전형에 포트폴리오를 제출해야 했다. 형식은 자유지만 웹사이트 형식을 가장 좋게 본다고 했다.",
+      desc: "THE SSS 채용 전형에 포트폴리오를 제출해야 했다. 웹사이트 형식이 나를 가장 잘 보여줄 수 있겠다는 생각이 들었다.",
       color: "#4D7CFE",
     },
     {
       icon: "💻",
       title: "기술 이해",
-      desc: "Kumo 때 AI 코드를 이해 없이 붙여넣기만 했다. 이번엔 코드 한 줄 한 줄을 읽고 이해하면서 만들기로 했다.",
+      desc: "모르는 기술들을 AI를 도구삼아 0부터 공부해가기로 했다.",
       color: "#34D399",
     },
     {
       icon: "🤖",
-      title: "AI 활용 능력 증명",
-      desc: "THE SSS는 AI를 적극 활용하는 문화를 강조했다. 코드를 이해하면서 AI와 협업하는 것 자체를 보여주고 싶었다.",
+      title: "AI 활용",
+      desc: "AI를 단순히 쓰는 게 아니라, 도구로서 제대로 활용하는 방식을 보여주고 싶었다.",
       color: "#FB923C",
     },
   ];
@@ -394,8 +395,7 @@ function PurposeSection() {
         variants={fadeUp}
         className="text-luna-mist text-base md:text-lg leading-relaxed max-w-[600px] mb-12"
       >
-        이 사이트를 만든 이유는 세 가지입니다. 기술 이해도 부족을 인정하고,
-        그것을 채우기 위해 시작했습니다.
+        이 사이트를 만든 이유는 세 가지입니다.
       </motion.p>
 
       <motion.div variants={stagger} className="flex flex-col gap-4">
@@ -766,9 +766,9 @@ function FuturePlanSection() {
 
       {/* 마무리 문장 */}
       <ContactSection
-        title="편하게 연락주세요."
-        description1="인사도 좋아요."
-        description2="언제든지 기다리고 있어요."
+        title="LUNA는 아직 진행 중이에요."
+        description1="왜 만들고 있는지,"
+        description2="직접 말씀드리고 싶어요."
         sectionNumber="06"
       />
     </motion.section>

@@ -36,7 +36,7 @@ export function LunaOrb() {
       indent: 1,
       tokens: [
         { text: "const ", color: isLight ? "#7C3AED" : "#569CD6" },
-        { text: "{ theme }", color: isLight ? "#1D4ED8" : "#9CDCFE" },
+        { text: "{ resolvedTheme }", color: isLight ? "#1D4ED8" : "#9CDCFE" },
         { text: " = ", color: isLight ? "#374151" : "#D4D4D4" },
         { text: "useTheme", color: isLight ? "#059669" : "#4EC994" },
         { text: "()", color: isLight ? "#374151" : "#D4D4D4" },
@@ -47,7 +47,10 @@ export function LunaOrb() {
       tokens: [
         { text: "const ", color: isLight ? "#7C3AED" : "#569CD6" },
         { text: "isDark", color: isLight ? "#1D4ED8" : "#9CDCFE" },
-        { text: " = theme === ", color: isLight ? "#374151" : "#D4D4D4" },
+        {
+          text: " = resolvedTheme === ",
+          color: isLight ? "#374151" : "#D4D4D4",
+        },
         { text: '"dark"', color: isLight ? "#B45309" : "#CE9178" },
       ],
     },
@@ -56,7 +59,7 @@ export function LunaOrb() {
       indent: 1,
       tokens: [
         {
-          text: "// 🌙 달 → ☀️ 해 전환",
+          text: "// 🌙 달 → 🌕 보름달 전환",
           color: isLight ? "#6B7280" : "#6A9955",
         },
       ],
@@ -69,7 +72,7 @@ export function LunaOrb() {
         { text: " ? ", color: isLight ? "#374151" : "#D4D4D4" },
         { text: "<Moon />", color: isLight ? "#1D4ED8" : "#4D7CFE" },
         { text: " : ", color: isLight ? "#374151" : "#D4D4D4" },
-        { text: "<Sun />", color: isLight ? "#B45309" : "#FBBF24" },
+        { text: "<Full-moon />", color: isLight ? "#B45309" : "#FBBF24" },
       ],
     },
     {

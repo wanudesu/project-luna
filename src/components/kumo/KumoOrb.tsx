@@ -101,7 +101,7 @@ const JAPAN_ISLANDS = [
     d: `M 66,138
         L 75,146 L 71,160 L 62,164
         L 55,159 L 57,148 L 61,140 Z`,
-    delay: 1.1,
+    delay: 1.0,
     tx: 3,
     ty: -5,
   },
